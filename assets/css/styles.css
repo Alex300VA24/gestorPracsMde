@@ -1,0 +1,30 @@
+:root{
+    --bg-color-principal: #13252E;
+    --bg-color-background: #E6E6E6;
+    --font-principal: "Inter", sans-serif;
+}
+
+html{
+    box-sizing: border-box;
+}
+
+*{
+    font-family: var(--font-principal);
+    box-sizing: inherit;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+}
+
+/* Globales */
+h1, h2, h3{
+    margin: 0;
+}
+
+a{
+    text-decoration: none;
+}
+/* ------- */
+
