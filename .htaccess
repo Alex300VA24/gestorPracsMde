@@ -1,1 +1,10 @@
-<?php
+<IfModule mod_rewrite.c>
+# Activar rewrite
+RewriteEngine on
+ErrorDocument 404 localhost/provaleWeb
+
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteCond %{SCRIPT_FILENAME} !-f
+
+RewriteRule ^(.*)/(.*) index.php?controller=$1&action=$2& [QSA,L]
+</IfModule>
