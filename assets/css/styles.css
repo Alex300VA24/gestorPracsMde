@@ -1,5 +1,6 @@
 :root{
     --bg-color-principal: #13252E;
+    --bg-color-second: #1f3947;
     --bg-color-background: #E6E6E6;
     --font-principal: "Inter", sans-serif;
 }
@@ -17,8 +18,7 @@ body{
     margin: 0;
     padding: 0;
     display: flex;
-    width: 100%;
-    height: 100vh;
+    flex-direction: column;
 }
 
 /* Globales */
@@ -26,30 +26,260 @@ h1, h2, h3{
     margin: 0;
 }
 
+p{
+    margin: 0;
+}
+
 a{
     text-decoration: none;
 }
-/* ------- */
+
+/* ESTILOS LOGIN */
+/* estilos login */
+.login-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    background-color: #fff;
+    border-radius: 80px 30px 80px 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 800px;
+    max-width: 90%;
+}
+
+.login-left {
+    background-color: var(--bg-color-principal);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    width: 50%;
+    text-align: center;
+}
+
+.logo-login {
+    width: 80%;
+    margin-bottom: 20px;
+}
+
+.login-right {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    padding: 30px 50px;
+}
+
+.login-right .login-title {
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 30px;
+    color: var(--bg-color-principal);
+}
+
+.login-right h3{
+    font-size: 18px;
+}
+
+.login-right p,
+.login-right form label{
+    font-size: 13px;
+}
+
+.login-container label {
+    display: block;
+    margin: 10px 0 5px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+input{
+    background: rgba(245, 245, 245, 0.44);
+    width: 100%;
+    display: block;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 0 solid #ccc;
+    border-bottom: 2px solid #ccc;
+    border-radius: 4px;
+}
+
+input:focus-visible{
+    outline: none;
+    border-bottom: 2px solid var(--bg-color-principal);
+    /*outline: 1px auto var(--bg-color-principal);*/
+}
+
+.login-container button {
+    width: 100%;
+    padding: 13px 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--bg-color-principal);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.login-container button:hover {
+    background-color: var(--bg-color-second);
+}
+
+/*  ESTILOS HEADER */
+
+.header{
+    background: var(--bg-color-principal);
+}
+
+.header{
+    display: flex;
+    width: 100%;
+    height: 70px;
+    justify-content: space-between;
+    padding: 0 20px;
+    position: relative;
+    overflow: hidden;
+    align-items: center;
+}
+
+.logo_nombre_sistema{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.logo_nombre_sistema img{
+    width: 180px;
+    background-color: #FFF;
+}
+
+.header h1{
+    font-size: 17px;
+    font-weight: 500;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+/* estilos informacion usuario login y boton logout */
+.container_userDetails_logout{
+    display: flex;
+    align-items: center;
+    gap: 70px;
+}
+
+.container_userDetails_logout .userDetails{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.container_userDetails_logout .userDetails .nombresUsuarioLog{
+    color: #FFF;
+}
+
+.container_userDetails_logout .userDetails div span .username{
+    color: #939393;
+}
+
+.container_userDetails_logout .userDetails div .username_rol{
+    color: #939393;
+    display: flex;
+    justify-content: left;
+    font-size: 12px;
+}
+
+.container_userDetails_logout .userDetails .iconUser{
+    height: 35px;
+    display: flex;
+    position: relative;
+}
+
+.container_userDetails_logout .userDetails .iconUser img{
+    cursor: pointer;
+}
+
+.container_userDetails_logout .iconUser .iconEditProfile{
+    background-color: #fff;
+    position: absolute;
+    width: 15px;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.container_userDetails_logout .iconLogout{
+    width: 40px;
+}
+
+/* Estilos contenedor principal*/
+
+.content{
+    display: flex;
+    padding: 20px;
+    gap: 20px;
+    background-color: var(--bg-color-background);
+    flex: calc(100vh - 70px);
+}
+
+/*     estilos sidebar     */
 
 .sideBar{
-    width: 12%;
+    background-color: var(--bg-color-principal);
+    flex: 1;
     display: flex;
     flex-direction: column;
 }
 
-.sideBar .logo{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    background-color: #fff;
-}
-.sideBar .logo img {
-    width: 70%;
+.main{
+    flex: 8;
 }
 
-.sideBar .menu{
+
+.sideBar{
     background-color: var(--bg-color-principal);
     display: flex;
-    flex: 90%;
-    border-top-left-radius: 20px;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 6px;
 }
+
+.sideBar .option{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 0 10px 0 5px;
+}
+
+.sideBar .option>:last-child{
+    flex: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.sideBar  .option p,
+.sideBar  .option a{
+    font-size: 15px;
+    color: #fff;
+    font-weight: 500;
+}
+
+.sideBar  .option p{
+    padding: 10px 0;
+    margin-bottom: 0;
+}
+
+.sideBar  .option:hover{
+    background-color: var(--bg-color-second);
+}
+
+

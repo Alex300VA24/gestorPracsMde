@@ -1,28 +1,19 @@
 <?php
-    require_once "config/parameters.php";
+session_start();
+require_once "config/parameters.php";
+require_once "views/layouts/head.php";
+date_default_timezone_set('America/Lima');
+
+
+if(!isset($_SESSION["autenticado"])){
+    require_once 'views/layouts/header.php';
+    require_once 'views/layouts/content.php';
+
+}else{
+    echo 'no autenticado';
+    var_dump(isset($_SESSION["autenticado"]));
+    require_once 'views/login/index.php';
+}
+
+    require_once "views/layouts/footer.php";
 ?>
-
-<!doctype html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="shortcut icon" href="assets/logo-vaca.png" type="image/x-icon">
-    <title>Provale</title>
-</head>
-<body>
-    <?php require_once "views/layouts/sideBar.php"?>
-
-    <div class="content">
-        <header class="header">
-            <h1>Sistema de Provale</h1>
-        </header>
-        <main class="main">
-
-        </main>
-    </div>
-</body>
-</html>
