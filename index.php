@@ -11,8 +11,6 @@ if(isset($_SESSION["autenticado"])){
     require_once 'views/layouts/content.php';
 
 }else{
-    echo 'no autenticado';
-    var_dump(isset($_SESSION["autenticado"]));
     require_once 'views/login/index.php';
 }
 

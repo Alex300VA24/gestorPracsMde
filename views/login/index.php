@@ -1,4 +1,3 @@
-
 <div class="login-container">
         <div class="login-left">
             <img class="logo-login" src="<?=base_url?>assets/logo.png" alt="logo">
@@ -8,10 +7,10 @@
             <p>Ingresa tus datos para iniciar sesi&oacute;n</p>
             <form id="formLogin" action="" method="post">
                 <label for="username">Usuario:</label>
-                <input type="text" id="username" name="username" autocomplete="off">
+                <input type="text" id="username" name="username" autocomplete="off" placeholder="ejemplo: alopezv">
 
                 <label for="password">Contrase&ntilde;a:</label>
-                <input type="password" id="password" name="password"> </br>
+                <input type="password" id="password" name="password" placeholder="******"> </br>
 
                 <button id="btnLogin">Ingresar</button>
             </form>

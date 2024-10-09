@@ -10,9 +10,9 @@
                 <img class="iconEditProfile" src="<?=base_url?>/assets/icons/iconEditProfile.svg" alt="">
             </a>
             <div>
-                <span id="nombresUsuarioLog" class="nombresUsuarioLog"> <?php echo 'miguel vega perez' ?> <span class="username">(<?php echo 'mvegape'?>)</span> </span>
+                <span id="nombresUsuarioLog" class="nombresUsuarioLog"> <?php echo $_SESSION['user']['nombresApellidos'] ?> <span class="username">(<?php echo $_SESSION['user']['nombreUsuario']?>)</span> </span>
                 <div class="username_rol">
-                    <span id="areaUsuarioLog">  <?php echo 'usuario' ?> <span id="rolUsuarioLog"> </span></span>
+                    <span id="areaUsuarioLog">  <?php echo $_SESSION['user']['rol'] ?> <span id="rolUsuarioLog"> </span></span>
                 </div>
             </div>
         </div>

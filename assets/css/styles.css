@@ -71,7 +71,7 @@ a{
     display: flex;
     flex-direction: column;
     width: 50%;
-    padding: 30px 50px;
+    padding: 60px 50px;
 }
 
 .login-right .login-title {
@@ -111,7 +111,6 @@ input{
 input:focus-visible{
     outline: none;
     border-bottom: 2px solid var(--bg-color-principal);
-    /*outline: 1px auto var(--bg-color-principal);*/
 }
 
 .login-container button {
@@ -128,6 +127,69 @@ input:focus-visible{
 
 .login-container button:hover {
     background-color: var(--bg-color-second);
+}
+
+/* ESTILOS MODAL CUI */
+.modalCUI .modal-header{
+    background-color: var(--bg-color-principal);
+    color: #FFF;
+    padding: 10px;
+}
+
+.modalCUI .modal-body{
+    padding: 25px;
+}
+
+.modalCUI .modal-body .containerGuiaCUI{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.modalCUI .modal-body .containerGuiaCUI p{
+    text-align: center;
+    font-size: 15px;
+}
+
+.modalCUI .modal-body .containerCUI{
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modalCUI .modal-body .containerCUI label{
+    text-align: center;
+    font-weight: 800;
+}
+
+.modalCUI .modal-body .containerCUI input{
+    background-color: #E9E9E9;
+    width: 60px;
+    height: 60px;
+    font-size: 30px;
+    text-align: center;
+}
+
+.containerButtonsModals{
+    display: flex;
+    justify-content: space-evenly;
+    gap: 10px;
+    padding: 0 20px;
+}
+
+.containerButtonsModals .btn{
+    color: #fff;
+}
+
+.containerButtonsModals .btn-submit{
+    width: 50%;
+    background-color: var(--bg-color-principal);
+}
+
+.containerButtonsModals .btn-cancel{
+    width: 50%;
+    background-color: #F12A2A;
 }
 
 /*  ESTILOS HEADER */
@@ -273,6 +335,11 @@ input:focus-visible{
 
 .sideBar  .option:hover{
     background-color: var(--bg-color-second);
+}
+
+/* LOGOUT */
+.header .iconLogout{
+    cursor: pointer;
 }
 
 /* INICIO */
