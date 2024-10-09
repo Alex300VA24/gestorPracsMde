@@ -17,8 +17,8 @@
             </div>
         </div>
 
-        <a href="<?=base_url?>usuario/logout">
-            <img class="iconLogout" src="<?=base_url?>/assets/icons/iconLogout.svg" alt="iconLogout">
+        <a>
+            <img id="btnLogout" class="iconLogout" src="<?=base_url?>/assets/icons/iconLogout.svg" alt="iconLogout">
         </a>
     </div>
 </header>

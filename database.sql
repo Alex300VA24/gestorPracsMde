@@ -11,6 +11,25 @@ CREATE TABLE Estados(
 	PRIMARY KEY(codEstado)
 );
 
+CREATE TABLE Roles(
+	codRol INT NOT NULL IDENTITY(1,1),
+	descripcion VARCHAR(100) NOT NULL UNIQUE,
+	PRIMARY KEY(codRol)
+);
+
+CREATE TABLE Usuarios(
+	codUsuario INT NOT NULL IDENTITY(1,1),
+	nombresApellidos VARCHAR(200) NOT NULL,
+	nombreUsuario VARCHAR(20) NOT NULL UNIQUE,
+	password VARCHAR(50) NOT NULL,
+	codRol INT NOT NULL,
+	dni VARCHAR(8) NOT NULL,
+	cui CHAR NOT NULL,
+	codEstado INT NOT NULL,
+	PRIMARY KEY(codUsuario),
+	FOREIGN KEY(codRol) REFERENCES Roles(codRol),
+);
+
 CREATE TABLE Parentescos(
 	codParentesco INT NOT NULL IDENTITY(1,1),
 	descripcion VARCHAR(100) NOT NULL UNIQUE,
@@ -24,24 +43,6 @@ CREATE TABLE TiposBeneficiario(
 	edadMaxima INT NOT NULL, 
 	observaciones VARCHAR(255),
 	PRIMARY KEY (codTipoBeneficiario)
-);
-
-CREATE TABLE Roles(
-	codRol INT NOT NULL IDENTITY(1,1),
-	descripcion VARCHAR(100) NOT NULL UNIQUE,
-	PRIMARY KEY(codRol)
-);
-
-CREATE TABLE Usuarios(
-	codUsuario INT NOT NULL IDENTITY(1,1),
-	nombresApellido VARCHAR(200) NOT NULL,
-	nombreUsuario VARCHAR(20) NOT NULL UNIQUE,
-	password VARCHAR(100) NOT NULL,
-	codRol INT NOT NULL,
-	codEstado INT NOT NULL,
-	PRIMARY KEY(codUsuario),
-	FOREIGN KEY(codRol) REFERENCES Roles(codRol),
-	FOREIGN KEY(codEstado) REFERENCES Estados(codEstado),
 );
 
 CREATE TABLE Zonas(

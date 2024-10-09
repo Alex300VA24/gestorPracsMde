@@ -15,7 +15,7 @@
     <script src="<?= base_url?>plugins/bootstrap/js/bootstrap.js"></script>
     <link rel="stylesheet" href="<?=base_url?>assets/css/normalize.css">
     <link rel="stylesheet" href="<?=base_url?>assets/css/styles.css">
-    <link rel="shortcut icon" href="assets/logo-vaca.png" type="image/x-icon">
+    <link rel="shortcut icon" href="<?=base_url?>assets/vacaHome.svg" type="image/x-icon">
     <title>Provale</title>
 </head>
 <body>

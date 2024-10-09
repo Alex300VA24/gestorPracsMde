@@ -1,11 +1,12 @@
 <?php
 session_start();
+require_once 'config/DataBase.php';
 require_once "config/parameters.php";
 require_once "views/layouts/head.php";
 date_default_timezone_set('America/Lima');
 
 
-if(!isset($_SESSION["autenticado"])){
+if(isset($_SESSION["autenticado"])){
     require_once 'views/layouts/header.php';
     require_once 'views/layouts/content.php';
 

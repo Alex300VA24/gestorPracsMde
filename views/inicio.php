@@ -5,7 +5,9 @@ if (!isset($_SESSION)){
 ?>
 
 <div class="inicio">
-<!--    <h1>Bienvenido(a), --><?php //= $_SESSION['user']['nombres']?><!--</h1>-->
-    <h1>Bienvenido(a), Miguel Vega Perez</h1>
-    <p>Has ingresado al sistema de gestión de Provale</p>
+    <div>
+        <h1>Bienvenido(a), <?= $_SESSION['user']['nombresApellidos']?></h1>
+        <p>Has ingresado al sistema de gestión de Provale</p>
+    </div>
+    <img src="<?=base_url?>/assets/vacaHome.svg">
 </div>

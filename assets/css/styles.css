@@ -220,7 +220,7 @@ input:focus-visible{
 
 .content{
     display: flex;
-    padding: 20px;
+    padding: 20px 10px;
     gap: 20px;
     background-color: var(--bg-color-background);
     flex: calc(100vh - 70px);
@@ -233,20 +233,13 @@ input:focus-visible{
     flex: 1;
     display: flex;
     flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 6px;
 }
 
 .main{
     flex: 8;
-}
-
-
-.sideBar{
-    background-color: var(--bg-color-principal);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px;
-    border-radius: 6px;
 }
 
 .sideBar .option{
@@ -280,6 +273,29 @@ input:focus-visible{
 
 .sideBar  .option:hover{
     background-color: var(--bg-color-second);
+}
+
+/* INICIO */
+.inicio{
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+    background-color: #FFF;
+    border-radius: 6px;
+}
+
+.inicio div h1,
+.inicio div p{
+    margin-top: 20px;
+    font-weight: 600;
+}
+
+.inicio div p{
+    color: var(--bg-color-second);
+}
+
+.inicio img{
+    width: 150px;
 }
 
 
