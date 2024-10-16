@@ -8,6 +8,7 @@ class Usuario {
     private int $codRol;
     private string $rol;
     private string $dni;
+    private string $cui;
     private int $codEstado;
 
     public function __construct(){}
@@ -71,6 +72,14 @@ class Usuario {
 
     public function setDni(string $dni): void{
         $this->dni = $dni;
+    }
+
+    public function getCui(): string{
+        return $this->cui;
+    }
+
+    public function setCui(string $cui): void{
+        $this->cui = $cui;
     }
 
     public function getCodEstado(): int{

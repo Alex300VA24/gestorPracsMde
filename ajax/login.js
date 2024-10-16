@@ -68,7 +68,7 @@ $(document).ready(function () {
     function showAlertIncorrectCUI() {
         Swal.fire({
             title: "¡Error!",
-            text: 'El código único de de idenficicación (CUI) no coincide con el del usuario registrado',
+            text: 'El código único de idenficicación (CUI) no coincide con el del usuario registrado',
             icon: "error",
             width: "350px",
             confirmButtonColor: "#13252E",

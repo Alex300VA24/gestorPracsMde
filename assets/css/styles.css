@@ -34,6 +34,21 @@ a{
     text-decoration: none;
 }
 
+.btn-nuevo-registro{
+    display: flex;
+    height: fit-content;
+    align-items: center;
+    background-color: var(--bg-color-principal);
+    gap: 10px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.btn-nuevo-registro img{
+    width: 30px;
+}
+
 /* ESTILOS LOGIN */
 /* estilos login */
 .login-container {
@@ -365,4 +380,34 @@ input:focus-visible{
     width: 150px;
 }
 
+/* modulo Personas */
+.header_modules h1{
+    font-weight: 800;
+    font-size: 25px;
+}
 
+.header_modules .filters_btn_new{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.header_modules .filters_btn_new .filters{
+    display: flex;
+    background-color: #fff;
+    border-radius: 10px;
+    align-items: center;
+    overflow: hidden;
+}
+
+.header_modules .filters_btn_new .filters input{
+    width: 320px;
+    margin: 0 10px;
+    background-color: #E3E3E3;
+}
+
+.header_modules .filters_btn_new .filters .container_clear_filters{
+    background-color: var(--bg-color-principal);
+    padding: 7px 15px;
+    cursor: pointer;
+}

@@ -10,12 +10,12 @@
         </div>
 
         <div>
-            <a href="#" class="option" id="optionTipoDocumentos">
+            <a href="views/personas/listar.php" class="option" id="optionPersonas">
                 <div class="containerIconOption">
-                    <img src="<?=base_url?>/assets/icons/beneficiarios.svg" alt="">
+                    <img src="<?=base_url?>/assets/icons/personas.svg" alt="">
                 </div>
                 <div>
-                    <p>Beneficiarios</p>
+                    <p>Personas</p>
                 </div>
             </a>
         </div>
@@ -26,7 +26,18 @@
                     <img src="<?=base_url?>/assets/icons/socias.svg" alt="">
                 </div>
                 <div>
-                    <p>Socias</p>
+                    <p>Socios</p>
+                </div>
+            </a>
+        </div>
+
+        <div>
+            <a href="#" class="option" id="optionTipoDocumentos">
+                <div class="containerIconOption">
+                    <img src="<?=base_url?>/assets/icons/beneficiarios.svg" alt="">
+                </div>
+                <div>
+                    <p>Beneficiarios</p>
                 </div>
             </a>
         </div>
