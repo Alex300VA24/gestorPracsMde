@@ -8,9 +8,6 @@ require_once "../../config/parameters.php"
             <input type="text" placeholder="Buscar por nombre de club">
 
             <select id="cboSectores" class="form-select">
-                <option selected value=0>Todos los sectores</option>
-                <option value=1>Divino Jesús</option>
-                <option value=2>Sol Naciente</option>
             </select>
 
             <div class="container_clear_filters">
@@ -18,7 +15,7 @@ require_once "../../config/parameters.php"
             </div>
         </div>
 
-        <a href="#" id="nuevaPersona" class="btn-nuevo-registro">
+        <a href="#" id="nuevaAsociacion" class="btn-nuevo-registro">
             <img src="<?= base_url ?>/assets/icons/addRegister.svg">
             Nuevo club de madre
         </a>
@@ -41,49 +38,13 @@ require_once "../../config/parameters.php"
         </tr>
         </thead>
         <tbody id="listaAsociaciones">
-<!--        <tr>-->
-<!--            <td>1</td>-->
-<!--            <td>Divino Jesús</td>-->
-<!--            <td>Nuevo Horizonte</td>-->
-<!--            <td>Mz. H lt. 33</td>-->
-<!--            <td>Angela Maria Lopez Urquiaga</td>-->
-<!--            <td>37</td>-->
-<!--            <td>RS-293-2024</td>-->
-<!--            <td>-->
-<!--                <span class="estado active">-->
-<!--                    Activo-->
-<!--                </span>-->
-<!--            </td>-->
-<!--            <td>-->
-<!--                <div class="actions actions_asociaciones">-->
-<!--                    <img class="action" src="--><?php //= base_url ?><!--/assets/icons/action_edit.svg">-->
-<!--                    <img class="action" src="--><?php //= base_url ?><!--/assets/icons/action_ver_detalle.svg">-->
-<!--                    <img class="action" src="--><?php //= base_url ?><!--/assets/icons/action_deshabilitar.svg">-->
-<!--                </div>-->
-<!--            </td>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--            <td>1</td>-->
-<!--            <td>Divino Jesús</td>-->
-<!--            <td>Nuevo Horizonte</td>-->
-<!--            <td>Mz. H lt. 33</td>-->
-<!--            <td>Angela Maria Lopez Urquiaga</td>-->
-<!--            <td>37</td>-->
-<!--            <td>RS-293-2024</td>-->
-<!--            <td>-->
-<!--                <span class="estado inactive">-->
-<!--                    Inactivo-->
-<!--                </span>-->
-<!--            </td>-->
-<!--            <td>-->
-<!--                <div class="actions actions_asociaciones">-->
-<!--                    <img class="action action_habilitar" src="--><?php //= base_url ?><!--/assets/icons/action_habilitar.svg">-->
-<!--                </div>-->
-<!--            </td>-->
-<!--        </tr>-->
         </tbody>
     </table>
 </div>
 
-<script src="<?= base_url?>/ajax/llenarCboSectores.js"></script>
-<script src="<?= base_url?>/ajax/asociacionesCRUD.js"></script>
+<?php require_once  "registrar.php"?>
+
+<script src="<?= base_url?>ajax/sectores_llenarCboSectores.js"></script>
+<script src="<?= base_url?>ajax/sectoresZona_llenarCboSectoresZona.js"></script>
+<script src="<?= base_url?>ajax/tipoLocal_llenarCboTiposLocal.js"></script>
+<script src="<?= base_url?>ajax/asociaciones_CRUD.js"></script>

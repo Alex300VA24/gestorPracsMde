@@ -1,5 +1,5 @@
 --- listar asociaciones ---
-ALTER PROCEDURE sp_asociacion_listar(
+CREATE PROCEDURE sp_asociacion_listar(
 	@nombreAsociacion VARCHAR(100) = NULL,
 	@codSector INT = NULL
 )
@@ -22,5 +22,25 @@ BEGIN
 	(@nombreAsociacion IS NULL OR a.nombreAsociacion LIKE @nombreAsociacion+'%')
 	GROUP BY a.codAsociacion, a.nombreAsociacion, sz.codSectorZona, s.descripcion, 
 	a.direccion, p.nombres, p.apellidoPaterno, p.apellidoMaterno, e.descripcion, r.documento, e.abreviatura
+END
+GO
+
+--- registrar asociacion ---
+CREATE PROCEDURE sp_asociacion_registrar(
+	@nombreAsociacion VARCHAR(100),
+	@codSectorZona INT,
+	@direccion VARCHAR(200),
+	@codTipoLocal INT,
+	@numeroFinca INT NULL,
+	@observacion VARCHAR(255) NULL
+)
+AS
+BEGIN
+	DECLARE @codEstadoPendienteResolucion INT
+
+	SELECT @codEstadoPendienteResolucion = codEstado FROM Estados WHERE abreviatura = 'pr';	
+
+	INSERT INTO Asociaciones(nombreAsociacion, codSectorZona, codTipoLocal, direccion, numeroFinca, observaciones, codEstado)
+	VALUES(@nombreAsociacion, @codSectorZona, @codTipoLocal, @direccion, @numeroFinca, @observacion, @codEstadoPendienteResolucion)
 END
 GO

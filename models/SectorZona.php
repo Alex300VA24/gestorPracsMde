@@ -7,14 +7,6 @@ class SectorZona{
     private int $codSector;
     private string $nombreSector;
 
-    public function __construct(int $codSectorZona, int $codZona, string $nombreZona, int $codSector, string $nombreSector){
-        $this->codSectorZona = $codSectorZona;
-        $this->codZona = $codZona;
-        $this->nombreZona = $nombreZona;
-        $this->codSector = $codSector;
-        $this->nombreSector = $nombreSector;
-    }
-
     public function getCodSectorZona(): int{
         return $this->codSectorZona;
     }
@@ -57,6 +49,39 @@ class SectorZona{
 
     public function listarZonasPorSector(){
 
+    }
+
+    public function listarSectoresYZona(){
+        $sql = "select sz.codSectorZona, s.descripcion 'sector', z.descripcion 'zona' from SectoresZona sz
+                INNER JOIN Sectores s ON sz.codSector = s.codSector
+                INNER JOIN Zonas z ON sz.codZona = z.codZona
+                ORDER BY s.descripcion";
+
+        try {
+            $stmt = DataBase::connect()->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return [
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'lista de sectores y zonas',
+                'action' => 'listarSectoresYZona',
+                'module' => 'sectorZona',
+                'data' => $result,
+                'info' => '',
+            ];
+        }catch (PDOException $e){
+            return [
+                'status' => 'failed',
+                'code' => 500,
+                'message' => 'Ocurrio un error al momento de listar los sectores y zonas',
+                'action' => 'listarSectoresYZona',
+                'module' => 'sectorZona',
+                'data' => [],
+                'info' => $e->getMessage()
+            ];
+        }
     }
 
 

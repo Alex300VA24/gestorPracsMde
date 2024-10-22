@@ -1,17 +1,17 @@
 $(document).ready(function () {
     $.ajax({
-        url: './controllers/sector/listarSectores.php',
+        url: './controllers/tipoLocal/listarTiposLocal.php',
         method: 'GET',
         dataType: 'json',
         success: function (response) {
             const { code, data } = response;
 
             if (code === 200) {
-                let options = `<option value="0">Todos los sectores</option>` +
-                data.map((sector) => {
-                    return `<option value="${sector.codSector}">${sector.descripcion}</option>`
-                })
-                $('#cboSectores').html(options);
+                let options = `<option value="0">Seleccionar</option>` +
+                    data.map(({codTipoLocal, descripcion}) => {
+                        return `<option value="${codTipoLocal}">${descripcion}</option>`
+                    })
+                $('#cboTiposLocales').html(options);
             }
 
             if (code === 500) {

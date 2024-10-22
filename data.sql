@@ -16,7 +16,9 @@ insert into Sectores(descripcion) values('Wichanzao'),('Central'),('Jerusalén')
 
 insert into Zonas(descripcion) values('01'),('02')
 
-insert into SectoresZona(codSector, codZona) values(1, 2),(1, 1);
+insert into SectoresZona(codSector, codZona) values(1, 1),(1,2),(2, 2),(3, 1),(3,2);
+
+insert into TipoLocales(descripcion) values('propio'),('provisional'),('municipalidad')
 
 exec sp_persona_insertar 'carlos', 'pereira', 'leyva', '74902012', 'm', null, '900212453', '10-10-1970', 2, 'los jaureles M.2 LT.3', null
 
@@ -33,13 +35,17 @@ INSERT INTO Personas(nombres, apellidoPaterno, apellidoMaterno, dni, sexo, telef
 	'15-10-2020', 2, 'jr jaureles 2203', null, 1)
 
 
-insert into Locales(descripcion) values('provisional'),('propio'),('municipalidad')
-
 insert into Asociaciones(nombreAsociacion , codSectorZona, codLocal, direccion, numeroFinca,
-observaciones, codEstado) values('Divino Jesús', 1, 1, 'Mz. H lt. 33',null, null, 3)
+observaciones, codEstado) values('Nuevo Renacer', 3, 1, 'Mz. L lt. 15',null, null, 2)
 
 
 select * from asociaciones
 select * from Estados
 select * from Personas
-update Asociaciones set codEstado = 4 where codAsociacion = 1
+select * from SectoresZona
+exec sp_asociacion_listar
+
+select sz.codSectorZona, s.descripcion 'sector', z.descripcion 'zona' from SectoresZona sz
+INNER JOIN Sectores s ON sz.codSector = s.codSector
+INNER JOIN Zonas z ON sz.codZona = z.codZona
+ORDER BY s.descripcion

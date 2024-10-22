@@ -7,7 +7,7 @@ $(document).ready(function () {
             dataType: 'json',
             data: {nombreAsociacion, codSector},
             success: function (response) {
-                const {code, data} = response;
+                const {code, message, info, data} = response;
 
                 if (code === 200) {
                     let row = '';
@@ -51,7 +51,7 @@ $(document).ready(function () {
                         })
                         $("#listaAsociaciones").html(row)
                     } else {
-                        row = `<tr><td>Aún no existen club de madres en el sistema</td></tr>`
+                        row = `<tr><td colspan="10">Aún no existen club de madres en el sistema</td></tr>`
                     }
                     $("#listaAsociaciones").html(row)
                 }
@@ -67,5 +67,92 @@ $(document).ready(function () {
     }
 
     listarAsociaciones();
+
+//     nueva asociacion - abrir modal
+    $(document).off("click", "#nuevaAsociacion").on("click", "#nuevaAsociacion", function(e) {
+        e.preventDefault();
+        let modalRegistrar = $("#modalRegistrarAsociacion");
+        $("#registrarAsociacionForm").trigger("reset");
+
+        modalRegistrar.modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+
+        modalRegistrar.modal('show');
+
+        modalRegistrar.one('shown.bs.modal', function() {
+            $("#nombresNuevo").focus();
+        });
+    });
+
+//     registrar asociacion
+    $(document).off("submit", "#registrarAsociacionForm").on('submit', '#registrarAsociacionForm', function(e) {
+        e.preventDefault();
+        const nombre = $.trim($('#nombreAsociacion').val());
+        const sector = Number($.trim($('#cboSectoresZonas').val()));
+        const direccion = $.trim($('#direccion').val()).toUpperCase();
+        const tipoLocal = Number($.trim($('#cboTiposLocales').val()));
+        const numeroFinca = $.trim($('#numeroFinca').val());
+        const observacion = $.trim($('#obervacionAsociacion').val());
+
+        if (isFiledsValid(nombre, sector, direccion, tipoLocal)){
+            $.ajax({
+                url: './controllers/asociacion/registrar.php',
+                method: 'POST',
+                dataType: 'json',
+                data: {nombre, sector, direccion, tipoLocal, numeroFinca, observacion},
+                success: function (response) {
+                    const {code, message, info, data} = response;
+
+                    if (code === 200) {
+                        showSuccessAlert(message)
+                    }
+
+                    if (code === 500) {
+                        showErrorInternalServer(message, info)
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error asociacionesCRUD.js: ', textStatus, errorThrown);
+                }
+            })
+        }
+    })
+
+    function isFiledsValid(nombre, sector, direccion, tipoLocal) {
+        if (nombre === '' || sector == '' || sector === 0 || direccion == '' || tipoLocal == '' || tipoLocal === 0) {
+            Swal.fire({
+                title: "¡Advertencia!",
+                text: 'Campos incompletos',
+                icon: "warning",
+                width: "350px",
+                confirmButtonColor: "#13252E",
+            });
+            return false;
+        }
+        return true;
+    }
+
+    function showErrorInternalServer(message, info) {
+        Swal.fire({
+            title: "¡Error!",
+            text: message + ' {' + info + '}',
+            icon: "error",
+            width: "350px",
+            confirmButtonColor: "#13252E",
+        });
+    }
+
+    function showSuccessAlert(message){
+        Swal.fire({
+            icon: "success",
+            title: "Registro Exitoso",
+            text: message
+        }).then(() => {
+            $('#modalRegistrarAsociacion').modal('hide');
+            listarAsociaciones();
+        });
+    }
 
 })

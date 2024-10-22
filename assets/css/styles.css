@@ -502,6 +502,52 @@ input:focus-visible{
     border: 1px solid #62642f;
 }
 
+/* Estilos generales modales */
+.modal .modal-header{
+    background-color: var(--bg-color-principal);
+    color: #fff;
+}
+
+.modal .modal-body input{
+    margin: 0;
+}
+
+.modal .modal-body{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modal .two-column{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    align-items: center;
+}
+
+.modal .modal-body p{
+    text-align: right;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.modal .containerButtonsModal{
+    display: flex;
+    padding: 10px;
+    gap: 10px;
+}
+
+.modal .containerButtonsModal input[type="submit"]{
+    background-color: var(--bg-color-principal);
+    color: #fff;
+    width: 50%;
+    margin-bottom: 0;
+}
+
+.modal .containerButtonsModal button{
+    width: 50%;
+    background-color: #F12A2A;
+}
+
 
 /* Estilos tabla asociaciones */
 .containerTable .tableAsociaciones tr td:nth-child(6){

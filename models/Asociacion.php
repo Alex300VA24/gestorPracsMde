@@ -9,7 +9,7 @@ class Asociacion{
     private int $codLocal;
     private string $nombreLocal;
     private string $direccion;
-    private int $numeroFinca;
+    private string $numeroFinca;
     private string $observaciones;
     private int $codEstado;
 
@@ -77,11 +77,11 @@ class Asociacion{
         $this->direccion = $direccion;
     }
 
-    public function getNumeroFinca(): int{
+    public function getNumeroFinca(): string{
         return $this->numeroFinca;
     }
 
-    public function setNumeroFinca(int $numeroFinca): void{
+    public function setNumeroFinca(string $numeroFinca): void{
         $this->numeroFinca = $numeroFinca;
     }
 
@@ -128,6 +128,52 @@ class Asociacion{
                 'code' => 500,
                 'message' => 'Ocurrio un error al momento de listar los club de madres',
                 'action' => 'listarAsoaciaciones',
+                'module' => 'asociacion',
+                'data' => [],
+                'info' => $e->getMessage()
+            ];
+        }
+    }
+
+    public function guardarAsociacion(){
+        $sql = "EXEC sp_asociacion_registrar :nombreAsociacion, :codSectorZona, :direccion, :codTipoLocal, :numeroFinca, :observacion";
+
+        try {
+            $stmt = DataBase::connect()->prepare($sql);
+            $stmt->bindParam('nombreAsociacion',$this->nombreAsociacion, PDO::PARAM_STR);
+            $stmt->bindParam('codSectorZona',$this->codSectorZona, PDO::PARAM_INT);
+            $stmt->bindParam('codSectorZona',$this->codSectorZona, PDO::PARAM_INT);
+            $stmt->bindParam('direccion',$this->direccion, PDO::PARAM_STR);
+            $stmt->bindParam('codTipoLocal',$this->codLocal, PDO::PARAM_INT);
+            $stmt->bindParam('numeroFinca',$this->numeroFinca, PDO::PARAM_INT);
+            $stmt->bindParam('observacion',$this->observaciones, PDO::PARAM_STR);
+            $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+                return [
+                    'status' => 'success',
+                    'code' => 200,
+                    'message' => 'Club de madre registrado exitosamente',
+                    'data' => [],
+                ];
+            } else {
+                return [
+                    'status' => 'failed',
+                    'code' => 400,
+                    'message' => 'No se pudo registrar el club de madre, verifica los datos',
+                    'action' => 'guardarAsociacion',
+                    'module' => 'asociacion',
+                    'data' => [],
+                ];
+            }
+
+
+        }catch (PDOException $e){
+            return [
+                'status' => 'failed',
+                'code' => 500,
+                'message' => 'Ocurrio un error al momento de listar los club de madres',
+                'action' => 'guardarAsociacion',
                 'module' => 'asociacion',
                 'data' => [],
                 'info' => $e->getMessage()
