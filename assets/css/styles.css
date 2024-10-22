@@ -425,6 +425,7 @@ input:focus-visible{
     cursor: pointer;
 }
 
+<<<<<<< Updated upstream
 /* ESTILOS TABLA */
 .containerTable{
     margin-top: 10px;
@@ -572,4 +573,15 @@ input:focus-visible{
 
 .actions_asociaciones .action_habilitar{
     grid-column: 3/4;
+=======
+/* BODY */
+
+.listadoProductos_body table thead tr th{
+    font-weight: 700;
+    padding: 10px 5px;
+}
+
+.listadoProductos_body table thead tr th:nth-child(8){
+    width: 260px;
+>>>>>>> Stashed changes
 }

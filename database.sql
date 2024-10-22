@@ -223,8 +223,6 @@ CREATE TABLE Pecosas (
     observacion VARCHAR(255),
     codEstado INT NOT NULL,
     FOREIGN KEY (codReconocimiento) REFERENCES Reconocimientos(codReconocimiento),
-    FOREIGN KEY (codSocioPresidenta) REFERENCES Socios(codSocio),
-    FOREIGN KEY (codEstado) REFERENCES Estados(codEstado)
 );
 CREATE TABLE DetallePecosa (
     codDetallePecosa CHAR(18) PRIMARY KEY,
