@@ -1,5 +1,5 @@
 insert into Roles(descripcion) values('administrador'),('usuario');
-insert into Estados(descripcion) values('activo'),('inactivo'),('historico');
+insert into Estados(abreviatura,descripcion) values('a', 'activo'),('i', 'inactivo'),('h', 'historico'),('pr', 'pendiente reconocimiento');
 
 
 insert into usuarios(nombresApellidos, nombreUsuario, password, dni, cui,codRol, codEstado)
@@ -33,4 +33,13 @@ INSERT INTO Personas(nombres, apellidoPaterno, apellidoMaterno, dni, sexo, telef
 	'15-10-2020', 2, 'jr jaureles 2203', null, 1)
 
 
+insert into Locales(descripcion) values('provisional'),('propio'),('municipalidad')
+
+insert into Asociaciones(nombreAsociacion , codSectorZona, codLocal, direccion, numeroFinca,
+observaciones, codEstado) values('Divino Jesús', 1, 1, 'Mz. H lt. 33',null, null, 3)
+
+
+select * from asociaciones
+select * from Estados
 select * from Personas
+update Asociaciones set codEstado = 4 where codAsociacion = 1

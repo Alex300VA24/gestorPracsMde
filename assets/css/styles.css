@@ -497,14 +497,23 @@ input:focus-visible{
     border: 1px solid #d91212;
 }
 
-
-/* Estilos tabla asociaciones */
-.containerTable .tableAsociaciones tr td:nth-child(5){
-    width: 150px;
+.pendingResolution{
+    background-color: #D9C13B;
+    border: 1px solid #62642f;
 }
 
+
+/* Estilos tabla asociaciones */
 .containerTable .tableAsociaciones tr td:nth-child(6){
+    width: 200px;
+}
+
+.containerTable .tableAsociaciones tr td:nth-child(7){
     width: 100px;
+}
+
+.containerTable .tableAsociaciones tr td:nth-child(9){
+    width: 210px;
 }
 
 .containerTable .tableAsociaciones tr td:last-child{
