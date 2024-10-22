@@ -34,6 +34,16 @@ a{
     text-decoration: none;
 }
 
+.form-select{
+    background-color: #E3E3E3;
+}
+
+.form-select:focus{
+    border-color: transparent;
+    outline: none;
+    box-shadow: none;
+}
+
 .btn-nuevo-registro{
     display: flex;
     height: fit-content;
@@ -398,11 +408,14 @@ input:focus-visible{
     border-radius: 10px;
     align-items: center;
     overflow: hidden;
+    /*padding: 10px;*/
+    gap: 10px;
 }
 
 .header_modules .filters_btn_new .filters input{
     width: 320px;
-    margin: 0 10px;
+    margin: 0;
+    margin-left: 10px;
     background-color: #E3E3E3;
 }
 
@@ -410,4 +423,98 @@ input:focus-visible{
     background-color: var(--bg-color-principal);
     padding: 7px 15px;
     cursor: pointer;
+}
+
+/* ESTILOS TABLA */
+.containerTable{
+    margin-top: 10px;
+}
+
+.containerTable table{
+    width: 100%;
+    border-spacing: 0;
+}
+
+.containerTable table thead tr{
+    background-color: #fff;
+    font-size: 14px;
+    text-align: center;
+}
+
+.containerTable table thead tr th{
+    font-weight: 700;
+    padding: 10px 0;
+}
+
+.containerTable tbody{
+    font-weight: 500;
+}
+
+.containerTable table tbody tr{
+    text-align: center;
+    font-size: 13px;
+}
+
+.containerTable table tbody tr td{
+    padding: 5px;
+}
+
+.containerTable table tbody tr td:first-child{
+    font-weight: 700;
+    color: red;
+}
+
+.containerTable table tbody tr:nth-child(even){
+    background-color: #fff;
+}
+
+.actions{
+    display: grid;
+    place-items: center;
+}
+
+.actions .action{
+    cursor: pointer;
+}
+
+.containerTable table tr td:first-child{
+    width: 100px;
+}
+
+.estado{
+    display: block;
+    padding: 5px 3px;
+    border-radius: 5px;
+}
+
+.active{
+    background-color: #33cb67;
+    border: 1px solid var(--bg-color-principal);
+}
+
+.inactive{
+    background-color: #fa7575;
+    border: 1px solid #d91212;
+}
+
+
+/* Estilos tabla asociaciones */
+.containerTable .tableAsociaciones tr td:nth-child(5){
+    width: 150px;
+}
+
+.containerTable .tableAsociaciones tr td:nth-child(6){
+    width: 100px;
+}
+
+.containerTable .tableAsociaciones tr td:last-child{
+    width: 130px;
+}
+
+.actions_asociaciones{
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.actions_asociaciones .action_habilitar{
+    grid-column: 3/4;
 }

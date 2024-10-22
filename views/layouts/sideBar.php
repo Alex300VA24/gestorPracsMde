@@ -43,7 +43,7 @@
         </div>
 
         <div>
-            <a href="#" class="option" id="option">
+            <a href="views/asociaciones/listar.php" class="option" id="optionAsociaciones">
                 <div class="containerIconOption">
                     <img src="<?=base_url?>/assets/icons/clubMadres.svg" alt="">
                 </div>
