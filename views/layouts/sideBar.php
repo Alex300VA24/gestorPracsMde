@@ -53,4 +53,48 @@
             </a>
         </div>
 
+        <div>
+            <a href="views/productos/listarProductos.php" class="option" id="option">
+                <div class="containerIconOption">
+                    <img src="<?=base_url?>/assets/icons/productos.svg" alt="">
+                </div>
+                <div>
+                    <p>Productos</p>
+                </div>
+            </a>
+        </div>
+
+        <div>
+            <a href="#" class="option" id="option">
+                <div class="containerIconOption">
+                    <img src="<?=base_url?>/assets/icons/movimientos.svg" alt="">
+                </div>
+                <div>
+                    <p>Movimientos</p>
+                </div>
+            </a>
+        </div>
+
+        <div>
+            <a href="#" class="option" id="option">
+                <div class="containerIconOption">
+                    <img src="<?=base_url?>/assets/icons/pecosas.svg" alt="">
+                </div>
+                <div>
+                    <p>Pecosas</p>
+                </div>
+            </a>
+        </div>
+
+        <div>
+            <a href="#" class="option" id="option">
+                <div class="containerIconOption">
+                    <img src="<?=base_url?>/assets/icons/reportes.svg" alt="">
+                </div>
+                <div>
+                    <p>Reportes</p>
+                </div>
+            </a>
+        </div>
+
 </div>

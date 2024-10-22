@@ -214,3 +214,59 @@ CREATE TABLE Beneficiarios(
 	FOREIGN KEY(codTipoBeneficiario) REFERENCES TiposBeneficiario(codTipoBeneficiario),
 );
 
+CREATE TABLE Pecosas (
+    codPecosa INT IDENTITY PRIMARY KEY,
+    codReconocimiento INT NOT NULL,
+    codSocioPresidenta INT NOT NULL,
+    fechaRegistro DATETIME NOT NULL,
+    observacion VARCHAR(255),
+    codEstado INT NOT NULL,
+    FOREIGN KEY (codReconocimiento) REFERENCES Reconocimientos(codReconocimiento),
+    FOREIGN KEY (codSocioPresidenta) REFERENCES Socios(codSocio),
+    FOREIGN KEY (codEstado) REFERENCES Estados(codEstado)
+);
+
+
+CREATE TABLE DetallePecosa (
+    codDetallePecosa CHAR(18) PRIMARY KEY,
+    codPecosa INT NOT NULL,
+    codProducto CHAR(18) NOT NULL,
+    prioridad INT NOT NULL,
+    fechaDesde DATETIME,
+    fechaHasta DATETIME,
+    cantidad INT NOT NULL,
+    precioUnitario DECIMAL(9,2) NOT NULL,
+);
+
+
+CREATE TABLE Producto (
+    codProducto CHAR(18) PRIMARY KEY,
+    descripcion VARCHAR(100) NOT NULL UNIQUE,
+    abreviatura CHAR(5),
+    unidadMedida VARCHAR(30) NOT NULL,
+    fechaRegistro DATETIME NOT NULL,
+    stockInicial INT NOT NULL,
+    precioUnitario DECIMAL(9,2) NOT NULL,
+    codEstado INT NOT NULL,
+    FOREIGN KEY (codEstado) REFERENCES Estados(codEstado)
+);
+
+
+CREATE TABLE MovimientoKardex (
+    codMovimientoKardex CHAR(18) PRIMARY KEY,
+    codProducto CHAR(18) NOT NULL,
+    codTipoMovimiento INT NOT NULL,
+    fechaMovimiento DATETIME NOT NULL,
+	documento VARCHAR(150) NOT NULL,
+    cantidad INT NOT NULL,
+    precioUnitario DECIMAL(9,2) NOT NULL,
+    precioTotal DECIMAL(9,2) NOT NULL,
+    FOREIGN KEY (codProducto) REFERENCES Producto(codProducto),
+    FOREIGN KEY (codTipoMovimiento) REFERENCES TipoMovimiento(codTipoMovimiento)
+);
+
+
+CREATE TABLE TipoMovimiento (
+    codTipoMovimiento INT IDENTITY PRIMARY KEY,
+    descripcion VARCHAR(100) NOT NULL
+);
