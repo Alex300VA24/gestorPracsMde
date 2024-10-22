@@ -172,8 +172,55 @@ class Asociacion{
             return [
                 'status' => 'failed',
                 'code' => 500,
-                'message' => 'Ocurrio un error al momento de listar los club de madres',
+                'message' => 'Ocurrio un error al momento de registrar los club de madres',
                 'action' => 'guardarAsociacion',
+                'module' => 'asociacion',
+                'data' => [],
+                'info' => $e->getMessage()
+            ];
+        }
+    }
+
+    public function actualizarAsociacion(){
+        $sql = "EXEC sp_asociacion_actualizar :codAsociacion, :nombreAsociacion, :codSectorZona, :direccion, :codTipoLocal, :numeroFinca, :observacion";
+
+        try {
+            $stmt = DataBase::connect()->prepare($sql);
+            $stmt->bindParam('codAsociacion',$this->codAsociacion, PDO::PARAM_INT);
+            $stmt->bindParam('nombreAsociacion',$this->nombreAsociacion, PDO::PARAM_STR);
+            $stmt->bindParam('codSectorZona',$this->codSectorZona, PDO::PARAM_INT);
+            $stmt->bindParam('codSectorZona',$this->codSectorZona, PDO::PARAM_INT);
+            $stmt->bindParam('direccion',$this->direccion, PDO::PARAM_STR);
+            $stmt->bindParam('codTipoLocal',$this->codLocal, PDO::PARAM_INT);
+            $stmt->bindParam('numeroFinca',$this->numeroFinca, PDO::PARAM_INT);
+            $stmt->bindParam('observacion',$this->observaciones, PDO::PARAM_STR);
+            $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+                return [
+                    'status' => 'success',
+                    'code' => 200,
+                    'message' => 'Club de madre actualizado exitosamente',
+                    'data' => [],
+                ];
+            } else {
+                return [
+                    'status' => 'failed',
+                    'code' => 400,
+                    'message' => 'No se pudo actualizar el club de madre, verifica los datos',
+                    'action' => 'actualizarAsociacion',
+                    'module' => 'asociacion',
+                    'data' => [],
+                ];
+            }
+
+
+        }catch (PDOException $e){
+            return [
+                'status' => 'failed',
+                'code' => 500,
+                'message' => 'Ocurrio un error al momento de actualizar los club de madres',
+                'action' => 'actualizarAsociacion',
                 'module' => 'asociacion',
                 'data' => [],
                 'info' => $e->getMessage()

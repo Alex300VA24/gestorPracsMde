@@ -15,7 +15,7 @@ $(document).ready(function () {
                         row = data.map(({
                                             codAsociacion, nombreAsociacion, codSectorZona,
                                             sector, direccion, presidenta, cantidadBeneficiarios,
-                                            documento, abreviatura, estado
+                                            documento, abreviatura, estado, numeroFinca, observaciones, codTipoLocal
                                         }) => {
                             return `
                                 <tr>
@@ -39,13 +39,16 @@ $(document).ready(function () {
                                 `<img class="action action_habilitar" src="./assets/icons/action_habilitar.svg">` : ''}
                                             
                                             ${(abreviatura == 'a' || abreviatura == 'pr') ?
-                                `<img class="action" src="./assets/icons/action_edit.svg">` : ''}    
+                                `<img id="btnEditarAsociacion" class="action" src="./assets/icons/action_edit.svg">` : ''}    
                                             
                                             ${abreviatura == 'a' ?
                                 `<img class="action" src="./assets/icons/action_ver_detalle.svg">
                                             <img class="action" src="./assets/icons/action_deshabilitar.svg">` : ''}                                            
                                         </div>
                                     </td>
+                                    <td hidden="hidden">${numeroFinca}</td>
+                                    <td hidden="hidden">${observaciones}</td>
+                                    <td hidden="hidden">${codTipoLocal}</td>
                                 </tr>
                             `
                         })
@@ -120,6 +123,80 @@ $(document).ready(function () {
         }
     })
 
+//     editar asociacion - abrir modal
+    $(document).off("click", "#btnEditarAsociacion").on("click", "#btnEditarAsociacion", function(e) {
+        e.preventDefault();
+        let modalEditar = $("#modalEditarAsociacion");
+        let fila = $(this).closest("tr");
+        let codAsociacion = fila.find('td:eq(0)').text();
+        let nombreAsociacion = fila.find('td:eq(1)').text();
+        let codSectorZona = fila.find('td:eq(2)').text();
+        let direccion = fila.find('td:eq(4)').text();
+        let numeroFinca = fila.find('td:eq(10)').text();
+        let observaciones = fila.find('td:eq(11)').text();
+        let tipoLocal = fila.find('td:eq(12)').text();
+
+        console.log({codAsociacion, nombreAsociacion})
+
+
+        $("#codAsociacion").val(codAsociacion.trim());
+        $("#nombreAsociacionEdit").val(nombreAsociacion.trim());
+        $("#cboSectoresZonasEdit").val(codSectorZona);
+        $("#cboTiposLocalesEdit").val(tipoLocal);
+        $("#direccionEdit").val(direccion.trim());
+        $("#numeroFincaEdit").val(numeroFinca.trim() === '0' ? '' : numeroFinca.trim());
+        $("#obervacionAsociacionEdit").val(observaciones.trim());
+
+        modalEditar.modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+
+        modalEditar.modal('show');
+
+        modalEditar.one('shown.bs.modal', function() {
+            $("#nombreAsociacionEdit").focus();
+        });
+    });
+
+    // Actualizar asociacion
+    $(document).off("submit", "#editarAsociacionForm").on('submit', '#editarAsociacionForm', function(e) {
+        e.preventDefault();
+        const codAsociacion = $.trim($('#codAsociacion').val());
+        const nombre = $.trim($('#nombreAsociacionEdit').val());
+        const sector = Number($.trim($('#cboSectoresZonasEdit').val()));
+        const direccion = $.trim($('#direccionEdit').val()).toUpperCase();
+        const tipoLocal = Number($.trim($('#cboTiposLocalesEdit').val()));
+        const numeroFinca = $.trim($('#numeroFincaEdit').val());
+        const observacion = $.trim($('#obervacionAsociacionEdit').val());
+
+        console.log({codAsociacion, nombre, sector, direccion, direccion, tipoLocal, numeroFinca, observacion})
+
+        if (isFiledsValid(nombre, sector, direccion, tipoLocal)){
+            $.ajax({
+                url: './controllers/asociacion/actualizar.php',
+                method: 'POST',
+                dataType: 'json',
+                data: {codAsociacion, nombre, sector, direccion, tipoLocal, numeroFinca, observacion},
+                success: function (response) {
+                    const {code, message, info, data} = response;
+
+                    if (code === 200) {
+                        showSuccessAlertUpdate(message)
+                    }
+
+                    if (code === 500) {
+                        showErrorInternalServer(message, info)
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error asociacionesCRUD.js: ', textStatus, errorThrown);
+                }
+            })
+        }
+    })
+
+
     function isFiledsValid(nombre, sector, direccion, tipoLocal) {
         if (nombre === '' || sector == '' || sector === 0 || direccion == '' || tipoLocal == '' || tipoLocal === 0) {
             Swal.fire({
@@ -151,6 +228,17 @@ $(document).ready(function () {
             text: message
         }).then(() => {
             $('#modalRegistrarAsociacion').modal('hide');
+            listarAsociaciones();
+        });
+    }
+
+    function showSuccessAlertUpdate(message){
+        Swal.fire({
+            icon: "success",
+            title: "Actualización Exitoso",
+            text: message
+        }).then(() => {
+            $('#modalEditarAsociacion').modal('hide');
             listarAsociaciones();
         });
     }

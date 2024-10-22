@@ -12,6 +12,7 @@ $(document).ready(function () {
                         return `<option value="${codTipoLocal}">${descripcion}</option>`
                     })
                 $('#cboTiposLocales').html(options);
+                $('#cboTiposLocalesEdit').html(options);
             }
 
             if (code === 500) {

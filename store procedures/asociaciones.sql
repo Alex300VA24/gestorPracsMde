@@ -1,11 +1,12 @@
 --- listar asociaciones ---
-CREATE PROCEDURE sp_asociacion_listar(
+ALTER PROCEDURE sp_asociacion_listar(
 	@nombreAsociacion VARCHAR(100) = NULL,
 	@codSector INT = NULL
 )
 AS
 BEGIN
-	SELECT a.codAsociacion, a.nombreAsociacion, sz.codSectorZona, s.descripcion 'sector', a.direccion, 
+	SELECT a.codAsociacion, a.nombreAsociacion, sz.codSectorZona, s.descripcion 'sector', a.direccion, a.numeroFinca, a.observaciones,
+	a.codTipoLocal,
 	CONCAT(p.nombres, ' ', p.apellidoPaterno, ' ', p.apellidoMaterno) 'presidenta', COUNT(b.codBeneficiario) 'cantidadBeneficiarios',
 	r.documento, e.abreviatura, e.descripcion 'estado'
 	FROM Asociaciones a 
@@ -21,7 +22,8 @@ BEGIN
 	AND 
 	(@nombreAsociacion IS NULL OR a.nombreAsociacion LIKE @nombreAsociacion+'%')
 	GROUP BY a.codAsociacion, a.nombreAsociacion, sz.codSectorZona, s.descripcion, 
-	a.direccion, p.nombres, p.apellidoPaterno, p.apellidoMaterno, e.descripcion, r.documento, e.abreviatura
+	a.direccion, p.nombres, p.apellidoPaterno, p.apellidoMaterno, e.descripcion, r.documento,
+	e.abreviatura, a.numeroFinca, a.observaciones, a.codTipoLocal
 END
 GO
 
@@ -42,5 +44,23 @@ BEGIN
 
 	INSERT INTO Asociaciones(nombreAsociacion, codSectorZona, codTipoLocal, direccion, numeroFinca, observaciones, codEstado)
 	VALUES(@nombreAsociacion, @codSectorZona, @codTipoLocal, @direccion, @numeroFinca, @observacion, @codEstadoPendienteResolucion)
+END
+GO
+
+--- registrar asociacion ---
+CREATE PROCEDURE sp_asociacion_actualizar(
+	@codAsociacion INT,
+	@nombreAsociacion VARCHAR(100),
+	@codSectorZona INT,
+	@direccion VARCHAR(200),
+	@codTipoLocal INT,
+	@numeroFinca INT NULL,
+	@observacion VARCHAR(255) NULL
+)
+AS
+BEGIN
+	UPDATE Asociaciones SET nombreAsociacion = @nombreAsociacion, codSectorZona = @codSectorZona, 
+	codTipoLocal= @codTipoLocal, direccion = @direccion, numeroFinca = @numeroFinca, observaciones = @observacion 
+	WHERE codAsociacion = @codAsociacion
 END
 GO
