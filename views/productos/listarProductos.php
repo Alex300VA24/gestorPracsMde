@@ -18,8 +18,8 @@
         </a>
     </div>
 
-    <div class="listadoProductos_body">
-        <table>
+    <div class="cotainerTable">
+        <table class="tableProductos">
             <thead>
                 <tr>
                     <th>CodProducto</th>
@@ -30,7 +30,7 @@
                     <th>Acciones</th>
                 </tr>
             </thead>
-            <tbody id="bodyListadoProductos">
+            <tbody id="listaProductos">
             </tbody>
         </table>
     </div>

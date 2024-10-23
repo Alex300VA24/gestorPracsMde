@@ -1,6 +1,6 @@
 <?php
 
-class Prodcutos{
+class Productos{
 
     private int $codProducto;
     private string $descripcion;
@@ -76,7 +76,46 @@ class Prodcutos{
     }
 
     public function guardarProductos(){
-        
+        $sql = "EXEC sp_productos_registrar :codigo, :descripcion, :abreviatura, :unidadMedida, :stock, :precioUnitario";
+
+        try {
+            $stmt = DataBase::connect()->prepare($sql);
+            $stmt->bindParam('codigo',$this->codigo, PDO::PARAM_INT);
+            $stmt->bindParam('descripcion',$this->descripcion, PDO::PARAM_STR);
+            $stmt->bindParam('abreviatura',$this->abreviatura, PDO::PARAM_STR);
+            $stmt->bindParam('unidadMedida',$this->unidadMedida, PDO::PARAM_STR);
+            $stmt->bindParam('stock',$this->stock, PDO::PARAM_INT);
+            $stmt->bindParam('precioUnitario',$this->precioUnitario, PDO::PARAM_STR); 
+            $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+                return [
+                    'status' => 'success',
+                    'code' => 200,
+                    'message' => 'Producto registrado exitosamente',
+                    'data' => [],
+                ];
+            }else {
+                return [
+                    'status' => 'failed',
+                    'code' => 400,
+                    'message' => 'No se pudo registrar el producto, verifica los datos',
+                    'action' => 'guardarProducto',
+                    'module' => 'productos',
+                    'data' => [],
+                ];
+            }
+        }catch (PDOException $e) {
+            return [
+                'status' => 'failed',
+                'code' => 500,
+                'message' => 'Ocurrio un error al momento de listar los productos',
+                'action' => 'guardarProducto',
+                'module' => 'producto',
+                'data' => [],
+                'info' => $e->getMessage()
+            ]; 
+        }
     }
 
 }

@@ -425,7 +425,6 @@ input:focus-visible{
     cursor: pointer;
 }
 
-<<<<<<< Updated upstream
 /* ESTILOS TABLA */
 .containerTable{
     margin-top: 10px;
@@ -550,20 +549,20 @@ input:focus-visible{
 }
 
 
-/* Estilos tabla asociaciones */
-.containerTable .tableAsociaciones tr td:nth-child(6){
+/* Estilos tabla asociaciones, productos */
+.containerTable .tableAsociaciones.tableProductos  tr td:nth-child(6){
     width: 200px;
 }
 
-.containerTable .tableAsociaciones tr td:nth-child(7){
+.containerTable .tableAsociaciones .tableProductos tr td:nth-child(7){
     width: 100px;
 }
 
-.containerTable .tableAsociaciones tr td:nth-child(9){
+.containerTable .tableAsociaciones .tableProductos tr td:nth-child(9){
     width: 210px;
 }
 
-.containerTable .tableAsociaciones tr td:last-child{
+.containerTable .tableAsociaciones .tableProductos tr td:last-child{
     width: 130px;
 }
 
@@ -573,15 +572,5 @@ input:focus-visible{
 
 .actions_asociaciones .action_habilitar{
     grid-column: 3/4;
-=======
-/* BODY */
 
-.listadoProductos_body table thead tr th{
-    font-weight: 700;
-    padding: 10px 5px;
-}
-
-.listadoProductos_body table thead tr th:nth-child(8){
-    width: 260px;
->>>>>>> Stashed changes
 }
