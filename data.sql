@@ -35,8 +35,8 @@ INSERT INTO Personas(nombres, apellidoPaterno, apellidoMaterno, dni, sexo, telef
 	'15-10-2020', 2, 'jr jaureles 2203', null, 1)
 
 
-insert into Asociaciones(nombreAsociacion , codSectorZona, codLocal, direccion, numeroFinca,
-observaciones, codEstado) values('Nuevo Renacer', 3, 1, 'Mz. L lt. 15',null, null, 2)
+insert into Asociaciones(nombreAsociacion , codSectorZona, codTipoLocal, direccion, numeroFinca,
+observaciones, codEstado) values('Nuevo Amanecer 2', 3, 1, 'Mz. L lt. 15',null, null, 1)
 
 
 select * from asociaciones

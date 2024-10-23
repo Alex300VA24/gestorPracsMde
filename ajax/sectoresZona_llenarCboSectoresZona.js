@@ -12,6 +12,7 @@ $(document).ready(function () {
                         return `<option value="${codSectorZona}">${sector} - ${zona}</option>`
                     })
                 $('#cboSectoresZonas').html(options);
+                $('#cboSectoresZonasEdit').html(options)
             }
 
             if (code === 500) {
