@@ -222,7 +222,7 @@ CREATE TABLE Pecosas (
     fechaRegistro DATETIME NOT NULL,
     observacion VARCHAR(255),
     codEstado INT NOT NULL,
-    FOREIGN KEY (codReconocimiento) REFERENCES Reconocimientos(codReconocimiento),
+    FOREIGN KEY (codAsociacion) REFERENCES Asociaciones(codAsociacion),
 );
 CREATE TABLE DetallePecosa (
     codDetallePecosa INT IDENTITY PRIMARY KEY,
@@ -261,6 +261,6 @@ CREATE TABLE Movimientos (
     cantidad INT NOT NULL,
     precioUnitario DECIMAL(9,2) NOT NULL,
     precioTotal DECIMAL(9,2) NOT NULL,
-    FOREIGN KEY (codProducto) REFERENCES Producto(codProducto),
+    FOREIGN KEY (codProducto) REFERENCES Productos(codProducto),
     FOREIGN KEY (codTipoMovimiento) REFERENCES TipoMovimiento(codTipoMovimiento)
 );
