@@ -30,7 +30,7 @@ $(document).ready(function () {
             $.ajax({
                 url: './controllers/productos/registrarProductos.php',
                 method: 'POST',
-                //dataType: 'json',
+                dataType: 'json',
                 data: {descripcion, abreviatura, unidadMedida},
                 success: function (response) {
                     console.log(response)

@@ -4,23 +4,15 @@ CREATE PROCEDURE sp_producto_registrar
     @unidadMedida VARCHAR(30)
 AS
 BEGIN
-
-    IF NOT EXISTS (SELECT 1 FROM Producto WHERE @descripcion = @descripcion)
     BEGIN
 
 		DECLARE @codEstadoProducto INT
 
 		SELECT @codEstadoProducto = codEstado FROM Estados WHERE abreviatura = 'a';
 
-        
         INSERT INTO Producto (descripcion, abreviatura, unidadMedida, codEstado)
         VALUES (@descripcion, @abreviatura, @unidadMedida, @codEstadoProducto);
 
-		PRINT 'Producto registrado exitosamente.';
-
     END
-	ELSE
-	BEGIN
-		PRINT 'Error ya existe un producto registrado;'
-	END
+	
 END;
