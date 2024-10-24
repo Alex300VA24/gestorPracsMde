@@ -24,16 +24,14 @@ $(document).ready(function () {
         const descripcion = $.trim($('#descripcionProducto').val());
         const abreviatura = $.trim($('#abreviatura').val());
         const unidadMedida = $.trim($('#cboUnidadMedida').val());
-        const precioUnitario = Number($.trim($('#precioUnitario').val()));
-        const stock = $.trim($('#stock').val());
-        console.log({descripcion, abreviatura, unidadMedida, precioUnitario, stock})
+        console.log({descripcion, abreviatura, unidadMedida})
 
-        if (isFiledsValid(descripcion, abreviatura, unidadMedida, precioUnitario, stock)){
+        if (isFiledsValid(descripcion, abreviatura, unidadMedida)){
             $.ajax({
                 url: './controllers/productos/registrarProductos.php',
                 method: 'POST',
                 //dataType: 'json',
-                data: {descripcion, abreviatura, unidadMedida, precioUnitario, stock},
+                data: {descripcion, abreviatura, unidadMedida},
                 success: function (response) {
                     console.log(response)
                 
@@ -54,9 +52,9 @@ $(document).ready(function () {
         }
     })
 
-    function isFiledsValid(descripcion, abreviatura, unidadMedida, precioUnitario, stock) {
+    function isFiledsValid(descripcion, abreviatura, unidadMedida) {
         
-        if (descripcion === '' || abreviatura == '' || unidadMedida === 0 || precioUnitario == '' || stock == '') {
+        if (descripcion === '' || abreviatura == '' || unidadMedida === 0) {
             Swal.fire({
                 title: "¡Advertencia!",
                 text: 'Campos incompletos',

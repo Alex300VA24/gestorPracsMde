@@ -25,8 +25,6 @@
                     <th>CodProducto</th>
                     <th>Descripcion</th>
                     <th>Unidad de Medida</th>
-                    <th>Precio Unitario</th>
-                    <th>Stock</th>
                     <th>Acciones</th>
                 </tr>
             </thead>

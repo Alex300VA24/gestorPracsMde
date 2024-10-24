@@ -1,8 +1,7 @@
 CREATE PROCEDURE sp_producto_registrar
     @descripcion VARCHAR(18),
     @abreviatura VARCHAR(5),
-    @unidadMedida VARCHAR(30),
-    @fechaRegistro DATETIME
+    @unidadMedida VARCHAR(30)
 AS
 BEGIN
 
@@ -14,8 +13,8 @@ BEGIN
 		SELECT @codEstadoProducto = codEstado FROM Estados WHERE abreviatura = 'a';
 
         
-        INSERT INTO Producto (descripcion, abreviatura, unidadMedida, fechaRegistro)
-        VALUES (@descripcion, @abreviatura, @unidadMedida, @fechaRegistro);
+        INSERT INTO Producto (descripcion, abreviatura, unidadMedida)
+        VALUES (@descripcion, @abreviatura, @unidadMedida);
 
 		PRINT 'Producto registrado exitosamente.';
 

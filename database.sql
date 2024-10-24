@@ -239,7 +239,7 @@ CREATE TABLE Producto (
     descripcion VARCHAR(100) NOT NULL UNIQUE,
     abreviatura CHAR(5),
     unidadMedida VARCHAR(30) NOT NULL,
-    fechaRegistro DATETIME NOT NULL,
+    fechaRegistro DATETIME DEFAULT GETDATE(),
     stock INT,
     precioUnitario DECIMAL(9,2),
     codEstado INT NOT NULL,

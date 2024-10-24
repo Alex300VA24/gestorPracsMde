@@ -67,15 +67,13 @@ class Productos{
     }
 
     public function guardarProductos(){
-        $sql = "EXEC sp_producto_registrar :descripcion, :abreviatura, :unidadMedida, :stock, :precioUnitario";
+        $sql = "EXEC sp_producto_registrar :descripcion, :abreviatura, :unidadMedida";
 
         try {
             $stmt = DataBase::connect()->prepare($sql);
             $stmt->bindParam('descripcion',$this->descripcion, PDO::PARAM_STR);
             $stmt->bindParam('abreviatura',$this->abreviatura, PDO::PARAM_STR);
-            $stmt->bindParam('unidadMedida',$this->unidadMedida, PDO::PARAM_STR);
-            $stmt->bindParam('stock',$this->stock, PDO::PARAM_INT);
-            $stmt->bindParam('precioUnitario',$this->precioUnitario, PDO::PARAM_STR); 
+            $stmt->bindParam('unidadMedida',$this->unidadMedida, PDO::PARAM_STR); 
             $stmt->execute();
 
             if ($stmt->rowCount() > 0) {

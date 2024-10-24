@@ -33,25 +33,6 @@
                                 <option value="tarro">Tarro</option>
                             </select>
                     </div>
-
-                    <div class="two-column">
-                        <label for="precioUnitario">Precio Unitario (*):</label>
-                        <input 
-                                type="text" 
-                                id="precioUnitario" 
-                                autocomplete="off"
-                                maxlength="100"
-                        >
-                    </div>
-
-                    <div class="two-column">
-                        <label for="stock">Stock (*):</label>
-                        <input 
-                                type="text" 
-                                id="stock" 
-                                autocomplete="off"
-                        >
-                    </div>
                     <p>Todos los campos (*) son obligatorios</p>
 
                     <div class="containerButtonsModal">
