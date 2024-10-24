@@ -66,6 +66,10 @@ class Productos{
         $this->codEstado = $codEstado;
     }
 
+    public function listarProductos($descripcion, $abreviatura, $unidadMedida){
+        
+    }
+
     public function guardarProductos(){
         $sql = "EXEC sp_producto_registrar :descripcion, :abreviatura, :unidadMedida";
 

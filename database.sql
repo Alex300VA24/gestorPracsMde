@@ -236,6 +236,7 @@ CREATE TABLE DetallePecosa (
 );
 CREATE TABLE Producto (
     codProducto INT IDENTITY PRIMARY KEY,
+	codigo INT NOT NULL,
     descripcion VARCHAR(100) NOT NULL UNIQUE,
     abreviatura CHAR(5),
     unidadMedida VARCHAR(30) NOT NULL,
