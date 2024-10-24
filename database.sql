@@ -225,9 +225,9 @@ CREATE TABLE Pecosas (
     FOREIGN KEY (codReconocimiento) REFERENCES Reconocimientos(codReconocimiento),
 );
 CREATE TABLE DetallePecosa (
-    codDetallePecosa CHAR(18) PRIMARY KEY,
+    codDetallePecosa INT IDENTITY PRIMARY KEY,
     codPecosa INT NOT NULL,
-    codProducto CHAR(18) NOT NULL,
+    codProducto INT NOT NULL,
     prioridad INT NOT NULL,
     fechaDesde DATETIME,
     fechaHasta DATETIME,
@@ -235,7 +235,7 @@ CREATE TABLE DetallePecosa (
     precioUnitario DECIMAL(9,2) NOT NULL,
 );
 CREATE TABLE Producto (
-    codProducto CHAR(18) PRIMARY KEY,
+    codProducto INT IDENTITY PRIMARY KEY,
     descripcion VARCHAR(100) NOT NULL UNIQUE,
     abreviatura CHAR(5),
     unidadMedida VARCHAR(30) NOT NULL,
@@ -251,11 +251,11 @@ CREATE TABLE TipoMovimiento (
     descripcion VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE MovimientoKardex (
-    codMovimientoKardex CHAR(18) PRIMARY KEY,
-    codProducto CHAR(18) NOT NULL,
+CREATE TABLE Movimientos (
+    codMovimientoKardex INT IDENTITY PRIMARY KEY,
+    codProducto INT NOT NULL,
     codTipoMovimiento INT NOT NULL,
-    fechaMovimiento DATETIME NOT NULL,
+    fechaMovimiento DATETIME DEFAULT GETDATE(),
 	documento VARCHAR(150) NOT NULL,
     cantidad INT NOT NULL,
     precioUnitario DECIMAL(9,2) NOT NULL,
