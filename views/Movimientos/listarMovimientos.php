@@ -3,7 +3,7 @@
 ?>
 
 <div class="header_modules">
-    <h1>Lista de Productos</h1>
+    <h1>Lista de Movimientos</h1>
     <div class="filters_btn_new">
         <div class="filters">
             <input type="text" placeholder="Buscar por nombre o codigo">
@@ -12,44 +12,44 @@
             </div>
         </div>
 
-        <a href="#" id="nuevoProducto" class="btn-nuevo-registro">
+        <a href="#" id="nuevoMovimiento" class="btn-nuevo-registro">
             <img src="<?=base_url?>/assets/icons/addRegister.svg">
-            Nuevo Producto
+            Nuevo Movimiento
         </a>
     </div>
 
     <div class="containerTable">
-        <table class="tableProductos">
+        <table>
             <thead>
                 <tr>
-                    <th>CodProducto</th>
-                    <th>Descripcion</th>
-                    <th>Unidad de Medida</th>
-                    <th>Precio Unitario</th>
-                    <th>Stock</th>
+                    <th>CodMovimiento</th>
+                    <tr>Producto</tr>
+                    <th>Fecha</th>
+                    <th>Cantidad</th>
+                    <th>Unidad</th>
+                    <th>Valor Unitario</th>
+                    <th>Valor Total</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
-            <tbody id="listaProductos">
+            <tbody id="listaMovimientos">
             </tbody>
         </table>
     </div>
     <div class="d-flex justify-content-between m-2">
         <div>
-            <p class="fs-6">Total de productos:  <span class="fw-bold" id="totalProductosRegistrados"></span></p>
+            <p class="fs-6">Total de movimientos:  <span class="fw-bold" id="totalMovimientosRegistrados"></span></p>
         </div>
         <div>
-            <ul class="listadoOpcionesPaginacion" id="opcionesPaginacionProductos">
+            <ul class="listadoOpcionesPaginacion" id="opcionesPaginacionMovimientos">
 
             </ul>
         </div>
     </div>
+
 </div>
-
-
-
 
 <?php  require_once "registro.php"?>
 
 
-<script src="<?= base_url?>ajax/listarProductos.js"></script>
+<script src="<?= base_url?>ajax/listarMovimientos.js"></script>

@@ -65,7 +65,7 @@
         </div>
 
         <div>
-            <a href="#" class="option" id="option">
+            <a href="views/movimientos/listarMovimientos.php" class="option" id="option">
                 <div class="containerIconOption">
                     <img src="<?=base_url?>/assets/icons/movimientos.svg" alt="">
                 </div>

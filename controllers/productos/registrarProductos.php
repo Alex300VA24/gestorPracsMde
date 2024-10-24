@@ -4,18 +4,21 @@ include_once "../../models/Productos.php";
 
 $productosObj = new Productos();
 
-$codigo = $_POST['codigo'] ?? null;
 $descripcion = $_POST['descripcion'] ?? null;
 $abreviatura = $_POST['abreviatura'] ?? null;
-$stock = $_POST['stock'] ?? null;
+$unidadMedida = $_POST['unidadMedida'] ?? null;
 $precioUnitario = $_POST['precioUnitario'] ?? null;
+$stock = $_POST['stock'] ?? null;
 
-$productosObj->setCodigo($codigo);
+
 $productosObj->setDescripcion($descripcion);
 $productosObj->setAbreviatura($abreviatura);
-$productosObj->setStock($stock);
+$productosObj->setUnidadMedida($unidadMedida);
 $productosObj->setPrecioUnitario($precioUnitario);
+$productosObj->setStock($stock);
 
 $response = $productosObj->guardarProductos();
 
 print json_encode($response);
+
+//print json_encode([$descripcion, $abreviatura, $unidadMedida, $precioUnitario, $stock]);

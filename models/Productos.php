@@ -6,9 +6,8 @@ class Productos{
     private string $descripcion;
     private string $abreviatura;
     private string $unidadMedida;
-    private string $fechaRegistro;
     private int $stock;
-    private decimal $precioUnitario;
+    private string $precioUnitario;
     private int $codEstado;
 
     public function getCodProducto(): int{
@@ -43,14 +42,6 @@ class Productos{
         $this->unidadMedida = $unidadMedida;
     }
 
-    public function getFechaRegistro(): string{
-        return $this->getFechaRegistro;
-    }
-
-    public function setFechaRegistro(string $fechaRegistro): void {
-        $this->fechaRegistro = $fechaRegistro;
-    }
-
     public function getStock(): int{
         return $this->getStock;
     }
@@ -59,11 +50,11 @@ class Productos{
         $this->stock = $stock;
     }
 
-    public function getPrecioUnitario(): decimal{
+    public function getPrecioUnitario(): string{
         return $this->getPrecioUnitario;
     }
 
-    public function setPreciounitario(decimal $precioUnitario): void{
+    public function setPreciounitario(string $precioUnitario): void{
         $this->precioUnitario = $precioUnitario;
     }
 
@@ -76,11 +67,10 @@ class Productos{
     }
 
     public function guardarProductos(){
-        $sql = "EXEC sp_productos_registrar :codigo, :descripcion, :abreviatura, :unidadMedida, :stock, :precioUnitario";
+        $sql = "EXEC sp_producto_registrar :descripcion, :abreviatura, :unidadMedida, :stock, :precioUnitario";
 
         try {
             $stmt = DataBase::connect()->prepare($sql);
-            $stmt->bindParam('codigo',$this->codigo, PDO::PARAM_INT);
             $stmt->bindParam('descripcion',$this->descripcion, PDO::PARAM_STR);
             $stmt->bindParam('abreviatura',$this->abreviatura, PDO::PARAM_STR);
             $stmt->bindParam('unidadMedida',$this->unidadMedida, PDO::PARAM_STR);

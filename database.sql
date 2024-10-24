@@ -240,8 +240,8 @@ CREATE TABLE Producto (
     abreviatura CHAR(5),
     unidadMedida VARCHAR(30) NOT NULL,
     fechaRegistro DATETIME NOT NULL,
-    stock INT NOT NULL,
-    precioUnitario DECIMAL(9,2) NOT NULL,
+    stock INT,
+    precioUnitario DECIMAL(9,2),
     codEstado INT NOT NULL,
     FOREIGN KEY (codEstado) REFERENCES Estados(codEstado)
 );
