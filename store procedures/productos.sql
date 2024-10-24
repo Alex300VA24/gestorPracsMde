@@ -10,7 +10,7 @@ BEGIN
 
 		SELECT @codEstadoProducto = codEstado FROM Estados WHERE abreviatura = 'a';
 
-        INSERT INTO Producto (descripcion, abreviatura, unidadMedida, codEstado)
+        INSERT INTO Productos (descripcion, abreviatura, unidadMedida, codEstado)
         VALUES (@descripcion, @abreviatura, @unidadMedida, @codEstadoProducto);
 
     END

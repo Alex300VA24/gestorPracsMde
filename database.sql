@@ -217,7 +217,7 @@ CREATE TABLE Beneficiarios(
 
 CREATE TABLE Pecosas (
     codPecosa INT IDENTITY PRIMARY KEY,
-    codReconocimiento INT NOT NULL,
+    codAsociacion INT NOT NULL,
     codSocioPresidenta INT NOT NULL,
     fechaRegistro DATETIME NOT NULL,
     observacion VARCHAR(255),
@@ -226,15 +226,15 @@ CREATE TABLE Pecosas (
 );
 CREATE TABLE DetallePecosa (
     codDetallePecosa INT IDENTITY PRIMARY KEY,
-    codPecosa INT NOT NULL,
     codProducto INT NOT NULL,
+	codPecosa INT NOT NULL,
     prioridad INT NOT NULL,
     fechaDesde DATETIME,
     fechaHasta DATETIME,
     cantidad INT NOT NULL,
     precioUnitario DECIMAL(9,2) NOT NULL,
 );
-CREATE TABLE Producto (
+CREATE TABLE Productos (
     codProducto INT IDENTITY PRIMARY KEY,
 	codigo INT NOT NULL,
     descripcion VARCHAR(100) NOT NULL UNIQUE,
@@ -253,7 +253,7 @@ CREATE TABLE TipoMovimiento (
 );
 
 CREATE TABLE Movimientos (
-    codMovimientoKardex INT IDENTITY PRIMARY KEY,
+    codMovimiento INT IDENTITY PRIMARY KEY,
     codProducto INT NOT NULL,
     codTipoMovimiento INT NOT NULL,
     fechaMovimiento DATETIME DEFAULT GETDATE(),
