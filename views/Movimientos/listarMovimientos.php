@@ -19,7 +19,7 @@
     </div>
 
     <div class="containerTable">
-        <table>
+        <table class="tableMovimientos">
             <thead>
                 <tr>
                     <th>CodMovimiento</th>

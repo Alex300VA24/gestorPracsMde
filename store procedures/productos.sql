@@ -1,4 +1,5 @@
 CREATE PROCEDURE sp_producto_registrar
+	@codigo INT,
     @descripcion VARCHAR(18),
     @abreviatura VARCHAR(5),
     @unidadMedida VARCHAR(30)
@@ -10,8 +11,8 @@ BEGIN
 
 		SELECT @codEstadoProducto = codEstado FROM Estados WHERE abreviatura = 'a';
 
-        INSERT INTO Productos (descripcion, abreviatura, unidadMedida, codEstado)
-        VALUES (@descripcion, @abreviatura, @unidadMedida, @codEstadoProducto);
+        INSERT INTO Productos (codigo, descripcion, abreviatura, unidadMedida, codEstado)
+        VALUES (@codigo, @descripcion, @abreviatura, @unidadMedida, @codEstadoProducto);
 
     END
 	

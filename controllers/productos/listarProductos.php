@@ -4,10 +4,10 @@ include_once "../../models/Productos.php";
 
 $productosObj = new Productos();
 
+$codigo = $_GET['codigo'] ?? null;
 $descripcionProducto = $_GET['descripcionProducto'] ?? null;
-$abreviatura = $_GET['abreviatura'] ?? null;
-$unidadMedida = $_GET['unidadMedida'] ?? null;
 
-$response = $productosObj->listarProductos($descripcionProducto, $abreviatura, $unidadMedida);
+
+$response = $productosObj->listarProductos($codigo, $descripcionProducto);
 
 print json_encode($response);

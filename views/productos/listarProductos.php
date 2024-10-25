@@ -22,9 +22,11 @@
         <table class="tableProductos">
             <thead>
                 <tr>
-                    <th>CodProducto</th>
+                    <th>Codigo</th>
                     <th>Descripcion</th>
+                    <th>Abreviatura</th>
                     <th>Unidad de Medida</th>
+                    <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
             </thead>

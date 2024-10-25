@@ -6,28 +6,65 @@
             </div>
             <form class="formMovimiento" id="registrarMovimientoForm" action="" method="post">
                 <div class="modal-body">
-                    <div class="row mb-3">
-                        <div class="two-column">
-                            <label for="fechaMovimiento">Fecha de Movimiento (*):</label>
-                            <input 
-                                    type="text" 
-                                    id="descripcionProducto" 
-                                    autocomplete="off"
-                                    maxlength="100"
-                                    >
-                        </div>
-
-                        <div class="two-column">
-                            <label for="producto">Producto (*):</label>
-                            <input 
-                                    type="text" 
-                                    id="abreviatura" 
-                                    autocomplete="off"
-                                    maxlength="100"
-                                    >
-                        </div>
-
+                
+                    <div class="two-column">
+                        <label for="fechaMovimiento">Fecha de Movimiento (*):</label>
+                        <input 
+                                type="date" 
+                                id="fechaMovimiento" 
+                                autocomplete="off"
+                                maxlength="100"
+                                >
                     </div>
+
+                    <div class="two-column">
+                        <label for="producto">Producto (*):</label>
+                        <select id="cboProducto" class="form-select">
+                            
+                        </select>
+                    </div>
+
+                    <div class="two-column">
+                        <label for="cantidad">Cantidad (*):</label>
+                        <input 
+                                type="text" 
+                                id="Cantidad" 
+                                autocomplete="off"
+                                maxlength="100"
+                                >
+                    </div>
+
+                    <div class="two-column">
+                        <label for="precioUnitario">Precio Unitario (*):</label>
+                        <input 
+                                type="text" 
+                                id="precioUnitario" 
+                                autocomplete="off"
+                                maxlength="100"
+                                >
+                    </div>
+
+                    <div class="two-column">
+                        <label for="documento">Documento (*):</label>
+                        <input 
+                                type="text" 
+                                id="documento" 
+                                autocomplete="off"
+                                maxlength="100"
+                                >
+                    </div>
+
+                    <div class="two-column">
+                        <label for="precioTotal">Precio Total (*):</label>
+                        <input 
+                                type="text" 
+                                id="precioTotal" 
+                                autocomplete="off"
+                                maxlength="100"
+                                >
+                    </div>
+
+                    
 
                     <p>Todos los campos (*) son obligatorios</p>
 

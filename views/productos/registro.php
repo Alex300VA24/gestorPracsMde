@@ -7,6 +7,15 @@
             <form class="formProducto" id="registrarProductoForm" action="" method="post">
                 <div class="modal-body">
                     <div class="two-column">
+                    <label for="codigo">Codigo (*):</label>
+                        <input 
+                                type="text" 
+                                id="codigo" 
+                                autocomplete="off"
+                                maxlength="100"
+                                >
+                    </div>
+                    <div class="two-column">
                         <label for="descripcionProducto">Descripción (*):</label>
                         <input 
                                 type="text" 

@@ -550,19 +550,19 @@ input:focus-visible{
 
 
 /* Estilos tabla asociaciones, productos */
-.containerTable .tableAsociaciones.tableProductos  tr td:nth-child(6){
+.containerTable .tableAsociaciones .tableProductos .tableMovimientos tr td:nth-child(6){
     width: 200px;
 }
 
-.containerTable .tableAsociaciones .tableProductos tr td:nth-child(7){
+.containerTable .tableAsociaciones .tableProductos .tableMovimientos tr td:nth-child(7){
     width: 100px;
 }
 
-.containerTable .tableAsociaciones .tableProductos tr td:nth-child(9){
+.containerTable .tableAsociaciones .tableProductos .tableMovimientos tr td:nth-child(9){
     width: 210px;
 }
 
-.containerTable .tableAsociaciones .tableProductos tr td:last-child{
+.containerTable .tableAsociaciones .tableProductos .tableMovimientos tr td:last-child{
     width: 130px;
 }
 
