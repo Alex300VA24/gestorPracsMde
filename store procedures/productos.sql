@@ -1,3 +1,5 @@
+
+-- REGISTRO PRODUCTOS
 CREATE PROCEDURE sp_producto_registrar
 	@codigo INT,
     @descripcion VARCHAR(18),
@@ -17,3 +19,35 @@ BEGIN
     END
 	
 END;
+
+--- LISTA DE PRODUCTOS
+CREATE PROCEDURE [dbo].[sp_producto_listar](
+    @Descripcion VARCHAR(18) = NULL,
+    @Codigo INT = NULL
+ 
+)
+AS
+BEGIN
+    SELECT p.*, e.abreviatura 'abreviaturaEstado', e.descripcion 'descripcionEstado'
+	FROM Productos p
+	INNER JOIN Estados e ON p.codEstado = e.codEstado
+    WHERE (@Descripcion IS NULL OR p.descripcion LIKE @Descripcion + '%')
+    AND (@Codigo IS NULL OR p.codigo = @Codigo);
+END;
+
+
+
+---ACTUALIZAR PRODUCTOS
+CREATE PROCEDURE sp_producto_actualizar (
+	@codProducto INT,
+	@codigo INT,
+	@descripcion VARCHAR(18),
+    @abreviatura VARCHAR(5),
+    @unidadMedida VARCHAR(30)
+)
+AS
+BEGIN
+	UPDATE Productos SET codigo = @codigo, descripcion = @descripcion, abreviatura = @abreviatura, 
+	unidadMedida = @unidadMedida
+	WHERE codProducto = @codProducto
+END

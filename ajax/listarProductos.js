@@ -13,28 +13,30 @@ $(document).ready(function () {
                     let row = '';
                     if (data && Array.isArray(data) && data.length > 0) {
                         row = data.map(({
-                                            codigo, descripcion, abreviatura, unidadMedida, estado
+                                            codProducto,codigo, descripcion, abreviatura, unidadMedida, 
+                                            estado, abreviaturaEstado, descripcionEstado
                                         }) => {
                             return `
                                 <tr>
+                                    <td>${codProducto}</td>
                                     <td>${codigo}</td>
                                     <td>${descripcion}</td>                                   
                                     <td>${abreviatura}</td>                                   
                                     <td>${unidadMedida}</td>
                                     <td>
-                                        <span class="estado ${abreviatura === "a" ? 'active' : 'inactive'}">
-                                            ${estado}
+                                        <span class="estado ${abreviaturaEstado === "a" ? 'active' : 'inactive'}">
+                                            ${descripcionEstado}
                                         </span>
                                     </td>
                                     <td>
                                         <div class="actions actions_productos">
                                         
-                                            ${abreviatura == 'i' ?
-                                `<img class="action action_habilitar" src="./assets/icons/action_habilitar.svg">` : ''}
+                                            ${abreviaturaEstado == 'i' ?
+                                `<img class="action action_edit" src="./assets/icons/action_edit.svg">` : ''}
                                             
-                                            ${abreviatura == 'a' ?
-                                `<img class="action" src="./assets/icons/action_ver_detalle.svg">
-                                            <img class="action" src="./assets/icons/action_deshabilitar.svg">` : ''}                                            
+                                            ${abreviaturaEstado == 'a' ?
+                                `
+                                            <img class="action" src="./assets/icons/action_edit.svg">` : ''}                                            
                                         </div>
                                     </td>
                                 </tr>

@@ -4,12 +4,13 @@ include_once "../../models/Productos.php";
 
 $productosObj = new Productos();
 
+$codigo = $_POST['codigo'] ?? null;
 $descripcion = $_POST['descripcion'] ?? null;
 $abreviatura = $_POST['abreviatura'] ?? null;
 $unidadMedida = $_POST['unidadMedida'] ?? null;
 
 
-
+$productosObj->setCodigo($codigo);
 $productosObj->setDescripcion($descripcion);
 $productosObj->setAbreviatura($abreviatura);
 $productosObj->setUnidadMedida($unidadMedida);

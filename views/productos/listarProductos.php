@@ -22,6 +22,7 @@
         <table class="tableProductos">
             <thead>
                 <tr>
+                    <th>CodProducto</th>
                     <th>Codigo</th>
                     <th>Descripcion</th>
                     <th>Abreviatura</th>

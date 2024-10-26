@@ -148,5 +148,9 @@ class Productos{
         }
     }
 
+    public function actualizarProductos(){
+        $sql="";
+    }
+
 }
 
