@@ -101,7 +101,7 @@ CREATE TABLE Reconocimientos(
 	codAsociacion INT NOT NULL,
 	documento VARCHAR(100) NOT NULL,
 	fechaDocumento DATE NOT NULL,
-	fechaInicio DATETIME DEFAULT GETDATE(),
+	fechaInicio DATE NOT NULL,
 	fechaFin DATE NOT NULL,
 	codEstado INT NOT NULL,
 	PRIMARY KEY(codReconocimiento),
