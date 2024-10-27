@@ -18,6 +18,14 @@ CREATE TABLE Roles(
 	PRIMARY KEY(codRol)
 );
 
+CREATE TABLE MotivosInhabilitacion(
+	codMotivoInhabilitacion INT NOT NULL IDENTITY(1,1),
+	descripcion VARCHAR(100) NOT NULL UNIQUE,
+	observacion VARCHAR(255),
+	PRIMARY KEY(codMotivoInhabilitacion)
+);
+
+
 CREATE TABLE Usuarios(
 	codUsuario INT NOT NULL IDENTITY(1,1),
 	nombresApellidos VARCHAR(200) NOT NULL,
@@ -37,14 +45,14 @@ CREATE TABLE Parentescos(
 	PRIMARY KEY(codParentesco)
 );
 
-CREATE TABLE TiposBeneficiario(
-	codTipoBeneficiario INT NOT NULL IDENTITY(1,1),
+CREATE TABLE TiposBeneficio(
+	codTipoBeneficio INT NOT NULL IDENTITY(1,1),
 	descripcion VARCHAR(100) NOT NULL UNIQUE,
 	edadMinima INT,
 	edadMaxima INT,
 	prioridad INT NOT NULL,
 	observaciones VARCHAR(255),
-	PRIMARY KEY (codTipoBeneficiario)
+	PRIMARY KEY (codTipoBeneficio)
 );
 
 CREATE TABLE Zonas(
@@ -68,7 +76,7 @@ CREATE TABLE SectoresZona(
 	FOREIGN KEY(codSector) REFERENCES Sectores(codSector)
 );
 
-CREATE TABLE TipoLocales(
+CREATE TABLE TiposLocal(
 	codTipoLocal INT NOT NULL IDENTITY(1,1),
 	descripcion VARCHAR(100) NOT NULL UNIQUE,
 	PRIMARY KEY(codTipoLocal)
@@ -84,7 +92,7 @@ CREATE TABLE Asociaciones(
 	observaciones VARCHAR(255),
 	codEstado INT NOT NULL,
 	PRIMARY KEY(codAsociacion),
-	FOREIGN KEY(codTipoLocal) REFERENCES TipoLocales(codTipoLocal),
+	FOREIGN KEY(codTipoLocal) REFERENCES TiposLocal(codTipoLocal),
 	FOREIGN KEY(codSectorZona) REFERENCES SectoresZona(codSectorZona)
 );
 
@@ -93,7 +101,7 @@ CREATE TABLE Reconocimientos(
 	codAsociacion INT NOT NULL,
 	documento VARCHAR(100) NOT NULL,
 	fechaDocumento DATE NOT NULL,
-	fechaInicio DATE NOT NULL,
+	fechaInicio DATETIME DEFAULT GETDATE(),
 	fechaFin DATE NOT NULL,
 	codEstado INT NOT NULL,
 	PRIMARY KEY(codReconocimiento),
@@ -105,27 +113,6 @@ CREATE TABLE Cargos(
 	descripcion VARCHAR(100) NOT NULL,
 	PRIMARY KEY(codCargo)
 );
-
-/*CREATE TABLE Personas(
-	codPersona INT NOT NULL IDENTITY(1,1),
-	nombres VARCHAR(100) NOT NULL, 
-	apellidoPaterno VARCHAR(50) NOT NULL,
-	apellidoMaterno VARCHAR(50) NOT NULL,
-	dni VARCHAR(8) NOT NULL UNIQUE,
-	sexo CHAR NOT NULL,
-	telefono VARCHAR(6),
-	celular VARCHAR(9),
-	fechaNacimiento DATE NOT NULL,
-	aniosNacido INT NOT NULL,
-	mesesNacido INT NOT NULL,
-	diasNacido INT NOT NULL,
-	codSectorZona INT NOT NULL,
-	direccion VARCHAR(100) NOT NULL,
-	numeroFinca INT,
-	codEstado INT NOT NULL,
-	PRIMARY KEY(codPersona),
-	FOREIGN KEY(codSectorZona) REFERENCES SectoresZona(codSectorZona)
-);*/
 
 CREATE TABLE Personas (
     codPersona INT NOT NULL IDENTITY(1,1),
@@ -174,8 +161,8 @@ CREATE TABLE Socios(
 	codSocio INT NOT NULL IDENTITY(1,1),	
 	codPersona INT NOT NULL,
 	codAsociacion INT NOT NULL,
-	fechaInicio DATE NOT NULL,
-	fechaFin DATE,
+	fechaInicio DATETIME DEFAULT GETDATE(),
+	fechaFin DATETIME,
 	observaciones VARCHAR(255),
 	codEstado INT NOT NULL,
 	PRIMARY KEY(codSocio),
@@ -199,20 +186,26 @@ CREATE TABLE Beneficiarios(
 	codBeneficiario INT NOT NULL IDENTITY(1,1),
 	codPersona INT NOT NULL,
 	codSocio INT NOT NULL,
-	codParentesco INT NOT NULL,
-	edad INT NOT NULL,
-	peso DECIMAL(9,2),
-	talla DECIMAL(9,2),
-	hgb DECIMAL(9,2),
-	codTipoBeneficiario INT NOT NULL,
-	fechaInicio DATE NOT NULL,
-	fechaTermino DATE,
-	codEstado INT NOT NULL,
+	codParentesco INT NOT NULL,			
 	PRIMARY KEY(codBeneficiario),
 	FOREIGN KEY(codPersona) REFERENCES Personas(codPersona),
 	FOREIGN KEY(codSocio) REFERENCES Socios(codSocio),
-	FOREIGN KEY(codParentesco) REFERENCES Parentescos(codParentesco),
-	FOREIGN KEY(codTipoBeneficiario) REFERENCES TiposBeneficiario(codTipoBeneficiario),
+	FOREIGN KEY(codParentesco) REFERENCES Parentescos(codParentesco),	
+);
+
+CREATE TABLE HistoricoBeneficiarios(
+	codHistoricoBeneficiario INT NOT NULL IDENTITY(1,1),
+	codtipoBeneficio INT NOT NULL,
+	peso DECIMAL(3,3),
+	talla DECIMAL(3,2),
+	hmg DECIMAL(3,2),
+	fechaInicio DATETIME DEFAULT GETDATE(),
+	fechaTermino DATETIME,
+	codEstado INT NOT NULL,
+	codMotivoInhabilitacion INT NOT NULL,
+	PRIMARY KEY(codHistoricoBeneficiario),
+	FOREIGN KEY(codtipoBeneficio) REFERENCES TiposBeneficio(codtipoBeneficio),
+	FOREIGN KEY(codMotivoInhabilitacion) REFERENCES MotivosInhabilitacion(codMotivoInhabilitacion)
 );
 
 CREATE TABLE Pecosas (
