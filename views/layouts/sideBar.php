@@ -10,17 +10,6 @@
         </div>
 
         <div>
-            <a href="views/personas/listar.php" class="option" id="optionPersonas">
-                <div class="containerIconOption">
-                    <img src="<?=base_url?>/assets/icons/personas.svg" alt="">
-                </div>
-                <div>
-                    <p>Personas</p>
-                </div>
-            </a>
-        </div>
-
-        <div>
             <a href="#" class="option" id="option">
                 <div class="containerIconOption">
                     <img src="<?=base_url?>/assets/icons/socias.svg" alt="">
@@ -49,6 +38,17 @@
                 </div>
                 <div>
                     <p>Club de Madres</p>
+                </div>
+            </a>
+        </div>
+
+        <div>
+            <a href="views/reconocimientos/listar.php" class="option" id="optionReconocimientos">
+                <div class="containerIconOption">
+                    <img src="<?=base_url?>/assets/icons/reconocimientos.svg" alt="">
+                </div>
+                <div>
+                    <p>Reconocimientos</p>
                 </div>
             </a>
         </div>

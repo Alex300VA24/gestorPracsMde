@@ -28,7 +28,7 @@ require_once "../../config/parameters.php"
         <tr>
             <th>Cod Club</th>
             <th>Nombre</th>
-            <th>Sector</th>
+            <th>Sector y Zona</th>
             <th>Dirección</th>
             <th>Presidenta</th>
             <th>Cantidad Beneficiarios</th>

@@ -21,7 +21,7 @@ class TipoLocal{
     }
 
     public function listarTiposLocal(){
-        $sql = "SELECT * FROM TipoLocales";
+        $sql = "SELECT * FROM TiposLocal";
 
         try {
             $stmt = DataBase::connect()->prepare($sql);
