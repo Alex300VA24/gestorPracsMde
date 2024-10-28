@@ -1,27 +1,34 @@
 --- listar asociaciones ---
-ALTER PROCEDURE sp_asociacion_listar(
+CREATE PROCEDURE sp_asociacion_listar(
 	@nombreAsociacion VARCHAR(100) = NULL,
 	@codSector INT = NULL
 )
 AS
 BEGIN
-	SELECT a.codAsociacion, a.nombreAsociacion, sz.codSectorZona, s.descripcion 'sector', a.direccion, a.numeroFinca, a.observaciones,
+	DECLARE @codEstadoPresidenta INT
+
+	SELECT @codEstadoPresidenta = codCargo FROM Cargos WHERE descripcion = 'presidenta'
+
+	SELECT a.codAsociacion, a.nombreAsociacion, sz.codSectorZona, CONCAT(s.descripcion, ' - ', z.descripcion) 'sector', a.direccion, a.numeroFinca, a.observaciones,
 	a.codTipoLocal,
 	CONCAT(p.nombres, ' ', p.apellidoPaterno, ' ', p.apellidoMaterno) 'presidenta', COUNT(b.codBeneficiario) 'cantidadBeneficiarios',
 	r.documento, e.abreviatura, e.descripcion 'estado'
 	FROM Asociaciones a 
 	INNER JOIN SectoresZona sz ON a.codSectorZona = sz.codSectorZona
-	INNER JOIN Sectores s ON sz.codSector = s.codSector
-	LEFT JOIN Socios so ON a.codAsociacion = so.codAsociacion
+	INNER JOIN Sectores s ON sz.codSector = s.codSector	
+	INNER JOIN Zonas z ON sz.codZona = z.codZona
+	LEFT JOIN Reconocimientos r ON a.codAsociacion = r.codAsociacion
+	LEFT JOIN Directivas d ON r.codReconocimiento = d.codReconocimiento
+	LEFT JOIN Socios so ON d.codSocio = so.codSocio
 	LEFT JOIN Personas p ON so.codPersona = p.codPersona
 	LEFT JOIN Beneficiarios b ON so.codSocio = b.codSocio
-	LEFT JOIN Reconocimientos r ON a.codAsociacion = r.codAsociacion
-	INNER JOIN Estados e ON a.codEstado = e.codEstado
+	INNER JOIN Estados e ON a.codEstado = e.codEstado	
 	WHERE 
 	(@codSector IS NULL OR s.codSector = @codSector)
 	AND 
-	(@nombreAsociacion IS NULL OR a.nombreAsociacion LIKE @nombreAsociacion+'%')
-	GROUP BY a.codAsociacion, a.nombreAsociacion, sz.codSectorZona, s.descripcion, 
+	(@nombreAsociacion IS NULL OR a.nombreAsociacion LIKE @nombreAsociacion+'%')	
+	AND d.codCargo IS NULL OR d.codCargo = @codEstadoPresidenta
+	GROUP BY a.codAsociacion, a.nombreAsociacion, sz.codSectorZona, s.descripcion, z.descripcion,
 	a.direccion, p.nombres, p.apellidoPaterno, p.apellidoMaterno, e.descripcion, r.documento,
 	e.abreviatura, a.numeroFinca, a.observaciones, a.codTipoLocal
 END
@@ -47,7 +54,7 @@ BEGIN
 END
 GO
 
---- registrar asociacion ---
+--- actualizar asociacion ---
 CREATE PROCEDURE sp_asociacion_actualizar(
 	@codAsociacion INT,
 	@nombreAsociacion VARCHAR(100),
