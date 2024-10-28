@@ -51,6 +51,7 @@
 
 
 <?php  require_once "registro.php"?>
+<?php  require_once "editarProducto.php"?>
 
 
 <script src="<?= base_url?>ajax/listarProductos.js"></script>

@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Registrar Nuevo Producto</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Editar Producto</h5>
             </div>
             <form class="formProducto" id="editarProductoForm" action="" method="post">
                 <div class="modal-body">
@@ -15,7 +15,7 @@
                     <label for="codigo">Codigo (*):</label>
                         <input 
                                 type="text" 
-                                id="codigo" 
+                                id="codigoEdit" 
                                 autocomplete="off"
                                 maxlength="100"
                                 >
@@ -24,7 +24,7 @@
                         <label for="descripcionProducto">Descripción (*):</label>
                         <input 
                                 type="text" 
-                                id="descripcionProducto" 
+                                id="descripcionProductoEdit" 
                                 autocomplete="off"
                                 maxlength="100"
                                 >
@@ -34,7 +34,7 @@
                         <label for="abreviatura">Abreviatura (*):</label>
                         <input 
                                 type="text" 
-                                id="abreviatura" 
+                                id="abreviaturaEdit" 
                                 autocomplete="off"
                                 maxlength="100"
                                 >
@@ -42,7 +42,7 @@
 
                     <div class="two-column">
                         <label for="unidadMedida">Unidad de Medida (*):</label>
-                            <select id="cboUnidadMedida" class="form-select">
+                            <select id="cboUnidadMedidaEdit" class="form-select">
                                 <option value="bolsa">Bolsa</option>
                                 <option value="tarro">Tarro</option>
                             </select>

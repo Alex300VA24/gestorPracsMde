@@ -54,7 +54,7 @@
         </div>
 
         <div>
-            <a href="views/productos/listarProductos.php" class="option" id="option">
+            <a href="views/productos/listarProductos.php" class="option" id="optionProductos">
                 <div class="containerIconOption">
                     <img src="<?=base_url?>/assets/icons/productos.svg" alt="">
                 </div>

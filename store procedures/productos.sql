@@ -2,7 +2,7 @@
 -- REGISTRO PRODUCTOS
 CREATE PROCEDURE sp_producto_registrar
 	@codigo INT,
-    @descripcion VARCHAR(18),
+    @descripcion VARCHAR(100),
     @abreviatura VARCHAR(5),
     @unidadMedida VARCHAR(30)
 AS
@@ -22,7 +22,7 @@ END;
 
 --- LISTA DE PRODUCTOS
 CREATE PROCEDURE [dbo].[sp_producto_listar](
-    @Descripcion VARCHAR(18) = NULL,
+    @Descripcion VARCHAR(100) = NULL,
     @Codigo INT = NULL
  
 )
@@ -41,7 +41,7 @@ END;
 CREATE PROCEDURE sp_producto_actualizar (
 	@codProducto INT,
 	@codigo INT,
-	@descripcion VARCHAR(18),
+	@descripcion VARCHAR(100),
     @abreviatura VARCHAR(5),
     @unidadMedida VARCHAR(30)
 )
