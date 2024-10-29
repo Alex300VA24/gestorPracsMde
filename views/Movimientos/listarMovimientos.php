@@ -22,13 +22,13 @@
         <table class="tableMovimientos">
             <thead>
                 <tr>
-                    <th>CodMov</th>
-                    <tr>Producto</tr>
+                    <th>CodMovimiento</th>
+                    <th>Producto</th>
                     <th>Fecha</th>
                     <th>Cantidad</th>
                     <th>Unidad</th>
-                    <th>V. Unitario</th>
-                    <th>V. Total</th>
+                    <th>Valor Unitario</th>
+                    <th>Valor Total</th>
                     <th>Acciones</th>
                 </tr>
             </thead>

@@ -32,11 +32,13 @@ $(document).ready(function () {
                                         <div class="actions actions_productos">
                                         
                                             ${abreviaturaEstado == 'i' ?
-                                `<img class="action action_edit" src="./assets/icons/action_edit.svg">` : ''}
+                                `<img class="action action_habilitar" src="./assets/icons/action_habilitar.svg">` : ''}
                                             
+                                            ${(abreviaturaEstado == 'a' || abreviaturaEstado == 'i')?
+                                `<img id="btnEditarProducto" class="action" src="./assets/icons/action_edit.svg">` : ''}
+                                
                                             ${abreviaturaEstado == 'a' ?
-                                `
-                                            <img class="action" src="./assets/icons/action_edit.svg">` : ''}                                            
+                                `<img class="action" src="./assets/icons/action_deshabilitar.svg">` : ''}
                                         </div>
                                     </td>
                                 </tr>
@@ -114,6 +116,74 @@ $(document).ready(function () {
         }
     })
 
+//     editar productos - abril modal
+    $(document).off("click", "#btnEditarProducto").on("click", "#btnEditarProducto", function(e) {
+        e.preventDefault();
+        let modalEditar = $("#modalEditarProducto");
+        let fila = $(this).closest("tr");
+        let codProducto = fila.find('td:eq(0)').text();
+        let codigo = fila.find('td:eq(1)').text();
+        let descripcion = fila.find('td:eq(2)').text();
+        let abreviatura = fila.find('td:eq(3)').text();
+        let unidadMedida = fila.find('td:eq(4)').text();
+
+        console.log({codProducto, codigo, descripcion})
+
+        $("#codProducto").val(codProducto.trim());
+        $("#codigoEdit").val(codigo.trim());
+        $("#descripcionProductoEdit").val(descripcion.trim());
+        $("#abreviaturaEdit").val(abreviatura.trim());
+        $("#cboUnidadMedidaEdit").val(unidadMedida);
+
+        modalEditar.modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+
+        modalEditar.modal('show');
+
+        modalEditar.one('shown.bs.modal', function() {
+            $("#codigoEdit").focus();
+        });
+    });
+
+// Actualizar productos
+    $(document).off("submit", "#editarProductoForm").on('submit', '#editarProductoForm', function(e) {
+        e.preventDefault();
+        const codProducto = $.trim($('#codProducto').val());
+        const codigo = $.trim($('#codigoEdit').val());
+        const descripcion = $.trim($('#descripcionProductoEdit').val());
+        const abreviatura = $.trim($('#abreviaturaEdit').val());
+        const unidadMedida = $.trim($('#cboUnidadMedidaEdit').val());
+
+        console.log({codProducto, codigo, descripcion, abreviatura, unidadMedida})
+
+        if (isFiledsValid(codigo, descripcion, abreviatura, unidadMedida)){
+            $.ajax({
+                url: './controllers/productos/actualizar.php',
+                method: 'POST',
+                dataType: 'json',
+                data: {codProducto, codigo, descripcion, abreviatura, unidadMedida},
+                success: function (response) {
+                    console.log(response)
+                    const {code, message, info, data} = response;
+
+                    if (code === 200) {
+                        showSuccessAlertUpdate(message)
+                    }
+
+                    if (code === 500) {
+                        showErrorInternalServer(message, info)
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error listarProductos.js: ', textStatus, errorThrown);
+                }
+            })
+        }
+    })
+
+
     function isFiledsValid(descripcion, abreviatura, unidadMedida) {
         
         if (descripcion === '' || abreviatura == '' || unidadMedida === 0) {
@@ -146,6 +216,17 @@ $(document).ready(function () {
             text: message
         }).then(() => {
             $('#modalRegistrarProducto').modal('hide');
+            listarProductos();
+        });
+    }
+
+    function showSuccessAlertUpdate(message){
+        Swal.fire({
+            icon: "success",
+            title: "Actualización Exitoso",
+            text: message
+        }).then(() => {
+            $('#modalEditarProducto').modal('hide');
             listarProductos();
         });
     }

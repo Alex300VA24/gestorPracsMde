@@ -149,7 +149,45 @@ class Productos{
     }
 
     public function actualizarProductos(){
-        $sql="";
+        $sql="EXEC sp_producto_actualizar :codProducto, :codigo, :descripcion, :abreviatura, :unidadMedida";
+
+        try {
+            $stmt = DataBase::connect()->prepare($sql);
+            $stmt->bindParam('codProducto',$this->codProducto, PDO::PARAM_INT);
+            $stmt->bindParam('codigo',$this->codigo, PDO::PARAM_INT);
+            $stmt->bindParam('descripcion',$this->descripcion, PDO::PARAM_STR);
+            $stmt->bindParam('abreviatura',$this->abreviatura, PDO::PARAM_STR);
+            $stmt->bindParam('unidadMedida',$this->unidadMedida, PDO::PARAM_STR); 
+            $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+                return [
+                    'status' => 'success',
+                    'code' => 200,
+                    'message' => 'Producto actualizado exitosamente',
+                    'data' => [],
+                ];
+            } else {
+                return [
+                    'status' => 'failed',
+                    'code' => 400,
+                    'message' => 'No se pudo actualizar el producto, verifica los datos',
+                    'action' => 'actualizarProducto',
+                    'module' => 'productos',
+                    'data' => [],
+                ];
+            }
+        }catch (PDOException $e){
+            return [
+                'status' => 'failed',
+                'code' => 500,
+                'message' => 'Ocurrio un error al momento de actualizar los productos',
+                'action' => 'actualizarProducto',
+                'module' => 'productos',
+                'data' => [],
+                'info' => $e->getMessage()
+            ];
+        }
     }
 
 }
