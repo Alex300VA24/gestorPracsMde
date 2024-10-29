@@ -71,3 +71,18 @@ BEGIN
 	WHERE codAsociacion = @codAsociacion
 END
 GO
+
+-- listar asociaciones nuevas o con reconocimiento vencido
+CREATE PROCEDURE sp_asociaciones_listar_nuevas_y_reconocimiento_vencido
+AS
+BEGIN
+	DECLARE @CodEstadoPendienteReconocimiento INT
+	DECLARE @CodEstadoReconocimientoVencido INT
+
+	SELECT @CodEstadoPendienteReconocimiento = codEstado FROM Estados WHERE abreviatura = 'pr'
+	SELECT @CodEstadoReconocimientoVencido = codEstado FROM Estados WHERE abreviatura = 'rv'
+
+	SELECT codAsociacion, nombreAsociacion FROM Asociaciones 
+	WHERE codEstado = @CodEstadoPendienteReconocimiento OR codEstado = @CodEstadoReconocimientoVencido
+END
+GO

@@ -1,5 +1,5 @@
 insert into Roles(descripcion) values('administrador'),('usuario');
-insert into Estados(abreviatura,descripcion) values('a', 'activo'),('i', 'inactivo'),('h', 'historico'),('pr', 'pendiente reconocimiento');
+insert into Estados(abreviatura,descripcion) values('a', 'activo'),('i', 'inactivo'),('h', 'historico'),('pr', 'reconocimiento pendiente'),('rv', 'reconocimiento vencido');
 insert into Cargos(descripcion) values('presidenta'),('vice presidenta'),('almacenera'),('tesorera'),('secretaria'),('vocal'),('coordinadora'),('fizcalizador')
 
 ------------------- SECUNDARIA ----------------------------

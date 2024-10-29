@@ -214,13 +214,44 @@ class Asociacion{
                 ];
             }
 
-
         }catch (PDOException $e){
             return [
                 'status' => 'failed',
                 'code' => 500,
                 'message' => 'Ocurrio un error al momento de actualizar los club de madres',
                 'action' => 'actualizarAsociacion',
+                'module' => 'asociacion',
+                'data' => [],
+                'info' => $e->getMessage()
+            ];
+        }
+    }
+
+    function listarAsociacionesNuevasYReconocimientoVencido(){
+        $sql = "EXEC sp_asociaciones_listar_nuevas_y_reconocimiento_vencido";
+
+        try {
+            $stmt = DataBase::connect()->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return [
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'lista de asociaciones nuevas y con reconocimiento vencido',
+                'action' => 'listarAsociacionesNuevasYReconocimientoVencido',
+                'module' => 'asociacion',
+                'data' => $result,
+                'info' => '',
+            ];
+
+
+        }catch (PDOException $e){
+            return [
+                'status' => 'failed',
+                'code' => 500,
+                'message' => 'Ocurrio un error al momento de listar las asociaciones nuevas y con reconocimiento vencido',
+                'action' => 'listarAsociacionesNuevasYReconocimientoVencido',
                 'module' => 'asociacion',
                 'data' => [],
                 'info' => $e->getMessage()
