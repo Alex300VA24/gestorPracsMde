@@ -12,6 +12,7 @@ $(document).ready(function () {
     let ultimoDNICoordinadora;
     let ultimoDNIAlmacenera;
     let ultimoDNIFiscalizador;
+    let ultimoDNISecretaria;
 
 //     nueva asociacion - abrir modal
     $(document).off("click", "#nuevaAsociacion").on("click", "#nuevaAsociacion", function(e) {
@@ -42,6 +43,7 @@ $(document).ready(function () {
         const fechaFin = $.trim($('#fechaFinReconocimiento').val());
         const presidenta = $.trim($('#codPresidenta').val());
         const vicePresidenta = $.trim($('#codVicePresidenta').val());
+        const secretaria = $.trim($('#codSecretaria').val());
         const tesorera = $.trim($('#codTesorera').val());
         const vocal = $.trim($('#codVocal').val());
         const coordinadora = $.trim($('#codCoordinadora').val());
@@ -52,13 +54,14 @@ $(document).ready(function () {
 
         if (isFiledsValid(asociacion, documento, fechaInicio, fechaFin, presidenta, vicePresidenta,
             tesorera, vocal, coordinadora, almacenera, fiscalizador)){
-            // TODO: Registrar reconocimiento
             $.ajax({
                 url: './controllers/reconocimiento/registrar.php',
                 method: 'POST',
                 dataType: 'json',
-                data: {nombre, sector, direccion, tipoLocal, numeroFinca, observacion},
+                data: {asociacion, documento, fechaInicio, fechaFin,
+                presidenta, vicePresidenta, secretaria, tesorera, vocal, coordinadora, almacenera, fiscalizador},
                 success: function (response) {
+                    console.log(response)
                     const {code, message, info, data} = response;
 
                     if (code === 200) {
@@ -94,6 +97,14 @@ $(document).ready(function () {
         const idInputNombreVicePresidenta = '#nombreVicePresidentaReconocimiento';
         const idInputCodVicePresidenta = '#codVicePresidenta';
         validarInputDNISocio(dni, idInputNombreVicePresidenta, idInputCodVicePresidenta, ultimoDNIVicepresidenta)
+    });
+
+    // Llenar campos de secretaria
+    $(document).off("input", "#dniSecretariaReconocimiento").on("input", "#dniSecretariaReconocimiento", function(e) {
+        const dni = $(this).val();
+        const idInputNombreSecretaria = '#nombreSecretariaReconocimiento';
+        const idInputCodSecretaria = '#codSecretaria';
+        validarInputDNISocio(dni, idInputNombreSecretaria, idInputCodSecretaria, ultimoDNISecretaria)
     });
 
     // Llenar campos de tesorera
@@ -236,6 +247,17 @@ $(document).ready(function () {
             return false;
         }
         return true;
+    }
+
+    function showSuccessAlert(message){
+        Swal.fire({
+            icon: "success",
+            title: "Registro Exitoso",
+            text: message
+        }).then(() => {
+            $('#modalRegistrarReconocimiento').modal('hide');
+        //     TODO: listar reconocimientos
+        });
     }
 
     function showErrorInternalServer(message, info) {

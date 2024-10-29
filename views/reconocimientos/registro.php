@@ -114,6 +114,42 @@
 
                     <div>
                         <div class="header_container_data">
+                            <h2>Secretaria</h2>
+                        </div>
+                        <div class="d-flex gap-3">
+                            <div class="two-column flex-grow-1">
+                                <label for="dniSecretariaReconocimiento">DNI (*):</label>
+                                <input
+                                        disabled
+                                        class="dniCargos colorDisable"
+                                        type="text"
+                                        id="dniSecretariaReconocimiento"
+                                        autocomplete="off"
+                                        maxlength="8"
+                                >
+                            </div>
+                            <div class="two-column flex-grow-1">
+                                <label for="nombreSecretariaReconocimiento">Nombres (*):</label>
+                                <input
+                                        class="colorDisable nombresCargo"
+                                        disabled
+                                        type="text"
+                                        id="nombreSecretariaReconocimiento"
+                                        autocomplete="off"
+                                >
+                            </div>
+                            <input
+                                    hidden="hidden"
+                                    class="codCargo"
+                                    disabled
+                                    type="number"
+                                    id="codSecretaria"
+                            >
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="header_container_data">
                             <h2>Tesorera</h2>
                         </div>
                         <div class="d-flex gap-3">

@@ -73,8 +73,20 @@ class Reconocimiento{
         $this->estadoDescripcion = $estadoDescripcion;
     }
 
-    public function registrarReconocimiento(){
-        $sql = "EXEC sp_reconocimiento_registrar :codAsociacion, :documento, :fechaInicio, :fechaFin";
+    public function registrarReconocimiento(int $presidente, int $vicePresidente, int $secretaria, int $tesorera, int $vocal, int $coordinadora, int $almacenera, int $fiscalizador){
+        $sql = "EXEC sp_reconocimiento_directivas_registrar 
+        :codAsociacion, 
+        :documento, 
+        :fechaInicio, 
+        :fechaFin,
+        :codSocioPresidenta, 
+        :codSocioVicePresidenta, 
+        :codSocioSecretaria,
+        :codSocioTesorera,
+        :codSocioVocal,
+        :codSocioCoordinadora,
+        :codSocioAlmacenera,
+        :codSocioFiscalizador";
 
         try {
             $stmt = DataBase::connect()->prepare($sql);
@@ -82,8 +94,18 @@ class Reconocimiento{
             $stmt->bindParam('documento',$this->documento, PDO::PARAM_STR);
             $stmt->bindParam('fechaInicio',$this->fechaInicio, PDO::PARAM_STR);
             $stmt->bindParam('fechaFin',$this->fechaFin, PDO::PARAM_STR);
+            $stmt->bindParam('codSocioPresidenta',$presidente, PDO::PARAM_INT);
+            $stmt->bindParam('codSocioVicePresidenta',$vicePresidente, PDO::PARAM_INT);
+            $stmt->bindParam('codSocioSecretaria',$secretaria, PDO::PARAM_INT);
+            $stmt->bindParam('codSocioTesorera',$tesorera, PDO::PARAM_INT);
+            $stmt->bindParam('codSocioVocal',$vocal, PDO::PARAM_INT);
+            $stmt->bindParam('codSocioCoordinadora',$coordinadora, PDO::PARAM_INT);
+            $stmt->bindParam('codSocioAlmacenera',$almacenera, PDO::PARAM_INT);
+            $stmt->bindParam('codSocioFiscalizador',$fiscalizador, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            if ($stmt->rowCount() > 0) {
+            if ($result[0]['status']!='error') {
                 return [
                     'status' => 'success',
                     'code' => 200,
@@ -91,17 +113,10 @@ class Reconocimiento{
                     'data' => [],
                 ];
             } else {
-                return [
-                    'status' => 'failed',
-                    'code' => 400,
-                    'message' => 'No se pudo registrar el reconocimiento, verifica los datos',
-                    'action' => 'registrarReconocimiento',
-                    'module' => 'reconocimiento',
-                    'data' => [],
-                ];
+                throw new Exception($result[0]['ErrorMessage']);
             }
 
-        }catch (PDOException $e){
+        }catch (Exception $e){
             return [
                 'status' => 'failed',
                 'code' => 500,
