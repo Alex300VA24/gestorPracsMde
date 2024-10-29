@@ -43,9 +43,6 @@
         </div>
 
         <div>
-<<<<<<< HEAD
-            <a href="views/productos/listarProductos.php" class="option" id="optionProductos">
-=======
             <a href="views/reconocimientos/listar.php" class="option" id="optionReconocimientos">
                 <div class="containerIconOption">
                     <img src="<?=base_url?>/assets/icons/reconocimientos.svg" alt="">
@@ -58,7 +55,6 @@
 
         <div>
             <a href="views/productos/listarProductos.php" class="option" id="option">
->>>>>>> 2676cc84e9ae34883afd21f76b54ff6cf43bbf33
                 <div class="containerIconOption">
                     <img src="<?=base_url?>/assets/icons/productos.svg" alt="">
                 </div>
