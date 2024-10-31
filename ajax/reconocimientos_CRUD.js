@@ -2,17 +2,83 @@ $(document).ready(function () {
     let fechaActual = new Date();
     let fechaFormateada = fechaActual.toISOString().split('T')[0];
 
-    let codAsociacion = 0;
+    let codAsociacion;
+    let documento;
+
     let directiva = [];
 
-    let ultimoDNIPresidenta;
-    let ultimoDNIVicepresidenta;
-    let ultimoDNITesorera;
-    let ultimoDNIVocal;
-    let ultimoDNICoordinadora;
-    let ultimoDNIAlmacenera;
-    let ultimoDNIFiscalizador;
-    let ultimoDNISecretaria;
+    let ultimoDNIPresidenta = { dni: null };
+    let ultimoDNIVicepresidenta = { dni: null };
+    let ultimoDNITesorera = { dni: null };
+    let ultimoDNIVocal = { dni: null };
+    let ultimoDNICoordinadora = { dni: null };
+    let ultimoDNIAlmacenera = { dni: null };
+    let ultimoDNIFiscalizador = { dni: null };
+    let ultimoDNISecretaria = { dni: null };
+
+    listarReconocimientos(documento, codAsociacion);
+
+    function listarReconocimientos(documento, codAsociacion) {
+        $.ajax({
+            url: './controllers/reconocimiento/listar.php',
+            method: 'GET',
+            dataType: 'json',
+            data: {documento, codAsociacion},
+            success: function (response) {
+                console.log(response)
+                const {code, message, info, data} = response;
+
+                if (code === 200) {
+                    let row = '';
+                    if (data && Array.isArray(data) && data.length > 0) {
+                        row = data.map(({codReconocimiento, documento, fechaInicio, fechaFin, nombreAsociacion, sector, presidenta, abreviatura, estado}) => {
+                            return `
+                                <tr>
+                                    <td>${codReconocimiento}</td>
+                                    <td>${documento}</td>
+                                    <td>${fechaInicio}</td>                                   
+                                    <td>${fechaFin}</td>                                   
+                                    <td>${nombreAsociacion}</td>                                   
+                                    <td>${sector}</td>                                   
+                                    <td>${presidenta}</td>                                                                                                       
+                                    <td>
+                                        <span class="estado ${abreviatura === "a" ? 'active' : abreviatura === 'v' ? 'vencido' : 'inactive'}">
+                                            ${estado}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="actions actions_asociaciones">
+                                        
+                                            ${abreviatura == 'i' ?
+                                `<img class="action action_habilitar" src="./assets/icons/action_habilitar.svg">` : ''}
+                                            
+                                            ${(abreviatura == 'a' || abreviatura == 'pr') ?
+                                `<img id="btnEditarAsociacion" class="action" src="./assets/icons/action_edit.svg">` : ''}    
+                                            
+                                            ${abreviatura == 'a' ?
+                                `<img class="action" src="./assets/icons/action_ver_detalle.svg">
+                                            <img class="action" src="./assets/icons/action_deshabilitar.svg">` : ''}                                            
+                                        </div>
+                                    </td>
+                                </tr>
+                            `
+                        })
+                        $("#listaAsociaciones").html(row)
+                    } else {
+                        row = `<tr><td colspan="10">Aún no existen club de madres en el sistema</td></tr>`
+                    }
+                    $("#listaReconocimientos").html(row)
+                }
+
+                if (code === 500) {
+                    showErrorInternalServer(message, info)
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error('Error reconocimientos_CRUD.js: ', textStatus, errorThrown);
+            }
+        })
+    }
 
 //     nueva asociacion - abrir modal
     $(document).off("click", "#nuevaAsociacion").on("click", "#nuevaAsociacion", function(e) {
@@ -148,16 +214,17 @@ $(document).ready(function () {
     });
 
     function validarInputDNISocio(dni, inputNombreSocio, inputCodSocio, ultimoDNISocio) {
+        console.log({dni, inputNombreSocio, inputCodSocio, ultimoDNISocio})
         if (dni.length === 8) {
             if(tieneAsignadoUnCargo(dni)){
                 showAlertCargoRepetido(dni, inputNombreSocio, inputCodSocio);
             }else{
-                ultimoDNISocio = dni;
+                ultimoDNISocio.dni = dni;
                 buscarSocioPorDNI(dni, codAsociacion, inputNombreSocio, inputCodSocio);
             }
         }else{
             limpiarInputsCargos(inputNombreSocio, inputCodSocio)
-            directiva = directiva.filter(dni => dni != ultimoDNISocio)
+            directiva = directiva.filter(dni => dni != ultimoDNISocio.dni)
         }
     }
 
@@ -256,7 +323,7 @@ $(document).ready(function () {
             text: message
         }).then(() => {
             $('#modalRegistrarReconocimiento').modal('hide');
-        //     TODO: listar reconocimientos
+            listarReconocimientos(documento, codAsociacion)
         });
     }
 

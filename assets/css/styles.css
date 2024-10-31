@@ -506,6 +506,11 @@ input:focus-visible{
     border: 1px solid #62642f;
 }
 
+.vencido{
+    background-color: #FAFF6A;
+    border: 1px solid #85883c;
+}
+
 /* Estilos generales modales */
 .modal .modal-header{
     background-color: var(--bg-color-principal);
