@@ -1,5 +1,5 @@
 --- listar asociaciones ---
-CREATE PROCEDURE sp_asociacion_listar(
+CREATE OR ALTER PROCEDURE sp_asociacion_listar(
 	@nombreAsociacion VARCHAR(100) = NULL,
 	@codSector INT = NULL
 )
@@ -27,7 +27,7 @@ BEGIN
 	(@codSector IS NULL OR s.codSector = @codSector)
 	AND 
 	(@nombreAsociacion IS NULL OR a.nombreAsociacion LIKE @nombreAsociacion+'%')	
-	AND d.codCargo IS NULL OR d.codCargo = @codEstadoPresidenta
+	AND (d.codCargo IS NULL OR d.codCargo = @codEstadoPresidenta)
 	GROUP BY a.codAsociacion, a.nombreAsociacion, sz.codSectorZona, s.descripcion, z.descripcion,
 	a.direccion, p.nombres, p.apellidoPaterno, p.apellidoMaterno, e.descripcion, r.documento,
 	e.abreviatura, a.numeroFinca, a.observaciones, a.codTipoLocal

@@ -1,5 +1,8 @@
 $(document).ready(function () {
 
+    let nombreAsociacion
+    let codSector
+
     function listarAsociaciones(nombreAsociacion, codSector) {
         $.ajax({
             url: './controllers/asociacion/listarAsociaciones.php',
@@ -69,7 +72,7 @@ $(document).ready(function () {
         })
     }
 
-    listarAsociaciones();
+    listarAsociaciones(nombreAsociacion, codSector);
 
 //     nueva asociacion - abrir modal
     $(document).off("click", "#nuevaAsociacion").on("click", "#nuevaAsociacion", function(e) {
@@ -195,6 +198,21 @@ $(document).ready(function () {
             })
         }
     })
+
+    // Filtrar por nombre de la asociacion
+    $(document).off("input", "#nombreAsociacionFiltro").on("input", "#nombreAsociacionFiltro", function(e) {
+        nombreAsociacion = $(this).val();
+        listarAsociaciones(nombreAsociacion, codSector)
+    });
+
+    // Filtrar por sector
+    $(document).off("input", "#cboSectores").on("input", "#cboSectores", function(e) {
+        codSector = $(this).val();
+        if (codSector === 0){
+            codSector = undefined
+        }
+        listarAsociaciones(nombreAsociacion, codSector)
+    });
 
 
     function isFiledsValid(nombre, sector, direccion, tipoLocal) {

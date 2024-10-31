@@ -47,17 +47,10 @@ $(document).ready(function () {
                                         </span>
                                     </td>
                                     <td>
-                                        <div class="actions actions_asociaciones">
-                                        
-                                            ${abreviatura == 'i' ?
-                                `<img class="action action_habilitar" src="./assets/icons/action_habilitar.svg">` : ''}
-                                            
-                                            ${(abreviatura == 'a' || abreviatura == 'pr') ?
-                                `<img id="btnEditarAsociacion" class="action" src="./assets/icons/action_edit.svg">` : ''}    
-                                            
+                                        <div class="actions actions_asociaciones">     
                                             ${abreviatura == 'a' ?
-                                `<img class="action" src="./assets/icons/action_ver_detalle.svg">
-                                            <img class="action" src="./assets/icons/action_deshabilitar.svg">` : ''}                                            
+                                            `<img id="btnEditarAsociacion" class="action" src="./assets/icons/action_edit.svg">
+                                            <img class="action" src="./assets/icons/action_ver_detalle.svg">` : ''}                                            
                                         </div>
                                     </td>
                                 </tr>

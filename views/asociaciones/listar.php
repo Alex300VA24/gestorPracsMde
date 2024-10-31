@@ -5,7 +5,7 @@ require_once "../../config/parameters.php"
     <h1>Lista de Club de Madres</h1>
     <div class="filters_btn_new">
         <div class="filters">
-            <input type="text" placeholder="Buscar por nombre de club">
+            <input type="text" id="nombreAsociacionFiltro" placeholder="Buscar por nombre de club">
 
             <select id="cboSectores" class="form-select">
             </select>
