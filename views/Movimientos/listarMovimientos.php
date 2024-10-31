@@ -1,5 +1,5 @@
 <?php
-    require_once "../../config/parameters.php"
+require_once "../../config/parameters.php"
 ?>
 
 <div class="header_modules">
@@ -7,6 +7,7 @@
     <div class="filters_btn_new">
         <div class="filters">
             <input type="text" placeholder="Buscar por nombre o codigo">
+            
             <div class="container_clear_filters">
                 <img src="<?=base_url?>/assets/icons/clearFilters.svg">
             </div>
@@ -24,11 +25,11 @@
                 <tr>
                     <th>CodMovimiento</th>
                     <th>Producto</th>
-                    <th>Fecha</th>
+                    <th>Fecha Movimiento</th>
+                    <th>Unidad de Medida</th>
                     <th>Cantidad</th>
-                    <th>Unidad</th>
-                    <th>Valor Unitario</th>
-                    <th>Valor Total</th>
+                    <th>Precio Unitario</th>
+                    <th>Precio Total</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -52,4 +53,5 @@
 <?php  require_once "registro.php"?>
 
 
+<script src="<?= base_url?>ajax/productos_llenarCboProducto.js"></script>
 <script src="<?= base_url?>ajax/listarMovimientos.js"></script>

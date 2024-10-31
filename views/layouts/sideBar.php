@@ -43,6 +43,9 @@
         </div>
 
         <div>
+<<<<<<< HEAD
+            <a href="views/productos/listarProductos.php" class="option" id="optionProductos">
+=======
             <a href="views/reconocimientos/listar.php" class="option" id="optionReconocimientos">
                 <div class="containerIconOption">
                     <img src="<?=base_url?>/assets/icons/reconocimientos.svg" alt="">
@@ -55,6 +58,7 @@
 
         <div>
             <a href="views/productos/listarProductos.php" class="option" id="option">
+>>>>>>> 982b515273e029a05b869a8cace2c6195bd171e9
                 <div class="containerIconOption">
                     <img src="<?=base_url?>/assets/icons/productos.svg" alt="">
                 </div>
@@ -76,7 +80,7 @@
         </div>
 
         <div>
-            <a href="#" class="option" id="option">
+            <a href="views/pecosa/listarPecosas.php" class="option" id="option">
                 <div class="containerIconOption">
                     <img src="<?=base_url?>/assets/icons/pecosas.svg" alt="">
                 </div>
