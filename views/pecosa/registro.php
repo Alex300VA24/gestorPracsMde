@@ -1,10 +1,10 @@
-<div id="modalRegistrarPecosa" class="modalPecosa modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+<div id="modalRegistrarPecosa" class="modal modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalPecosa modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Registrar Pecosa</h5>
             </div>
-            <form class="formPecosa" id="registrarPecosaForm" action="" method="post">
+            <form class="" id="registrarPecosaForm" action="" method="post">
                 <div class="modal-body">
                     <div class="grid-container">
                         <div class="form-section">

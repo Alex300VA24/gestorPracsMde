@@ -579,25 +579,6 @@ input:focus-visible{
 
 }
 
-<<<<<<< HEAD
-.actions_productos{
-    grid-template-columns: repeat(2, 1fr);
-}
-
-.actions_productos .action_habilitar{
-    grid-column: 3/4;
-
-}
-
-/* Estilos tabla registro pecosa */
-
-.grid-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 20px;
-  }
-=======
 /* RECONOCIMIENTO */
 
 /* modal registrar reconocimiento */
@@ -615,4 +596,3 @@ input:focus-visible{
     width: 870px;
     min-width: 870px;
 }
->>>>>>> 982b515273e029a05b869a8cace2c6195bd171e9

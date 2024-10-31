@@ -36,3 +36,26 @@
     cursor: pointer;
     height: fit-content;
 }
+
+
+
+
+
+
+.actions_productos{
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.actions_productos .action_habilitar{
+    grid-column: 3/4;
+
+}
+
+/* Estilos tabla registro pecosa */
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
