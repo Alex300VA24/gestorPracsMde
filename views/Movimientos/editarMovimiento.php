@@ -1,14 +1,19 @@
-<div id="modalRegistrarMovimiento" class="modalMovimiento modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div id="modalEditarMovimiento" class="modalMovimiento modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Registrar Movimiento</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Editar Movimiento</h5>
             </div>
-            <form class="formMovimiento" id="registrarMovimientoForm" action="" method="post">
+            <form class="formMovimiento" id="editarMovimientoForm" action="" method="post">
                 <div class="modal-body">
+                    <input 
+                                type="number"
+                                id="codProducto"
+                                hidden="hidden"
+                    >
                     <div class="two-column">
                             <label for="producto">Producto (*):</label>
-                            <select id="cboProducto" class="form-select">
+                            <select id="cboProductoEdit" class="form-select">
                             </select>
                     </div>
 
@@ -16,7 +21,7 @@
                         <label for="precioUnitario">Precio Unitario (*):</label>
                         <input 
                                 type="text" 
-                                id="precioUnitario" 
+                                id="precioUnitarioEdit" 
                                 autocomplete="off"
                                 maxlength="100"
                                 >
@@ -26,7 +31,7 @@
                         <label for="fechaMovimiento">Fecha de Movimiento (*):</label>
                         <input 
                                 type="date" 
-                                id="fechaMovimiento" 
+                                id="fechaMovimientoEdit" 
                                 autocomplete="off"
                                 maxlength="100"
                                 >
@@ -36,7 +41,7 @@
                         <label for="documento">Documento (*):</label>
                         <input 
                                 type="text" 
-                                id="documento" 
+                                id="documentoEdit" 
                                 autocomplete="off"
                                 maxlength="100"
                                 >
@@ -46,7 +51,7 @@
                         <label for="cantidad">Cantidad (*):</label>
                         <input 
                                 type="text" 
-                                id="cantidad" 
+                                id="cantidadEdit" 
                                 autocomplete="off"
                                 maxlength="100"
                                 >
@@ -54,7 +59,7 @@
 
                     <div class="two-column">
                             <label for="tipoMovimiento">Tipo Movimiento (*):</label>
-                            <select id="cboTipoMovimiento" class="form-select">
+                            <select id="cboTipoMovimientoEdit" class="form-select">
                                 <option value=1>Ingreso</option>
                                 <option value=2>Salida</option>
                             </select>
@@ -63,7 +68,7 @@
                     <p>Todos los campos (*) son obligatorios</p>
 
                     <div class="containerButtonsModal">
-                        <input type="submit" class="btn btn-primary" value="Registrar">
+                        <input type="submit" class="btn btn-primary" value="Actualizar">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     </div>
                 </div>

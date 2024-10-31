@@ -14,7 +14,7 @@ $(document).ready(function () {
                     if (data && Array.isArray(data) && data.length > 0) {
                         row = data.map(({
                                             codProducto,codigo, descripcion, abreviatura, unidadMedida, 
-                                            estado, abreviaturaEstado, descripcionEstado
+                                            abreviaturaEstado, descripcionEstado
                                         }) => {
                             return `
                                 <tr>
