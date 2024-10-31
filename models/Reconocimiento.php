@@ -128,4 +128,34 @@ class Reconocimiento{
             ];
         }
     }
+
+    public function listarReconocimientos($documento, $codAsociacion){
+        $sql = "EXEC sp_reconocimiento_listar :documento, :codAsociacion";
+
+        try {
+            $stmt = DataBase::connect()->prepare($sql);
+            $stmt->bindParam('documento',$documento, PDO::PARAM_STR);
+            $stmt->bindParam('codAsociacion',$codAsociacion, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return [
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'lista de reconocimientoss',
+                'data' => $result,
+            ];
+
+        }catch (Exception $e){
+            return [
+                'status' => 'failed',
+                'code' => 500,
+                'message' => 'Ocurrio un error al momento de listar los reconocimientos',
+                'action' => 'listarReconocimientos',
+                'module' => 'reconocimiento',
+                'data' => [],
+                'info' => $e->getMessage()
+            ];
+        }
+    }
 }

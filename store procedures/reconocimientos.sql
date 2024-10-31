@@ -1,4 +1,38 @@
--- registrar reconocimiento ---
+-- listar reconocimientos por documento y/o asociacion
+
+CREATE OR ALTER PROCEDURE sp_reconocimiento_listar(
+	@documento VARCHAR(100) = NULL,
+	@codAsociacion INT = NULL
+)
+AS
+BEGIN
+	SELECT 
+	r.codReconocimiento, 
+	r.documento, 
+	r.fechaInicio, 
+	r.fechaFin,
+	a.nombreAsociacion,
+	s.descripcion 'sector',
+	CONCAT(p.nombres, ' ', p.apellidoPaterno, ' ', p.apellidoMaterno) 'presidenta',
+	e.abreviatura,
+	e.descripcion 'estado' 
+	FROM Reconocimientos r 
+	INNER JOIN Asociaciones a ON r.codAsociacion = a.codAsociacion
+	INNER JOIN SectoresZona sz ON a.codSectorZona = sz.codSectorZona
+	INNER JOIN Sectores s ON sz.codSector = s.codSector
+	INNER JOIN Directivas d ON r.codReconocimiento = d.codReconocimiento
+	INNER JOIN Socios so ON d.codSocio = so.codSocio
+	INNER JOIN Personas p ON so.codPersona = p.codPersona
+	INNER JOIN Cargos c ON d.codCargo = c.codCargo
+	INNER JOIN Estados e ON r.codEstado = e.codEstado
+	WHERE c.descripcion = 'presidenta'
+	AND (@documento IS NULL OR r.documento LIKE @documento + '%')
+	AND (@codAsociacion IS NULL OR a.codAsociacion = @codAsociacion)
+END
+GO
+
+
+-- registrar reconocimiento y directivas con cargos ---
 ALTER PROCEDURE sp_reconocimiento_directivas_registrar(
 	@codAsociacion INT,
 	@documento VARCHAR(100),
@@ -80,8 +114,5 @@ BEGIN
 	
 END
 GO
-
-
--- listar reconocimientos ---
 
 
