@@ -55,6 +55,10 @@ a{
     color: #fff;
 }
 
+.colorDisable{
+    background-color: #CAC7C7;
+}
+
 .btn-nuevo-registro img{
     width: 30px;
 }
@@ -123,7 +127,7 @@ a{
 }
 
 input{
-    background: rgba(245, 245, 245, 0.44);
+    background-color: #efefef;
     width: 100%;
     display: block;
     padding: 10px;
@@ -575,6 +579,7 @@ input:focus-visible{
 
 }
 
+<<<<<<< HEAD
 .actions_productos{
     grid-template-columns: repeat(2, 1fr);
 }
@@ -592,3 +597,22 @@ input:focus-visible{
     gap: 20px;
     margin-bottom: 20px;
   }
+=======
+/* RECONOCIMIENTO */
+
+/* modal registrar reconocimiento */
+.header_container_data{
+    padding: 10px 0;
+    border-bottom: 1px solid #000;
+    margin-bottom: 5px;
+}
+.header_container_data h2{
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.modalReconocimiento{
+    width: 870px;
+    min-width: 870px;
+}
+>>>>>>> 982b515273e029a05b869a8cace2c6195bd171e9

@@ -41,3 +41,8 @@ require_once "../../config/parameters.php"
         </tbody>
     </table>
 </div>
+
+<?php require_once "registro.php" ?>
+
+<script src="<?= base_url?>ajax/reconocimientos_CRUD.js"></script>
+<script src="<?= base_url?>ajax/asociaciones_llenarCboAsocNuevaRecVencido.js"></script>

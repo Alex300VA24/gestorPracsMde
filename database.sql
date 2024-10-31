@@ -100,7 +100,7 @@ CREATE TABLE Reconocimientos(
 	codReconocimiento INT NOT NULL IDENTITY(1,1),
 	codAsociacion INT NOT NULL,
 	documento VARCHAR(100) NOT NULL,
-	fechaDocumento DATE NOT NULL,
+	fechaDocumento DATETIME DEFAULT GETDATE(),
 	fechaInicio DATE NOT NULL,
 	fechaFin DATE NOT NULL,
 	codEstado INT NOT NULL,
@@ -150,8 +150,7 @@ CREATE TABLE Personas (
     ),
 	codSectorZona INT NOT NULL,
     direccion VARCHAR(100) NOT NULL,
-    numeroFinca INT,
-    codEstado INT NOT NULL
+    numeroFinca INT    
     PRIMARY KEY(codPersona),
     FOREIGN KEY(codSectorZona) REFERENCES SectoresZona(codSectorZona)
 );
