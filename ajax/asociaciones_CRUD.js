@@ -18,7 +18,7 @@ $(document).ready(function () {
                         row = data.map(({
                                             codAsociacion, nombreAsociacion, codSectorZona,
                                             sector, direccion, presidenta, cantidadBeneficiarios,
-                                            documento, abreviatura, estado, numeroFinca, observaciones, codTipoLocal
+                                            documento, abreviatura, estado, numeroFinca, observaciones, codTipoLocal, tipoLocal
                                         }) => {
                             return `
                                 <tr>
@@ -45,13 +45,14 @@ $(document).ready(function () {
                                 `<img id="btnEditarAsociacion" class="action" src="./assets/icons/action_edit.svg">` : ''}    
                                             
                                             ${abreviatura == 'a' ?
-                                `<img class="action" src="./assets/icons/action_ver_detalle.svg">
+                                `<img id="btnDetalleAsociacion" class="action" src="./assets/icons/action_ver_detalle.svg">
                                             <img class="action" src="./assets/icons/action_deshabilitar.svg">` : ''}                                            
                                         </div>
                                     </td>
                                     <td hidden="hidden">${numeroFinca}</td>
                                     <td hidden="hidden">${observaciones}</td>
                                     <td hidden="hidden">${codTipoLocal}</td>
+                                    <td hidden="hidden">${tipoLocal}</td>
                                 </tr>
                             `
                         })
@@ -204,6 +205,107 @@ $(document).ready(function () {
         nombreAsociacion = $(this).val();
         listarAsociaciones(nombreAsociacion, codSector)
     });
+
+    // Detalle de la asociacion
+    $(document).off("click", "#btnDetalleAsociacion").on("click", "#btnDetalleAsociacion", function(e) {
+
+        let fila = $(this).closest("tr");
+        let codAsociacion = fila.find('td:eq(0)').text();
+        let nombreAsociacion = fila.find('td:eq(1)').text();
+        let sectorZona = fila.find('td:eq(3)').text();
+        let direccion = fila.find('td:eq(4)').text();
+        let numeroFinca = fila.find('td:eq(10)').text();
+        let observaciones = fila.find('td:eq(11)').text();
+        let tipoLocal = fila.find('td:eq(13)').text();
+
+        $.ajax({
+            url: './controllers/reconocimiento/listar.php',
+            method: 'GET',
+            dataType: 'json',
+            data: {codAsociacion},
+            success: function (response) {
+                const {code, message, info, data} = response;
+
+                if (code === 200) {
+                    $("#nombreAsociacionDetalle").val(nombreAsociacion)
+                    $("#sectorZonaAsociacionDetalle").val(sectorZona)
+                    $("#direccionAsociacionDetalle").val(direccion)
+                    $("#tipoLocalAsociacionDetalle").val(tipoLocal)
+                    $("#numeroFincaAsociacionDetalle").val(numeroFinca)
+                    $("#obervacionAsociacionDetalle").val(observaciones)
+
+                    let reconocimientos = data.map(reconocimiento => {
+                        return `
+                        <div class="detalle-reconocimiento">
+                            <div class="detalle-reconocimiento__estado"></div>
+                            <div class="two-column">
+                                <label for="documento">Documento:</label>
+                                <input
+                                        disabled
+                                        class="colorDisable"
+                                        type="text"                                       
+                                        value="${reconocimiento.documento}"
+                                >
+                            </div>
+                            <div>
+                                <div class="fecha-inicio">
+                                    <label>Fecha Inicio:</label>
+                                    <input
+                                            disabled
+                                            class="colorDisable"
+                                            type="date"
+                                            value="${reconocimiento.fechaInicio}"                                           
+                                    >
+                                </div>
+
+                                <div class="fecha-fin">
+                                    <label>Fecha Fin:</label>
+                                    <input
+                                            disabled
+                                            class="colorDisable"
+                                            type="date"
+                                            value="${reconocimiento.fechaFin}"
+                                    >
+                                </div>
+                            </div>
+                        </div>                                                                      
+                        `
+                    })
+
+                    $('.modal-body-detalle-reconocimientos').html(reconocimientos)
+                }
+
+                if (code === 500) {
+                    showErrorInternalServer(message, info)
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error('Error asociacionesCRUD.js: ', textStatus, errorThrown);
+            }
+        })
+
+
+
+        console.log('abriendo modal')
+        e.preventDefault();
+        let modalDetalle = $("#modalDetalleAsociacion");
+        $("#detalleAsociacionForm").trigger("reset");
+
+        modalDetalle.modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+
+        modalDetalle.modal('show');
+
+        modalDetalle.one('shown.bs.modal', function() {
+            $("#nombresNuevo").focus();
+        });
+    });
+
+    function obtenerReconocimientos() {
+
+    }
 
     // Filtrar por sector
     $(document).off("input", "#cboSectores").on("input", "#cboSectores", function(e) {

@@ -557,6 +557,74 @@ input:focus-visible{
     background-color: #F12A2A;
 }
 
+/* modal detalle reconocimiento */
+
+.modalAsocacionDetalle{
+    width: 1000px;
+    min-width: 800px;
+}
+
+.formAsociacionDetalle{
+    padding: 10px 20px;
+}
+
+.modal-body-detalle-asociacion input,
+.modal-body-detalle-reconocimientos input {
+    margin-bottom: 0;
+    color: #000;
+}
+
+.modal-body-detalle-asociacion{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+}
+
+.detalle-reconocimiento{
+    padding: 10px 20px;
+    display: grid;
+    grid-template-columns: 30px repeat(2, 1fr);
+    gap: 50px;
+    align-items: center;
+    justify-content: center;
+}
+
+.detalle-reconocimiento:nth-child(even){
+    background-color: #E3E3E3;
+}
+
+.detalle-reconocimiento__estado{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #F12A2A;
+    justify-self: center;
+}
+
+.detalle-reconocimiento:first-child .detalle-reconocimiento__estado{
+    background-color: #33cb67;
+}
+
+.modal-body-detalle-reconocimientos{
+    max-height: 320px;
+    overflow-y: auto;
+}
+
+.modal-body-detalle-reconocimientos .fecha-inicio,
+.modal-body-detalle-reconocimientos .fecha-fin{
+    display: flex;
+    align-items: center;
+}
+
+.modal-body-detalle-reconocimientos .fecha-inicio{
+    margin-bottom: 5px;
+}
+
+.modal-body-detalle-reconocimientos .fecha-inicio label,
+.modal-body-detalle-reconocimientos .fecha-fin label{
+    flex: 200px;
+}
+
 
 /* Estilos tabla asociaciones, productos */
 .containerTable .tableAsociaciones .tableProductos .tableMovimientos tr td:nth-child(6){
@@ -581,7 +649,6 @@ input:focus-visible{
 
 .actions_asociaciones .action_habilitar{
     grid-column: 3/4;
-
 }
 
 /* RECONOCIMIENTO */

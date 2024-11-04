@@ -44,6 +44,7 @@ require_once "../../config/parameters.php"
 
 <?php require_once  "registrar.php"?>
 <?php require_once  "editar.php"?>
+<?php require_once  "detalle.php"?>
 
 <script src="<?= base_url?>ajax/sectores_llenarCboSectores.js"></script>
 <script src="<?= base_url?>ajax/sectoresZona_llenarCboSectoresZona.js"></script>

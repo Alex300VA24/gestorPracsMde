@@ -10,10 +10,11 @@ BEGIN
 	SELECT @codEstadoPresidenta = codCargo FROM Cargos WHERE descripcion = 'presidenta'
 
 	SELECT a.codAsociacion, a.nombreAsociacion, sz.codSectorZona, CONCAT(s.descripcion, ' - ', z.descripcion) 'sector', a.direccion, a.numeroFinca, a.observaciones,
-	a.codTipoLocal,
+	a.codTipoLocal, t.descripcion 'tipoLocal',
 	CONCAT(p.nombres, ' ', p.apellidoPaterno, ' ', p.apellidoMaterno) 'presidenta', COUNT(b.codBeneficiario) 'cantidadBeneficiarios',
 	r.documento, e.abreviatura, e.descripcion 'estado'
 	FROM Asociaciones a 
+	INNER JOIN TiposLocal t ON a.codTipoLocal = t.codTipoLocal
 	INNER JOIN SectoresZona sz ON a.codSectorZona = sz.codSectorZona
 	INNER JOIN Sectores s ON sz.codSector = s.codSector	
 	INNER JOIN Zonas z ON sz.codZona = z.codZona
@@ -30,7 +31,7 @@ BEGIN
 	AND (d.codCargo IS NULL OR d.codCargo = @codEstadoPresidenta)
 	GROUP BY a.codAsociacion, a.nombreAsociacion, sz.codSectorZona, s.descripcion, z.descripcion,
 	a.direccion, p.nombres, p.apellidoPaterno, p.apellidoMaterno, e.descripcion, r.documento,
-	e.abreviatura, a.numeroFinca, a.observaciones, a.codTipoLocal
+	e.abreviatura, a.numeroFinca, a.observaciones, a.codTipoLocal, t.descripcion
 END
 GO
 
