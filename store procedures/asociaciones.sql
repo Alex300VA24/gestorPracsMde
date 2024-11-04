@@ -28,7 +28,7 @@ BEGIN
 	(@codSector IS NULL OR s.codSector = @codSector)
 	AND 
 	(@nombreAsociacion IS NULL OR a.nombreAsociacion LIKE @nombreAsociacion+'%')	
-	AND (d.codCargo IS NULL OR d.codCargo = @codEstadoPresidenta)
+	AND (d.codCargo IS NULL OR d.codCargo = @codEstadoPresidenta)	
 	GROUP BY a.codAsociacion, a.nombreAsociacion, sz.codSectorZona, s.descripcion, z.descripcion,
 	a.direccion, p.nombres, p.apellidoPaterno, p.apellidoMaterno, e.descripcion, r.documento,
 	e.abreviatura, a.numeroFinca, a.observaciones, a.codTipoLocal, t.descripcion
@@ -85,5 +85,26 @@ BEGIN
 
 	SELECT codAsociacion, nombreAsociacion FROM Asociaciones 
 	WHERE codEstado = @CodEstadoPendienteReconocimiento OR codEstado = @CodEstadoReconocimientoVencido
+END
+GO
+
+--- listar asociaciones ---
+CREATE OR ALTER PROCEDURE sp_asociacion_listar_activas
+AS
+BEGIN
+	SELECT a.codAsociacion, a.nombreAsociacion,
+	s.codSocio 'codSocioPresidenta',
+	CONCAT(p.nombres, ' ', p.apellidoPaterno, ' ', p.apellidoMaterno) 'presidenta'
+	FROM Asociaciones a 
+	INNER JOIN Reconocimientos r ON a.codAsociacion = r.codAsociacion
+	INNER JOIN Directivas d ON r.codReconocimiento = d.codReconocimiento
+	INNER JOIN Cargos c ON d.codCargo = c.codCargo
+	INNER JOIN Estados ea ON a.codEstado = ea.codEstado
+	INNER JOIN Estados ed ON d.codEstado = ed.codEstado
+	INNER JOIN Socios s ON d.codSocio = s.codSocio
+	INNER JOIN Personas p ON s.codPersona = p.codPersona
+	WHERE c.descripcion = 'presidenta'
+	AND ea.abreviatura = 'a'
+	AND ed.abreviatura = 'a'
 END
 GO
