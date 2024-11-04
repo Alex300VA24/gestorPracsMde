@@ -13,22 +13,27 @@ $(document).ready(function () {
                     let row = '';
                     if (data && Array.isArray(data) && data.length > 0) {
                         row = data.map(({
-                                            codMovimiento, codProducto, fechaMovimiento, cantidad, unidadMedida,
-                                            precioUnitario, precioTotal, codTipoMovimiento
+                                            codMovimiento, codProducto, descripcion,fechaMovimiento, cantidad, unidadMedida,
+                                            precioUnitario, precioTotal, documento, codTipoMovimiento, descripcionTipoMov
                                         }) => {
                             return `
                                 <tr>
                                     <td>${codMovimiento}</td>
-                                    <td>${codProducto}</td>
-                                    <td>${fechaMovimiento.split(' ')[0]}</td>                                                                      
+                                    <td hidden="hidden">${codProducto}</td>
+                                    <td>${descripcion}</td>
+                                    <td>${fechaMovimiento.split(' ')[0]}</td> 
+                                    <td>${documento}</td>                                                                     
                                     <td>${unidadMedida}</td>
                                     <td>${cantidad}</td>
                                     <td>${precioUnitario}</td>
                                     <td>${precioTotal}</td>
+                                    <td hidden="hidden">${codTipoMovimiento}</td>
+                                    <td hidden="hidden">${descripcionTipoMov}</td>
+
                                     <td>
                                         <div class="actions actions_productos">
                              
-                                <img id="btnEditarProducto" class="action" src="./assets/icons/action_edit.svg">
+                                <img id="btnEditarMovimiento" class="action" src="./assets/icons/action_edit.svg">
                                         </div>
                                     </td>
                                 </tr>
@@ -116,20 +121,20 @@ $(document).ready(function () {
         let fila = $(this).closest("tr");
         let codMovimiento = fila.find('td:eq(0)').text();
         let codProducto = fila.find('td:eq(1)').text();
-        let precioUnitario = fila.find('td:eq(2)').text();
-        let fechaMovimiento = fila.find('td:eq(2)').text();
-        let documento = fila.find('td:eq(2)').text();
+        let fechaMovimiento = fila.find('td:eq(3)').text();
+        let documento = fila.find('td:eq(4)').text();
         let cantidad = fila.find('td:eq(6)').text();
-        let codTipoMovimiento = fila.find('td:eq(6)').text();
+        let precioUnitario = fila.find('td:eq(7)').text();
+        let codTipoMovimiento = fila.find('td:eq(9)').text();
 
         console.log({codMovimiento, codProducto, precioUnitario})
 
         $("#codMovimiento").val(codMovimiento.trim());
         $("#cboProductoEdit").val(codProducto);
-        $("#precioUnitarioEdit").val(precioUnitario.trim());
         $("#fechaMovimientoEdit").val(fechaMovimiento.trim());
-        $("#documentoEdit").val(documento.trim());
         $("#cantidadEdit").val(cantidad.trim());
+        $("#precioUnitarioEdit").val(precioUnitario.trim());
+        $("#documentoEdit").val(documento.trim());
         $("#cboTipoMovimientoEdit").val(codTipoMovimiento);
 
         modalEditar.modal({
@@ -140,7 +145,7 @@ $(document).ready(function () {
         modalEditar.modal('show');
 
         modalEditar.one('shown.bs.modal', function() {
-            $("#codigoEdit").focus();
+            $("#cboProductoEdit").focus();
         });
     });
 

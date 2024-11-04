@@ -59,7 +59,7 @@
 
                     <div class="two-column">
                             <label for="tipoMovimiento">Tipo Movimiento (*):</label>
-                            <select id="cboTipoMovimientoEdit" class="form-select">
+                            <select id="cboTipoMovimientoEdit" class="form-select" disabled>
                                 <option value=1>Ingreso</option>
                                 <option value=2>Salida</option>
                             </select>

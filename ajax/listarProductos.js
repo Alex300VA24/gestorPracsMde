@@ -14,7 +14,7 @@ $(document).ready(function () {
                     if (data && Array.isArray(data) && data.length > 0) {
                         row = data.map(({
                                             codProducto,codigo, descripcion, abreviatura, unidadMedida, 
-                                            abreviaturaEstado, descripcionEstado
+                                            abreviaturaEstado, descripcionEstado, stock
                                         }) => {
                             return `
                                 <tr>
@@ -23,6 +23,7 @@ $(document).ready(function () {
                                     <td>${descripcion}</td>                                   
                                     <td>${abreviatura}</td>                                   
                                     <td>${unidadMedida}</td>
+                                    <td>${stock}</td>
                                     <td>
                                         <span class="estado ${abreviaturaEstado === "a" ? 'active' : 'inactive'}">
                                             ${descripcionEstado}

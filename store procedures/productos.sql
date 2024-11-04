@@ -1,6 +1,6 @@
 
 -- REGISTRO PRODUCTOS
-CREATE PROCEDURE sp_producto_registrar
+CREATE OR ALTER PROCEDURE sp_producto_registrar
 	@codigo INT,
     @descripcion VARCHAR(100),
     @abreviatura VARCHAR(5),
@@ -13,15 +13,15 @@ BEGIN
 
 		SELECT @codEstadoProducto = codEstado FROM Estados WHERE abreviatura = 'a';
 
-        INSERT INTO Productos (codigo, descripcion, abreviatura, unidadMedida, codEstado)
-        VALUES (@codigo, @descripcion, @abreviatura, @unidadMedida, @codEstadoProducto);
+        INSERT INTO Productos (codigo, descripcion, abreviatura, unidadMedida, codEstado, stock)
+        VALUES (@codigo, @descripcion, @abreviatura, @unidadMedida, @codEstadoProducto, 0);
 
     END
 	
 END;
 
 --- LISTA DE PRODUCTOS
-CREATE PROCEDURE [dbo].[sp_producto_listar](
+CREATE OR ALTER PROCEDURE sp_producto_listar (
     @Descripcion VARCHAR(100) = NULL,
     @Codigo INT = NULL
  
@@ -38,7 +38,7 @@ END;
 
 
 ---ACTUALIZAR PRODUCTOS
-CREATE PROCEDURE sp_producto_actualizar (
+CREATE OR ALTER PROCEDURE sp_producto_actualizar (
 	@codProducto INT,
 	@codigo INT,
 	@descripcion VARCHAR(100),
