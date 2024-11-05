@@ -198,7 +198,7 @@ CREATE TABLE HistoricoBeneficiarios(
 	peso DECIMAL(3,3),
 	talla DECIMAL(3,2),
 	hmg DECIMAL(3,2),
-	fechaInicio DATETIME DEFAULT GETDATE(),
+	fechaInicio DATETIME,
 	fechaTermino DATETIME,
 	codEstado INT NOT NULL,
 	codMotivoInhabilitacion INT NOT NULL,

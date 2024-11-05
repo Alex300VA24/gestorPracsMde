@@ -88,7 +88,23 @@ BEGIN
 END
 GO
 
---- listar asociaciones ---
+-- listar asociaciones activas, con reconocimiento activo, pendiente o vencido
+CREATE OR ALTER PROCEDURE sp_asociaciones_listar_nuevas_rec_pendiente_rec_vencido
+AS
+BEGIN
+	SELECT a.codAsociacion, a.nombreAsociacion, ea.descripcion 'estado asociacion'
+	FROM Asociaciones a
+	INNER JOIN Estados ea ON a.codEstado = ea.codEstado
+	LEFT JOIN Reconocimientos r ON a.codAsociacion = r.codAsociacion	
+	WHERE
+	ea.abreviatura = 'pr'
+	OR ea.abreviatura = 'a'	
+	OR ea.abreviatura = 'rv'
+END
+GO
+
+
+--- listar asociaciones activas ---
 CREATE OR ALTER PROCEDURE sp_asociacion_listar_activas
 AS
 BEGIN
@@ -103,8 +119,10 @@ BEGIN
 	INNER JOIN Estados ed ON d.codEstado = ed.codEstado
 	INNER JOIN Socios s ON d.codSocio = s.codSocio
 	INNER JOIN Personas p ON s.codPersona = p.codPersona
+	INNER JOIN Estados er ON r.codEstado = er.codEstado
 	WHERE c.descripcion = 'presidenta'
 	AND ea.abreviatura = 'a'
 	AND ed.abreviatura = 'a'
+	AND er.abreviatura = 'a'
 END
 GO
