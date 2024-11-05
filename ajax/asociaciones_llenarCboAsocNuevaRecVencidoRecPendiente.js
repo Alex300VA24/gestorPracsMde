@@ -1,20 +1,17 @@
 $(document).ready(function () {
     $.ajax({
-        url: './controllers/sectorZona/listarSectoresYZonas.php',
+        url: './controllers/asociacion/listarAsociacionesNuevasRecVencidoRecActivo.php',
         method: 'GET',
         dataType: 'json',
         success: function (response) {
-            const { code, data } = response;
-
+            const {code, data} = response;
+            console.log(response)
             if (code === 200) {
                 let options = `<option value=0>Seleccionar</option>` +
-                    data.map(({codSectorZona, sector, zona}) => {
-                        return `<option value="${codSectorZona}">${sector} - ${zona}</option>`
+                    data.map(({codAsociacion, nombreAsociacion}) => {
+                        return `<option value="${codAsociacion}">${nombreAsociacion}</option>`
                     })
-                $('#cboSectoresZonas').html(options);
-                $('#cboSectoresZonasEdit').html(options)
-                $('#cboSectorZonaRegistroSocio').html(options)
-                $('#cboSectorZonaRegistroBeneficiario').html(options)
+                $('#cboClubDeMadresActivos').html(options);
             }
 
             if (code === 500) {
@@ -23,9 +20,10 @@ $(document).ready(function () {
 
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            console.error('Error sectoresZona_llenarCboSectoresZona.js: ', textStatus, errorThrown);
+            console.error('Error asociaciones_llenarCboAsocNuevaRecVencido.js: ', textStatus, errorThrown);
         }
     })
+
 
     function showErrorInternalServer(message, info) {
         Swal.fire({
@@ -37,3 +35,4 @@ $(document).ready(function () {
         });
     }
 })
+

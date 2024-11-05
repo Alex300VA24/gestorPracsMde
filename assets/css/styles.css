@@ -668,3 +668,110 @@ input:focus-visible{
     width: 870px;
     min-width: 870px;
 }
+
+/* SOCIOS */
+
+/* modal registrar socios y beneficiarios */
+.modalRegistroSocio{
+    width: 1400px;
+    min-width: 1250px;
+}
+
+.modalRegistroSocio input{
+    margin-bottom: 0;
+    padding: 7px;
+}
+
+.modalRegistroSocio select{
+    padding: 5px;
+}
+
+.formDatosSocio .body_container_data,
+.formDatosBeneficiario .body_container_data,
+.formDatosSocio .body_container_data select,
+.formDatosBeneficiario .body_container_data select{
+    font-size: 12px;
+}
+
+.modalRegistroSocio form{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    padding: 10px 20px;
+}
+
+.formDatosSocio .body_container_data div label,
+.formDatosBeneficiario .body_container_data div label{
+    width: 130px;
+}
+
+.formDatosSocio .body_container_data div select,
+.formDatosBeneficiario .body_container_data div select{
+    width: 150px;
+}
+
+.formDatosSocio .body_container_data div input,
+.formDatosBeneficiario .body_container_data div input{
+    width: 150px;
+}
+
+.formDatosSocio .body_container_data div,
+.formDatosBeneficiario .body_container_data div{
+    display: flex;
+}
+
+.formDatosSocio .body_container_data,
+.formDatosBeneficiario .body_container_data{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.formDatosSocio .body_container_data input[type="radio"]{
+    width: 20px;
+}
+
+.formDatosSocio .body_container_data .options_socio_beneficiario{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+}
+
+.formDatosSocio .body_container_data .options_socio_beneficiario div:nth-child(2){
+    margin-right: 20px;
+}
+
+.formDatosSocio .body_container_data .options_socio_beneficiario div{
+    display: flex;
+    gap: 5px;
+}
+
+.formDatosSocio .body_container_data .observaciones label{
+    width: 160px;
+}
+
+.formDatosSocio .body_container_data .observaciones{
+    grid-column: 1/3;
+}
+
+.formDatosSocio .body_container_data div:last-child label{
+    width: 160px;
+}
+
+.modalRegistroSocio .detalleBeneficiarios{
+    grid-column: 1/3;
+}
+
+/* Btn agregar beneficiario */
+.formDatosBeneficiario .btnAgregarSocio{
+    cursor: pointer;
+    background-color: var(--bg-color-principal);
+    justify-self: right;
+    grid-column: 2/3;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    justify-content: center;
+    width: 100px;
+    font-weight: 700;
+}

@@ -310,9 +310,10 @@ $(document).ready(function () {
     // Filtrar por sector
     $(document).off("input", "#cboSectores").on("input", "#cboSectores", function(e) {
         codSector = $(this).val();
-        if (codSector === 0){
+        if (codSector === 0 || codSector === '0'){
             codSector = undefined
         }
+        console.log({nombreAsociacion, codSector})
         listarAsociaciones(nombreAsociacion, codSector)
     });
 

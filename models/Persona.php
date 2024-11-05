@@ -20,6 +20,22 @@ class Persona{
     private int $numeroFinca;
     private int $codEstado;
 
+    public function __construct(int $codPersona, string $nombres, string $apellidoPaterno, string $apellidoMaterno, string $dni, string $sexo, string $telefono, string $celular, string $fechaNacimiento, int $codSectorZona, string $direccion, int $numeroFinca)
+    {
+        $this->codPersona = $codPersona;
+        $this->nombres = $nombres;
+        $this->apellidoPaterno = $apellidoPaterno;
+        $this->apellidoMaterno = $apellidoMaterno;
+        $this->dni = $dni;
+        $this->sexo = $sexo;
+        $this->telefono = $telefono;
+        $this->celular = $celular;
+        $this->fechaNacimiento = $fechaNacimiento;
+        $this->codSectorZona = $codSectorZona;
+        $this->direccion = $direccion;
+        $this->numeroFinca = $numeroFinca;
+    }
+
     public function getCodPersona(): int{
         return $this->codPersona;
     }

@@ -10,7 +10,7 @@
         </div>
 
         <div>
-            <a href="#" class="option" id="option">
+            <a href="views/socios/listar.php" class="option" id="option">
                 <div class="containerIconOption">
                     <img src="<?=base_url?>/assets/icons/socias.svg" alt="">
                 </div>

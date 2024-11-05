@@ -1,14 +1,26 @@
 <?php
 
-class Socio{
+include_once "./Persona.php";
+
+class Socio extends Persona {
     private int $codSocio;
     private int $codAsociacion;
     private string $nombreAsociacion;
     private string $fechaInicio;
     private string $fechaFin;
     private string $observaciones;
-    private string $codEstado;
+    private int $codEstado;
     private string $descripcionEstado;
+
+    public function __construct(int $codSocio, int $codAsociacion,
+                                int $codPersona, string $nombres, string $apellidoPaterno, string $apellidoMaterno,
+                                string $dni, string $sexo, string $telefono, string $celular, string $fechaNacimiento,
+                                int $codSectorZona, string $direccion, int $numeroFinca){
+        parent::__construct($codPersona, $nombres, $apellidoPaterno, $apellidoMaterno,
+            $dni, $sexo, $telefono, $celular, $fechaNacimiento, $codSectorZona, $direccion, $numeroFinca);
+        $this->codSocio = $codSocio;
+        $this->codAsociacion = $codAsociacion;
+    }
 
     public function getCodSocio(): int{
         return $this->codSocio;
@@ -58,11 +70,11 @@ class Socio{
         $this->observaciones = $observaciones;
     }
 
-    public function getCodEstado(): string{
+    public function getCodEstado(): int{
         return $this->codEstado;
     }
 
-    public function setCodEstado(string $codEstado): void{
+    public function setCodEstado(int $codEstado): void{
         $this->codEstado = $codEstado;
     }
 

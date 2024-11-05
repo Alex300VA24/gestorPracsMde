@@ -259,4 +259,67 @@ class Asociacion{
         }
     }
 
+    function listarAsociacionesNuevasReconocimientoVencidoOPendiente(){
+        $sql = "EXEC sp_asociaciones_listar_nuevas_rec_pendiente_rec_vencido";
+
+        try {
+            $stmt = DataBase::connect()->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return [
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'lista de asociaciones nuevas, con reconocimiento vencido o pendiente de reconocimiento',
+                'action' => 'listarAsociacionesNuevasReconocimientoVencidoOPendiente',
+                'module' => 'asociacion',
+                'data' => $result,
+                'info' => '',
+            ];
+
+
+        }catch (PDOException $e){
+            return [
+                'status' => 'failed',
+                'code' => 500,
+                'message' => 'Ocurrio un error al momento de listar las asociaciones nuevas, con reconocimiento vencido o pendiente de reconocimiento',
+                'action' => 'listarAsociacionesNuevasReconocimientoVencidoOPendiente',
+                'module' => 'asociacion',
+                'data' => [],
+                'info' => $e->getMessage()
+            ];
+        }
+    }
+
+    function listarAsociacionesActivas(){
+        $sql = "EXEC sp_asociacion_listar_activos";
+
+        try {
+            $stmt = DataBase::connect()->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return [
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'lista de asociaciones activas',
+                'action' => 'listarAsociacionesActivas',
+                'module' => 'asociacion',
+                'data' => $result,
+                'info' => '',
+            ];
+
+
+        }catch (PDOException $e){
+            return [
+                'status' => 'failed',
+                'code' => 500,
+                'message' => 'Ocurrio un error al momento de listar las asociaciones activas',
+                'action' => 'listarAsociacionesActivas',
+                'module' => 'asociacion',
+                'data' => [],
+                'info' => $e->getMessage()
+            ];
+        }
+    }
 }
