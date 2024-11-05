@@ -164,7 +164,7 @@
                             <label for="dni">DNI (*):</label>
                             <input
                                     type="text"
-                                    id="dniSocioRegistro"
+                                    id="dniBeneficiarioRegistro"
                                     autocomplete="off"
                                     maxlength="8"
                             >

@@ -1,5 +1,5 @@
 --- listar asociaciones ---
-CREATE OR ALTER PROCEDURE sp_asociacion_listar(
+CREATE PROCEDURE sp_asociacion_listar(
 	@nombreAsociacion VARCHAR(100) = NULL,
 	@codSector INT = NULL
 )

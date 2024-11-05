@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    let optionSelected
+
     //     nueva asociacion - abrir modal
     // $(document).off("click", "#btnNuevoSocio").on("click", "#btnNuevoSocio", function(e) {
         // e.preventDefault();
@@ -18,9 +20,20 @@ $(document).ready(function () {
         });
     // });
 
-    // Filtrar por nombre de la asociacion
-    $(document).off("input change", "#optionSocioBeneficiario").on("input change", "#optionSocioBeneficiario", function(e) {
-        console.log($(this).val())
+    $(document).off("input", "#dniSocioRegistro").on("input change", "dniSocioRegistro", function(e) {
+        console.log('bene')
+        if (optionSelected === 1){
+            $("#dniBeneficiarioRegistro").val($(this).val());
+        }
+    })
+
+    // Socio es beneficiario
+    $(document).off("input change", "input[name='optionSocioBeneficiario']").on("input change", "input[name='optionSocioBeneficiario']", function(e) {
+        optionSelected = $(this).val();
+
+        if(optionSelected === 0){
+            $("#dniBeneficiarioRegistro").val();
+        }
     });
 
 })

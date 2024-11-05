@@ -1,6 +1,6 @@
 -- listar reconocimientos por documento y/o asociacion
 
-CREATE OR ALTER PROCEDURE sp_reconocimiento_listar(
+CREATE PROCEDURE sp_reconocimiento_listar(
 	@documento VARCHAR(100) = NULL,
 	@codAsociacion INT = NULL
 )
@@ -33,7 +33,7 @@ GO
 
 
 -- registrar reconocimiento y directivas con cargos ---
-ALTER PROCEDURE sp_reconocimiento_directivas_registrar(
+CREATE PROCEDURE sp_reconocimiento_directivas_registrar(
 	@codAsociacion INT,
 	@documento VARCHAR(100),
 	@fechaInicio DATE,
