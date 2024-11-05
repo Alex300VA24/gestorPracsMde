@@ -27,6 +27,7 @@
                     <th>Descripcion</th>
                     <th>Abreviatura</th>
                     <th>Unidad de Medida</th>
+                    <th>Stock</th>
                     <th>Estado</th>
                     <th>Acciones</th>
                 </tr>

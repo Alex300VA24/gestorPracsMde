@@ -1,5 +1,5 @@
 ---REGISTRO MOVIMIENTOS
-CREATE PROCEDURE sp_movimiento_registrar (
+CREATE OR ALTER PROCEDURE sp_movimiento_registrar (
     @codProducto INT,
     @codTipoMovimiento INT,
     @fechaMovimiento DATETIME,
@@ -36,7 +36,7 @@ BEGIN
         
     );
 
-	 -- Actualiza el stock en la tabla Producto según el tipo de movimiento
+	 -- Actualiza el stock en la tabla Producto segÃºn el tipo de movimiento
     IF @codTipoMovimiento = 1 -- Ejemplo: 1 = Entrada de producto
     BEGIN
         UPDATE Productos
@@ -53,16 +53,18 @@ END;
 
 
 --- LISTAR MOVIMIENTOS
-CREATE PROCEDURE sp_movimiento_listar (
+CREATE OR ALTER PROCEDURE sp_movimiento_listar (
 	@descripcion VARCHAR(100) = NULL,
 	@Codigo INT = NULL
 )
 AS
 BEGIN
-	select m.codMovimiento, m.fechaMovimiento, m.cantidad, m.precioUnitario, m.precioTotal, p.descripcion, p.unidadMedida
+	select m.codMovimiento, p.codProducto,tp.codTipoMovimiento, m.fechaMovimiento, m.cantidad, m.precioUnitario, 
+	m.precioTotal, p.descripcion, tp.descripcion AS 'descripcionTipoMov', p.unidadMedida, m.documento
 	from
 	Movimientos m
 	INNER JOIN Productos p ON m.codProducto = p.codProducto
+	INNER JOIN TipoMovimiento tp ON m.codTipoMovimiento = tp.codTipoMovimiento
 	WHERE (@descripcion IS NULL OR p.descripcion LIKE @descripcion + '%')
 	AND (@Codigo IS NULL OR p.codigo = @Codigo);
 END;

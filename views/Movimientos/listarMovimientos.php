@@ -26,6 +26,7 @@ require_once "../../config/parameters.php"
                     <th>CodMovimiento</th>
                     <th>Producto</th>
                     <th>Fecha Movimiento</th>
+                    <th>Documento</th>
                     <th>Unidad de Medida</th>
                     <th>Cantidad</th>
                     <th>Precio Unitario</th>
@@ -51,7 +52,7 @@ require_once "../../config/parameters.php"
 </div>
 
 <?php  require_once "registro.php"?>
-
+<?php  require_once "editarMovimiento.php"?>
 
 <script src="<?= base_url?>ajax/productos_llenarCboProducto.js"></script>
 <script src="<?= base_url?>ajax/listarMovimientos.js"></script>
