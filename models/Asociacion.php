@@ -292,7 +292,7 @@ class Asociacion{
     }
 
     function listarAsociacionesActivas(){
-        $sql = "EXEC sp_asociacion_listar_activos";
+        $sql = "EXEC sp_asociacion_listar_activas";
 
         try {
             $stmt = DataBase::connect()->prepare($sql);

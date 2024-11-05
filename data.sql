@@ -32,27 +32,28 @@ values
 INSERT INTO Personas(nombres, apellidoPaterno, apellidoMaterno, dni, sexo, telefono, celular,
         fechaNacimiento, codSectorZona, direccion, 
         numeroFinca)
-    VALUES 
-    ('María Alejandra', 'López', 'Rodríguez', '12345678', 'f', null, '912345678', '15-04-1990', 1, 'Av. Primavera 100', null),
-    ('Ana Sofía', 'García', 'Mendoza', '23456789', 'f', null, '912345679', '22-08-1992', 2, 'Calle Olivo 200', null),
-    ('Valeria Isabel', 'Morales', 'Jiménez', '34567890', 'f', null, '912345680', '11-12-1988', 3, 'Paseo de las Flores 300', null),
-    ('Daniela Fernanda', 'Ruiz', 'Pérez', '45678901', 'f', null, '912345681', '09-06-1991', 4, 'Av. Los Nogales 400', null),
-    ('Camila Victoria', 'Castro', 'Ramírez', '56789012', 'f', null, '912345682', '25-01-1993', 5, 'Calle Las Rosas 500', null),
-    ('Laura Gabriela', 'Torres', 'Sánchez', '67890123', 'f', null, '912345683', '14-10-1989', 1, 'Av. Los Pinos 600', null),
-    ('Sara Lucía', 'Ríos', 'Fernández', '78901234', 'f', null, '912345684', '07-05-1990', 2, 'Paseo del Bosque 700', null),
-    ('Paula Andrea', 'Castillo', 'Gómez', '89012345', 'f', null, '912345685', '03-03-1987', 3, 'Calle Los Álamos 800', null),
-    ('Elena Patricia', 'Delgado', 'Torres', '90123456', 'f', null, '912345686', '19-09-1994', 4, 'Av. Los Robles 900', null),
-    ('Rosa Emilia', 'Martínez', 'Campos', '01234567', 'f', null, '912345687', '28-02-1995', 5, 'Calle Las Acacias 1000', null),
-	('Julia Alejandra', 'Fernández', 'López', '12345679', 'f', null, '912345688', '10-11-1988', 1, 'Calle Santa Rosa 110', null),
-    ('Gabriela Estefanía', 'Vásquez', 'Martín', '23456780', 'f', null, '912345689', '20-02-1991', 2, 'Av. del Sol 220', null),
-    ('Carla Andrea', 'Pérez', 'Castillo', '34567891', 'f', null, '912345690', '15-04-1993', 3, 'Calle Las Palmas 330', null),
-    ('Verónica Elena', 'Hernández', 'Salazar', '45678902', 'f', null, '912345691', '02-08-1990', 4, 'Av. San Martín 440', null),
-    ('Patricia Isabel', 'Mora', 'Quispe', '56789013', 'f', null, '912345692', '29-05-1989', 5, 'Calle Las Lilas 550', null),
-    ('Nancy Julieta', 'Torres', 'Cruz', '67890124', 'f', null, '912345693', '12-07-1992', 1, 'Paseo del Río 660', null),
-    ('Inés Carolina', 'Ramos', 'Aldana', '78901235', 'f', null, '912345694', '05-09-1994', 2, 'Calle El Manzano 770', null),
-    ('Karla Andrea', 'Vera', 'Arce', '89012346', 'f', null, '912345695', '17-01-1987', 3, 'Av. El Cedro 880', null),
-    ('Silvia Estela', 'Núñez', 'Paredes', '90123457', 'f', null, '912345696', '11-12-1990', 4, 'Calle Las Guayabas 990', null),
-    ('Mónica Patricia', 'Soto', 'Martínez', '01234568', 'f', null, '912345697', '26-03-1993', 5, 'Calle El Sauce 1000', null);
+VALUES 
+    ('María Alejandra', 'López', 'Rodríguez', '12345678', 'f', null, '912345678', '1990-04-15', 1, 'Av. Primavera 100', null),
+    ('Ana Sofía', 'García', 'Mendoza', '23456789', 'f', null, '912345679', '1992-08-22', 2, 'Calle Olivo 200', null),
+    ('Valeria Isabel', 'Morales', 'Jiménez', '34567890', 'f', null, '912345680', '1988-12-11', 3, 'Paseo de las Flores 300', null),
+    ('Daniela Fernanda', 'Ruiz', 'Pérez', '45678901', 'f', null, '912345681', '1991-06-09', 4, 'Av. Los Nogales 400', null),
+    ('Camila Victoria', 'Castro', 'Ramírez', '56789012', 'f', null, '912345682', '1993-01-25', 5, 'Calle Las Rosas 500', null),
+    ('Laura Gabriela', 'Torres', 'Sánchez', '67890123', 'f', null, '912345683', '1989-10-14', 1, 'Av. Los Pinos 600', null),
+    ('Sara Lucía', 'Ríos', 'Fernández', '78901234', 'f', null, '912345684', '1990-05-07', 2, 'Paseo del Bosque 700', null),
+    ('Paula Andrea', 'Castillo', 'Gómez', '89012345', 'f', null, '912345685', '1987-03-03', 3, 'Calle Los Álamos 800', null),
+    ('Elena Patricia', 'Delgado', 'Torres', '90123456', 'f', null, '912345686', '1994-09-19', 4, 'Av. Los Robles 900', null),
+    ('Rosa Emilia', 'Martínez', 'Campos', '01234567', 'f', null, '912345687', '1995-02-28', 5, 'Calle Las Acacias 1000', null),
+    ('Julia Alejandra', 'Fernández', 'López', '12345679', 'f', null, '912345688', '1988-11-10', 1, 'Calle Santa Rosa 110', null),
+    ('Gabriela Estefanía', 'Vásquez', 'Martín', '23456780', 'f', null, '912345689', '1991-02-20', 2, 'Av. del Sol 220', null),
+    ('Carla Andrea', 'Pérez', 'Castillo', '34567891', 'f', null, '912345690', '1993-04-15', 3, 'Calle Las Palmas 330', null),
+    ('Verónica Elena', 'Hernández', 'Salazar', '45678902', 'f', null, '912345691', '1990-08-02', 4, 'Av. San Martín 440', null),
+    ('Patricia Isabel', 'Mora', 'Quispe', '56789013', 'f', null, '912345692', '1989-05-29', 5, 'Calle Las Lilas 550', null),
+    ('Nancy Julieta', 'Torres', 'Cruz', '67890124', 'f', null, '912345693', '1992-07-12', 1, 'Paseo del Río 660', null),
+    ('Inés Carolina', 'Ramos', 'Aldana', '78901235', 'f', null, '912345694', '1994-09-05', 2, 'Calle El Manzano 770', null),
+    ('Karla Andrea', 'Vera', 'Arce', '89012346', 'f', null, '912345695', '1987-01-17', 3, 'Av. El Cedro 880', null),
+    ('Silvia Estela', 'Núñez', 'Paredes', '90123457', 'f', null, '912345696', '1990-12-11', 4, 'Calle Las Guayabas 990', null),
+    ('Mónica Patricia', 'Soto', 'Martínez', '01234568', 'f', null, '912345697', '1993-03-26', 5, 'Calle El Sauce 1000', null);
+
 		
 
 INSERT INTO Socios(codPersona, codAsociacion, observaciones, codEstado)
@@ -73,11 +74,11 @@ VALUES
 (15, 2, '', 1),
 (16, 2, '', 1);
 
-insert into Reconocimientos(codAsociacion, documento, fechaDocumento, fechaInicio, fechaFin, codEstado)
-values(2, 'RS-203-2024', '2024-10-20', '2024-10-26', '2026-10-26', 1)
+insert into Reconocimientos(codAsociacion, documento,fechaInicio, fechaFin, codEstado)
+values(2, 'RS-203-2024', '2024-10-26', '2026-10-26', 1)
 
 insert into Directivas(codReconocimiento, codSocio, codCargo, codEstado)
-values(1, 31, 1, 1)
+values(1, 3, 1, 1)
 
 select * from Socios
 
