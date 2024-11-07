@@ -210,6 +210,7 @@ CREATE TABLE HistoricoBeneficiarios(
 CREATE TABLE Pecosas (
     codPecosa INT IDENTITY PRIMARY KEY,
     codAsociacion INT NOT NULL,
+	numeroPecosa VARCHAR(8),
     codSocioPresidenta INT NOT NULL,
     fechaRegistro DATETIME NOT NULL,
     observacion VARCHAR(255),
@@ -226,17 +227,24 @@ CREATE TABLE DetallePecosa (
     cantidad INT NOT NULL,
     precioUnitario DECIMAL(9,2) NOT NULL,
 );
+
+CREATE TABLE UnidadMedida (
+	codUnidadMedida INT IDENTITY PRIMARY KEY,
+	descripcion VARCHAR(100) NOT NULL
+);
+
 CREATE TABLE Productos (
     codProducto INT IDENTITY PRIMARY KEY,
+	codUnidadMedida INT NOT NULL,
 	codigo INT NOT NULL,
     descripcion VARCHAR(100) NOT NULL UNIQUE,
     abreviatura CHAR(5),
-    unidadMedida VARCHAR(30) NOT NULL,
     fechaRegistro DATETIME DEFAULT GETDATE(),
     stock INT,
     precioUnitario DECIMAL(9,2),
     codEstado INT NOT NULL,
-    FOREIGN KEY (codEstado) REFERENCES Estados(codEstado)
+    FOREIGN KEY (codEstado) REFERENCES Estados(codEstado),
+	FOREIGN KEY (codUnidadMedida) REFERENCES UnidadMedida(codUnidadMedida)
 );
 
 CREATE TABLE TipoMovimiento (

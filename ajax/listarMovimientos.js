@@ -149,6 +149,44 @@ $(document).ready(function () {
         });
     });
 
+// Actualizar movimientos
+    $(document).off("submit", "#editarMovimientoForm").on('submit', '#editarMovimientoForm', function(e) {
+        e.preventDefault();
+        const codMovimiento = $.trim($('#codMovimiento').val());
+        const producto = $.trim($('#cboProductoEdit').val());
+        const tipoMovimiento = $.trim($('#cboTipoMovimientoEdit').val());
+        const fechaMovimiento = $.trim($('#fechaMovimientoEdit').val());
+        const documento = $.trim($('#documentoEdit').val());
+        const cantidad = $.trim($('#cantidadEdit').val());
+        const precioUnitario = $.trim($('#precioUnitarioEdit').val());
+
+        console.log({codMovimiento, producto, tipoMovimiento, fechaMovimiento, documento, cantidad, precioUnitario})
+
+        if (isFiledsValid(producto, tipoMovimiento, fechaMovimiento, documento, cantidad, precioUnitario)){
+            $.ajax({
+                url: './controllers/movimientos/actualizar.php',
+                method: 'POST',
+                dataType: 'json',
+                data: {codMovimiento, producto, tipoMovimiento, fechaMovimiento, documento, cantidad, precioUnitario},
+                success: function (response) {
+                    console.log(response)
+                    const {code, message, info, data} = response;
+
+                    if (code === 200) {
+                        showSuccessAlertUpdate(message)
+                    }
+
+                    if (code === 500) {
+                        showErrorInternalServer(message, info)
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error listarMovimientos.js: ', textStatus, errorThrown);
+                }
+            })
+        }
+    })
+
     function isFiledsValid(producto, tipoMovimiento, fechaMovimiento, documento, cantidad, precioUnitario) {
         if (producto === '' || producto === 0 || tipoMovimiento == '' || tipoMovimiento == 0 || fechaMovimiento === '' || documento == '' || cantidad == '' || precioUnitario === '') {
             Swal.fire({
@@ -184,16 +222,16 @@ $(document).ready(function () {
         });
     }
 
-    /*function showSuccessAlertUpdate(message){
+    function showSuccessAlertUpdate(message){
         Swal.fire({
             icon: "success",
             title: "Actualización Exitoso",
             text: message
         }).then(() => {
-            $('#modalEditarAsociacion').modal('hide');
+            $('#modalEditarMovimiento').modal('hide');
             listarMovimientos();
         });
-    }*/
+    }
 
 
 

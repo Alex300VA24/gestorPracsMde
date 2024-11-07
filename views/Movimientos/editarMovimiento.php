@@ -8,7 +8,7 @@
                 <div class="modal-body">
                     <input 
                                 type="number"
-                                id="codProducto"
+                                id="codMovimiento"
                                 hidden="hidden"
                     >
                     <div class="two-column">

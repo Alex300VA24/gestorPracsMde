@@ -24,4 +24,4 @@ $movimientosObj->setPrecioUnitario($precioUnitario);
 $response = $movimientosObj->actualizarMovimientos();
 
 print json_encode($response);
-//print json_encode([$codProducto, $codTipoMovimiento, $fechaMovimiento, $documento, $cantidad, $precioUnitario]);
+//print json_encode($codMovimiento,[$codProducto, $codTipoMovimiento, $fechaMovimiento, $documento, $cantidad, $precioUnitario]);
