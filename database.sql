@@ -236,7 +236,6 @@ CREATE TABLE UnidadMedida (
 CREATE TABLE Productos (
     codProducto INT IDENTITY PRIMARY KEY,
 	codUnidadMedida INT NOT NULL,
-	codigo INT NOT NULL,
     descripcion VARCHAR(100) NOT NULL UNIQUE,
     abreviatura CHAR(5),
     fechaRegistro DATETIME DEFAULT GETDATE(),
@@ -257,7 +256,6 @@ CREATE TABLE Movimientos (
     codProducto INT NOT NULL,
     codTipoMovimiento INT NOT NULL,
     fechaMovimiento DATETIME DEFAULT GETDATE(),
-	documento VARCHAR(150) NOT NULL,
     cantidad INT NOT NULL,
     precioUnitario DECIMAL(9,2) NOT NULL,
     precioTotal DECIMAL(9,2) NOT NULL,

@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Registrar Nuevo Producto</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Registrar Producto</h5>
             </div>
             <form class="formProducto" id="registrarProductoForm" action="" method="post">
                 <div class="modal-body">
