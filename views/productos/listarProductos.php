@@ -23,7 +23,6 @@
             <thead>
                 <tr>
                     <th>CodProducto</th>
-                    <th>Codigo</th>
                     <th>Descripcion</th>
                     <th>Abreviatura</th>
                     <th>Unidad de Medida</th>
@@ -54,5 +53,5 @@
 <?php  require_once "registro.php"?>
 <?php  require_once "editarProducto.php"?>
 
-
+<script src="<?= base_url?>ajax/unidadMedida_llenarCboUnidadMedida.js"></script>
 <script src="<?= base_url?>ajax/listarProductos.js"></script>

@@ -12,15 +12,6 @@
                                 hidden="hidden"
                     >
                     <div class="two-column">
-                    <label for="codigo">Codigo (*):</label>
-                        <input 
-                                type="text" 
-                                id="codigoEdit" 
-                                autocomplete="off"
-                                maxlength="100"
-                                >
-                    </div>
-                    <div class="two-column">
                         <label for="descripcionProducto">Descripción (*):</label>
                         <input 
                                 type="text" 
@@ -43,8 +34,6 @@
                     <div class="two-column">
                         <label for="unidadMedida">Unidad de Medida (*):</label>
                             <select id="cboUnidadMedidaEdit" class="form-select">
-                                <option value="bolsa">Bolsa</option>
-                                <option value="tarro">Tarro</option>
                             </select>
                     </div>
                     <p>Todos los campos (*) son obligatorios</p>
