@@ -74,13 +74,13 @@ class Movimientos{
         $this->precioTotal = $precioTotal;
     }
 
-    public function listarMovimientos($codigo, $descripcion){
-        $sql = "EXEC sp_movimiento_listar :codigo, :descripcion";
+    public function listarMovimientos($descripcion, $codUnidadMedida){
+        $sql = "EXEC sp_movimiento_listar :descripcion, :codUnidadMedida";
 
         try{
             $stmt = DataBase::connect()->prepare($sql);
-            $stmt->bindParam('codigo',$codigo, PDO::PARAM_INT);
             $stmt->bindParam('descripcion',$descripcion, PDO::PARAM_STR);
+            $stmt->bindParam('codUnidadMedida',$codUnidadMedida, PDO::PARAM_INT);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             
@@ -132,7 +132,7 @@ class Movimientos{
                     'code' => 400,
                     'message' => 'No se pudo registrar el movimiento, verifica los datos',
                     'action' => 'guardarMovimiento',
-                    'module' => 'movimiento',
+                    'module' => 'movimientos',
                     'data' => [],
                 ];
             }
@@ -143,7 +143,7 @@ class Movimientos{
                 'code' => 500,
                 'message' => 'Ocurrio un error al momento de guardar los movimientos',
                 'action' => 'guardarMovimiento',
-                'module' => 'movimiento',
+                'module' => 'movimientos',
                 'data' => [],
                 'info' => $e->getMessage()
             ]; 

@@ -4,10 +4,9 @@ include_once "../../models/Movimientos.php";
 
 $movimientosObj = new Movimientos();
 
-$codigo = $_GET['codigo'] ?? null;
 $descripcionProducto = $_GET['descripcionProducto'] ?? null;
+$codUnidadMedida = $_GET['codUnidadMedida'] ?? null;
 
-
-$response = $movimientosObj->listarMovimientos($codigo, $descripcionProducto);
+$response = $movimientosObj->listarMovimientos($descripcionProducto, $codUnidadMedida);
 
 print json_encode($response);

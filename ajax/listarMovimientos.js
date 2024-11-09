@@ -13,8 +13,8 @@ $(document).ready(function () {
                     let row = '';
                     if (data && Array.isArray(data) && data.length > 0) {
                         row = data.map(({
-                                            codMovimiento, codProducto, descripcion,fechaMovimiento, cantidad, unidadMedida,
-                                            precioUnitario, precioTotal, documento, codTipoMovimiento, descripcionTipoMov
+                                            codMovimiento, codProducto, descripcion,fechaMovimiento, cantidad, codUnidadMedida,
+                                            descripcionUnidadMedida, precioUnitario, precioTotal, documento, codTipoMovimiento, descripcionTipoMov
                                         }) => {
                             return `
                                 <tr>
@@ -23,7 +23,8 @@ $(document).ready(function () {
                                     <td>${descripcion}</td>
                                     <td>${fechaMovimiento.split(' ')[0]}</td> 
                                     <td>${documento}</td>                                                                     
-                                    <td>${unidadMedida}</td>
+                                    <td hidden="hidden">${codUnidadMedida}</td>                                   
+                                    <td>${descripcionUnidadMedida}</td>
                                     <td>${cantidad}</td>
                                     <td>${precioUnitario}</td>
                                     <td>${precioTotal}</td>
@@ -123,9 +124,9 @@ $(document).ready(function () {
         let codProducto = fila.find('td:eq(1)').text();
         let fechaMovimiento = fila.find('td:eq(3)').text();
         let documento = fila.find('td:eq(4)').text();
-        let cantidad = fila.find('td:eq(6)').text();
-        let precioUnitario = fila.find('td:eq(7)').text();
-        let codTipoMovimiento = fila.find('td:eq(9)').text();
+        let cantidad = fila.find('td:eq(7)').text();
+        let precioUnitario = fila.find('td:eq(8)').text();
+        let codTipoMovimiento = fila.find('td:eq(10)').text();
 
         console.log({codMovimiento, codProducto, precioUnitario})
 

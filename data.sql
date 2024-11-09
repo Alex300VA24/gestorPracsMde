@@ -20,6 +20,7 @@ values('ni�o (0-6 a�os)', 0, 6, 1, ''),('ni�o (7-13 a�os)', 7, 13, 2, ''
 
 insert into UnidadMedida(descripcion) values('Bolsa'),('Tarro');
 
+insert into TipoMovimiento(descripcion) values('Ingreso'),('Salida');
 
 insert into Asociaciones(nombreAsociacion , codSectorZona, codTipoLocal, direccion, numeroFinca, observaciones, codEstado) 
 values
