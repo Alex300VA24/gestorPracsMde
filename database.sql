@@ -256,6 +256,7 @@ CREATE TABLE Movimientos (
     codProducto INT NOT NULL,
     codTipoMovimiento INT NOT NULL,
     fechaMovimiento DATETIME DEFAULT GETDATE(),
+	documento VARCHAR(100) NOT NULL,
     cantidad INT NOT NULL,
     precioUnitario DECIMAL(9,2) NOT NULL,
     precioTotal DECIMAL(9,2) NOT NULL,
