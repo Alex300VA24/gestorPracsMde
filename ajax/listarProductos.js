@@ -83,7 +83,7 @@ $(document).ready(function () {
     });
 
 //    registrar producto
-    $(document).off("click", "#registrarProductoForm").on('submit', '#registrarProductoForm', function(e) {
+    $(document).off("submit", "#registrarProductoForm").on('submit', '#registrarProductoForm', function(e) {
         e.preventDefault();
         const descripcion = $.trim($('#descripcionProducto').val());
         const abreviatura = $.trim($('#abreviatura').val());

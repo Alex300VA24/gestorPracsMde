@@ -1,9 +1,8 @@
 ---REGISTRO MOVIMIENTOS
-CREATE OR ALTER PROCEDURE sp_movimiento_registrar (
+CREATE   PROCEDURE sp_movimiento_registrar (
     @codProducto INT,
     @codTipoMovimiento INT,
     @fechaMovimiento DATETIME,
-    @documento VARCHAR(100),
     @cantidad INT,
     @precioUnitario DECIMAL(9,2)
 	
@@ -19,7 +18,6 @@ BEGIN
         codProducto,
         codTipoMovimiento,
         fechaMovimiento,
-        documento,
         cantidad,
         precioUnitario,
 		precioTotal
@@ -29,7 +27,6 @@ BEGIN
         @codProducto,
         @codTipoMovimiento,
         @fechaMovimiento,
-        @documento,
         @cantidad,
         @precioUnitario,
 		@cantidad * @precioUnitario
@@ -52,9 +49,8 @@ BEGIN
 END
 GO
 
-
 --- LISTAR MOVIMIENTOS
-CREATE OR ALTER PROCEDURE sp_movimiento_listar (
+CREATE   PROCEDURE sp_movimiento_listar (
 	@descripcion VARCHAR(100) = NULL,
 	@codUnidadMedida INT = NULL
 )
@@ -62,7 +58,7 @@ AS
 BEGIN
 	select m.codMovimiento, p.codProducto,tp.codTipoMovimiento, m.fechaMovimiento, m.cantidad, 
 	m.precioUnitario, m.precioTotal, p.descripcion, tp.descripcion AS 'descripcionTipoMov', 
-	um.codUnidadMedida, um.descripcion AS 'descripcionUnidadMedida', m.documento
+	um.codUnidadMedida, um.descripcion AS 'descripcionUnidadMedida'
 	from
 	Movimientos m
 	INNER JOIN Productos p ON m.codProducto = p.codProducto
