@@ -1,6 +1,6 @@
 <?php
 
-include_once "./Persona.php";
+include_once "Persona.php";
 
 class Socio extends Persona {
     private int $codSocio;

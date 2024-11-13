@@ -231,7 +231,7 @@ $(document).ready(function () {
                     $("#sectorZonaAsociacionDetalle").val(sectorZona)
                     $("#direccionAsociacionDetalle").val(direccion)
                     $("#tipoLocalAsociacionDetalle").val(tipoLocal)
-                    $("#numeroFincaAsociacionDetalle").val(numeroFinca)
+                    $("#numeroFincaAsociacionDetalle").val(numeroFinca == 0 ? '' : numeroFinca)
                     $("#obervacionAsociacionDetalle").val(observaciones)
 
                     let reconocimientos = data.map(reconocimiento => {
@@ -285,8 +285,6 @@ $(document).ready(function () {
         })
 
 
-
-        console.log('abriendo modal')
         e.preventDefault();
         let modalDetalle = $("#modalDetalleAsociacion");
         $("#detalleAsociacionForm").trigger("reset");

@@ -7,7 +7,7 @@
             <form class="" id="registrarSocioYBeneficiarioForm" action="" method="post">
                 <div class="formDatosSocio">
                     <div class="header_container_data">
-                        <h2>Presidenta</h2>
+                        <h2>Socio</h2>
                     </div>
                     <div class="body_container_data">
                         <div>
@@ -52,7 +52,7 @@
 
                         <div>
                             <label for="dni">Sexo (*):</label>
-                            <select class="form-control">
+                            <select id="sexoSocioRegistro" class="form-control">
                                 <option value="0" selected>Seleccionar</option>
                                 <option value="f">Femenino</option>
                                 <option value="m">Masculino</option>
@@ -84,6 +84,7 @@
                             <input
                                     type="date"
                                     id="fechaNacimientoSocioRegistro"
+                                    max=""
                             >
                         </div>
 
@@ -157,7 +158,7 @@
 
                 <div class="formDatosBeneficiario">
                     <div class="header_container_data">
-                        <h2>Presidenta</h2>
+                        <h2>Beneficiario</h2>
                     </div>
                     <div class="body_container_data">
                         <div>
@@ -174,7 +175,7 @@
                             <label for="dni">Nombres (*):</label>
                             <input
                                     type="text"
-                                    id="nombresSocioRegistro"
+                                    id="nombresBeneficiarioRegistro"
                                     autocomplete="off"
                                     maxlength="100"
                             >
@@ -184,7 +185,7 @@
                             <label for="dni">Apellido Paterno (*):</label>
                             <input
                                     type="text"
-                                    id="apellidoPaternoSocioRegistro"
+                                    id="apellidoPaternoBeneficiarioRegistro"
                                     autocomplete="off"
                                     maxlength="100"
                             >
@@ -194,7 +195,7 @@
                             <label for="dni">Apellido Materno (*):</label>
                             <input
                                     type="text"
-                                    id="apellidoMaternoSocioRegistro"
+                                    id="apellidoMaternoBeneficiarioRegistro"
                                     autocomplete="off"
                                     maxlength="100"
                             >
@@ -202,7 +203,7 @@
 
                         <div>
                             <label for="dni">Sexo (*):</label>
-                            <select class="form-control">
+                            <select id="sexoBeneficiarioRegistro" class="form-control">
                                 <option value="0" selected>Seleccionar</option>
                                 <option value="f">Femenino</option>
                                 <option value="m">Masculino</option>
@@ -213,7 +214,7 @@
                             <label for="dni">Telefono:</label>
                             <input
                                     type="text"
-                                    id="telefonoSocioRegistro"
+                                    id="telefonoBeneficiarioRegistro"
                                     autocomplete="off"
                                     maxlength="6"
                             >
@@ -223,7 +224,7 @@
                             <label for="dni">Celular:</label>
                             <input
                                     type="text"
-                                    id="celularSocioRegistro"
+                                    id="celularBeneficiarioRegistro"
                                     autocomplete="off"
                                     maxlength="9"
                             >
@@ -233,7 +234,8 @@
                             <label for="fechaNacimiento">Fecha Nacimiento (*):</label>
                             <input
                                     type="date"
-                                    id="fechaNacimientoSocioRegistro"
+                                    id="fechaNacimientoBeneficiarioRegistro"
+                                    max=""
                             >
                         </div>
 
@@ -243,7 +245,7 @@
                                     class="colorDisable"
                                     disabled
                                     type="number"
-                                    id="edadSocioRegistro"
+                                    id="edadBeneficiarioRegistro"
                             >
                         </div>
 

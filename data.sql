@@ -52,7 +52,12 @@ VALUES
     ('Inés Carolina', 'Ramos', 'Aldana', '78901235', 'f', null, '912345694', '1994-09-05', 2, 'Calle El Manzano 770', null),
     ('Karla Andrea', 'Vera', 'Arce', '89012346', 'f', null, '912345695', '1987-01-17', 3, 'Av. El Cedro 880', null),
     ('Silvia Estela', 'Núñez', 'Paredes', '90123457', 'f', null, '912345696', '1990-12-11', 4, 'Calle Las Guayabas 990', null),
-    ('Mónica Patricia', 'Soto', 'Martínez', '01234568', 'f', null, '912345697', '1993-03-26', 5, 'Calle El Sauce 1000', null);
+    ('Mónica Patricia', 'Soto', 'Martínez', '01234568', 'f', null, '912345697', '1993-03-26', 5, 'Calle El Sauce 1000', null),
+	('Diana Patricia', 'López', 'Ortega', '11223344', 'f', null, '912345698', '1985-06-15', 1, 'Av. Las Palmeras 1010', null),
+    ('Claudia Isabel', 'Guzmán', 'Ramos', '22334455', 'f', null, '912345699', '1989-11-23', 2, 'Calle Las Margaritas 1020', null),
+    ('Florencia Andrea', 'Peña', 'Castañeda', '33445566', 'f', null, '912345700', '1991-01-09', 3, 'Paseo Las Lomas 1030', null),
+    ('Isabel Cristina', 'Vargas', 'Romero', '44556677', 'f', null, '912345701', '1986-07-18', 4, 'Av. La Alameda 1040', null),
+    ('Lucía Renata', 'Quiroz', 'Flores', '55667788', 'f', null, '912345702', '1993-12-02', 5, 'Calle Las Camelias 1050', null);;
 
 		
 
@@ -68,12 +73,16 @@ VALUES
 (8, 1, '', 1),
 (9, 2, '', 1),
 (10, 2, '', 1),
+(11, 2, '', 1),
 (12, 2, '', 1),
 (13, 2, '', 1),
 (14, 2, '', 1),
 (15, 2, '', 1),
 (16, 2, '', 1);
 
+
+
+--- no es necesario ----
 insert into Reconocimientos(codAsociacion, documento,fechaInicio, fechaFin, codEstado)
 values(2, 'RS-203-2024', '2024-10-26', '2026-10-26', 1)
 
@@ -81,6 +90,10 @@ insert into Directivas(codReconocimiento, codSocio, codCargo, codEstado)
 values(1, 3, 1, 1)
 
 select * from Socios
+
+delete from Directivas
+delete from Reconocimientos
+update Asociaciones set codEstado = 4 where codAsociacion = 1
 
 
 --exec sp_persona_insertar 'carlos', 'pereira', 'leyva', '74902012', 'm', null, '900212453', '10-10-1970', 2, 'los jaureles M.2 LT.3', null
