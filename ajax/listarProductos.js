@@ -13,16 +13,16 @@ $(document).ready(function () {
                     let row = '';
                     if (data && Array.isArray(data) && data.length > 0) {
                         row = data.map(({
-                                            codProducto,codigo, descripcion, abreviatura, unidadMedida, 
-                                            abreviaturaEstado, descripcionEstado, stock
+                                            codProducto,descripcion, abreviatura, codUnidadMedida, 
+                                            descripcionUnidadMedida,abreviaturaEstado, descripcionEstado, stock
                                         }) => {
                             return `
                                 <tr>
                                     <td>${codProducto}</td>
-                                    <td>${codigo}</td>
                                     <td>${descripcion}</td>                                   
-                                    <td>${abreviatura}</td>                                   
-                                    <td>${unidadMedida}</td>
+                                    <td>${abreviatura}</td>
+                                    <td hidden="hidden">${codUnidadMedida}</td>                                   
+                                    <td>${descripcionUnidadMedida}</td>
                                     <td>${stock}</td>
                                     <td>
                                         <span class="estado ${abreviaturaEstado === "a" ? 'active' : 'inactive'}">
@@ -78,25 +78,24 @@ $(document).ready(function () {
         modalRegistrar.modal('show');
     
         modalRegistrar.one('shown.bs.modal', function() {
-            $("#codigo").focus();
+            $("#descripcionProducto").focus();
         });
     });
 
 //    registrar producto
     $(document).off("click", "#registrarProductoForm").on('submit', '#registrarProductoForm', function(e) {
         e.preventDefault();
-        const codigo = $.trim($('#codigo').val());
         const descripcion = $.trim($('#descripcionProducto').val());
         const abreviatura = $.trim($('#abreviatura').val());
         const unidadMedida = $.trim($('#cboUnidadMedida').val());
-        console.log({codigo, descripcion, abreviatura, unidadMedida})
+        console.log({descripcion, abreviatura, unidadMedida})
 
-        if (isFiledsValid(codigo, descripcion, abreviatura, unidadMedida)){
+        if (isFiledsValid(descripcion, abreviatura, unidadMedida)){
             $.ajax({
                 url: './controllers/productos/registrarProductos.php',
                 method: 'POST',
                 dataType: 'json',
-                data: {codigo, descripcion, abreviatura, unidadMedida},
+                data: {descripcion, abreviatura, unidadMedida},
                 success: function (response) {
                     console.log(response)
                 
@@ -123,18 +122,16 @@ $(document).ready(function () {
         let modalEditar = $("#modalEditarProducto");
         let fila = $(this).closest("tr");
         let codProducto = fila.find('td:eq(0)').text();
-        let codigo = fila.find('td:eq(1)').text();
-        let descripcion = fila.find('td:eq(2)').text();
-        let abreviatura = fila.find('td:eq(3)').text();
-        let unidadMedida = fila.find('td:eq(4)').text();
+        let descripcion = fila.find('td:eq(1)').text();
+        let abreviatura = fila.find('td:eq(2)').text();
+        let codUnidadMedida = fila.find('td:eq(3)').text();
 
-        console.log({codProducto, codigo, descripcion})
+        console.log({codProducto, descripcion})
 
         $("#codProducto").val(codProducto.trim());
-        $("#codigoEdit").val(codigo.trim());
         $("#descripcionProductoEdit").val(descripcion.trim());
         $("#abreviaturaEdit").val(abreviatura.trim());
-        $("#cboUnidadMedidaEdit").val(unidadMedida);
+        $("#cboUnidadMedidaEdit").val(codUnidadMedida);
 
         modalEditar.modal({
             backdrop: 'static',
@@ -144,7 +141,7 @@ $(document).ready(function () {
         modalEditar.modal('show');
 
         modalEditar.one('shown.bs.modal', function() {
-            $("#codigoEdit").focus();
+            $("#descripcionProductoEdit").focus();
         });
     });
 
@@ -152,19 +149,18 @@ $(document).ready(function () {
     $(document).off("submit", "#editarProductoForm").on('submit', '#editarProductoForm', function(e) {
         e.preventDefault();
         const codProducto = $.trim($('#codProducto').val());
-        const codigo = $.trim($('#codigoEdit').val());
         const descripcion = $.trim($('#descripcionProductoEdit').val());
         const abreviatura = $.trim($('#abreviaturaEdit').val());
         const unidadMedida = $.trim($('#cboUnidadMedidaEdit').val());
 
-        console.log({codProducto, codigo, descripcion, abreviatura, unidadMedida})
+        console.log({codProducto, descripcion, abreviatura, unidadMedida})
 
-        if (isFiledsValid(codigo, descripcion, abreviatura, unidadMedida)){
+        if (isFiledsValid(descripcion, abreviatura, unidadMedida)){
             $.ajax({
                 url: './controllers/productos/actualizar.php',
                 method: 'POST',
                 dataType: 'json',
-                data: {codProducto, codigo, descripcion, abreviatura, unidadMedida},
+                data: {codProducto, descripcion, abreviatura, unidadMedida},
                 success: function (response) {
                     console.log(response)
                     const {code, message, info, data} = response;
@@ -187,7 +183,7 @@ $(document).ready(function () {
 
     function isFiledsValid(descripcion, abreviatura, unidadMedida) {
         
-        if (descripcion === '' || abreviatura == '' || unidadMedida === 0) {
+        if (descripcion === '' || abreviatura == '' || unidadMedida == '' || unidadMedida === 0) {
             Swal.fire({
                 title: "¡Advertencia!",
                 text: 'Campos incompletos',

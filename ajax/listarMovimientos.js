@@ -13,8 +13,8 @@ $(document).ready(function () {
                     let row = '';
                     if (data && Array.isArray(data) && data.length > 0) {
                         row = data.map(({
-                                            codMovimiento, codProducto, descripcion,fechaMovimiento, cantidad, unidadMedida,
-                                            precioUnitario, precioTotal, documento, codTipoMovimiento, descripcionTipoMov
+                                            codMovimiento, codProducto, descripcion,fechaMovimiento, cantidad, codUnidadMedida,
+                                            descripcionUnidadMedida, precioUnitario, precioTotal, documento, codTipoMovimiento, descripcionTipoMov
                                         }) => {
                             return `
                                 <tr>
@@ -23,7 +23,8 @@ $(document).ready(function () {
                                     <td>${descripcion}</td>
                                     <td>${fechaMovimiento.split(' ')[0]}</td> 
                                     <td>${documento}</td>                                                                     
-                                    <td>${unidadMedida}</td>
+                                    <td hidden="hidden">${codUnidadMedida}</td>                                   
+                                    <td>${descripcionUnidadMedida}</td>
                                     <td>${cantidad}</td>
                                     <td>${precioUnitario}</td>
                                     <td>${precioTotal}</td>
@@ -123,9 +124,9 @@ $(document).ready(function () {
         let codProducto = fila.find('td:eq(1)').text();
         let fechaMovimiento = fila.find('td:eq(3)').text();
         let documento = fila.find('td:eq(4)').text();
-        let cantidad = fila.find('td:eq(6)').text();
-        let precioUnitario = fila.find('td:eq(7)').text();
-        let codTipoMovimiento = fila.find('td:eq(9)').text();
+        let cantidad = fila.find('td:eq(7)').text();
+        let precioUnitario = fila.find('td:eq(8)').text();
+        let codTipoMovimiento = fila.find('td:eq(10)').text();
 
         console.log({codMovimiento, codProducto, precioUnitario})
 
@@ -148,6 +149,44 @@ $(document).ready(function () {
             $("#cboProductoEdit").focus();
         });
     });
+
+// Actualizar movimientos
+    $(document).off("submit", "#editarMovimientoForm").on('submit', '#editarMovimientoForm', function(e) {
+        e.preventDefault();
+        const codMovimiento = $.trim($('#codMovimiento').val());
+        const producto = $.trim($('#cboProductoEdit').val());
+        const tipoMovimiento = $.trim($('#cboTipoMovimientoEdit').val());
+        const fechaMovimiento = $.trim($('#fechaMovimientoEdit').val());
+        const documento = $.trim($('#documentoEdit').val());
+        const cantidad = $.trim($('#cantidadEdit').val());
+        const precioUnitario = $.trim($('#precioUnitarioEdit').val());
+
+        console.log({codMovimiento, producto, tipoMovimiento, fechaMovimiento, documento, cantidad, precioUnitario})
+
+        if (isFiledsValid(producto, tipoMovimiento, fechaMovimiento, documento, cantidad, precioUnitario)){
+            $.ajax({
+                url: './controllers/movimientos/actualizar.php',
+                method: 'POST',
+                dataType: 'json',
+                data: {codMovimiento, producto, tipoMovimiento, fechaMovimiento, documento, cantidad, precioUnitario},
+                success: function (response) {
+                    console.log(response)
+                    const {code, message, info, data} = response;
+
+                    if (code === 200) {
+                        showSuccessAlertUpdate(message)
+                    }
+
+                    if (code === 500) {
+                        showErrorInternalServer(message, info)
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error listarMovimientos.js: ', textStatus, errorThrown);
+                }
+            })
+        }
+    })
 
     function isFiledsValid(producto, tipoMovimiento, fechaMovimiento, documento, cantidad, precioUnitario) {
         if (producto === '' || producto === 0 || tipoMovimiento == '' || tipoMovimiento == 0 || fechaMovimiento === '' || documento == '' || cantidad == '' || precioUnitario === '') {
@@ -184,16 +223,16 @@ $(document).ready(function () {
         });
     }
 
-    /*function showSuccessAlertUpdate(message){
+    function showSuccessAlertUpdate(message){
         Swal.fire({
             icon: "success",
             title: "Actualización Exitoso",
             text: message
         }).then(() => {
-            $('#modalEditarAsociacion').modal('hide');
+            $('#modalEditarMovimiento').modal('hide');
             listarMovimientos();
         });
-    }*/
+    }
 
 
 

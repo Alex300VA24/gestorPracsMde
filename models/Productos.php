@@ -3,10 +3,9 @@
 class Productos{
 
     private int $codProducto;
-    private int $codigo;
     private string $descripcion;
     private string $abreviatura;
-    private string $unidadMedida;
+    private int $codUnidadMedida;
     private int $stock;
     private string $precioUnitario;
     private int $codEstado;
@@ -17,14 +16,6 @@ class Productos{
 
     public function setCodProducto(int $codProducto): void{
         $this->codProducto = $codProducto;
-    }
-
-    public function getCodigo(): int{
-        return $this->codigo;
-    }
-
-    public function setCodigo(int $codigo): void{
-        $this->codigo = $codigo;
     }
 
     public function getDescripcion(): string{
@@ -43,12 +34,12 @@ class Productos{
         $this->abreviatura = $abreviatura;
     }
 
-    public function getUnidadMedida(): string{
+    public function getCodUnidadMedida(): int{
         return $this->unidadMedida;
     }
 
-    public function setUnidadMedida(string $unidadMedida): void{
-        $this->unidadMedida = $unidadMedida;
+    public function setCodUnidadMedida(int $codUnidadMedida): void{
+        $this->codUnidadMedida = $codUnidadMedida;
     }
 
     public function getStock(): int{
@@ -75,13 +66,13 @@ class Productos{
         $this->codEstado = $codEstado;
     }
 
-    public function listarProductos($codigo, $descripcion){
-        $sql = "EXEC sp_producto_listar :codigo, :descripcion";
+    public function listarProductos($descripcion, $codUnidadMedida){
+        $sql = "EXEC sp_producto_listar :descripcion, :codUnidadMedida";
 
         try{
             $stmt = DataBase::connect()->prepare($sql);
-            $stmt->bindParam('codigo',$codigo, PDO::PARAM_INT);
             $stmt->bindParam('descripcion',$descripcion, PDO::PARAM_STR);
+            $stmt->bindParam('codUnidadMedida',$codUnidadMedida, PDO::PARAM_INT);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             
@@ -108,14 +99,13 @@ class Productos{
     }
 
     public function guardarProductos(){
-        $sql = "EXEC sp_producto_registrar :codigo, :descripcion, :abreviatura, :unidadMedida";
+        $sql = "EXEC sp_producto_registrar :descripcion, :abreviatura, :codUnidadMedida";
 
         try {
             $stmt = DataBase::connect()->prepare($sql);
-            $stmt->bindParam('codigo',$this->codigo, PDO::PARAM_INT);
             $stmt->bindParam('descripcion',$this->descripcion, PDO::PARAM_STR);
             $stmt->bindParam('abreviatura',$this->abreviatura, PDO::PARAM_STR);
-            $stmt->bindParam('unidadMedida',$this->unidadMedida, PDO::PARAM_STR); 
+            $stmt->bindParam('codUnidadMedida',$this->codUnidadMedida, PDO::PARAM_INT); 
             $stmt->execute();
 
             if ($stmt->rowCount() > 0) {
@@ -141,7 +131,7 @@ class Productos{
                 'code' => 500,
                 'message' => 'Ocurrio un error al momento de guardar los productos',
                 'action' => 'guardarProducto',
-                'module' => 'producto',
+                'module' => 'productos',
                 'data' => [],
                 'info' => $e->getMessage()
             ]; 
@@ -149,15 +139,14 @@ class Productos{
     }
 
     public function actualizarProductos(){
-        $sql="EXEC sp_producto_actualizar :codProducto, :codigo, :descripcion, :abreviatura, :unidadMedida";
+        $sql="EXEC sp_producto_actualizar :codProducto, :descripcion, :abreviatura, :codUnidadMedida";
 
         try {
             $stmt = DataBase::connect()->prepare($sql);
             $stmt->bindParam('codProducto',$this->codProducto, PDO::PARAM_INT);
-            $stmt->bindParam('codigo',$this->codigo, PDO::PARAM_INT);
             $stmt->bindParam('descripcion',$this->descripcion, PDO::PARAM_STR);
             $stmt->bindParam('abreviatura',$this->abreviatura, PDO::PARAM_STR);
-            $stmt->bindParam('unidadMedida',$this->unidadMedida, PDO::PARAM_STR); 
+            $stmt->bindParam('codUnidadMedida',$this->codUnidadMedida, PDO::PARAM_INT); 
             $stmt->execute();
 
             if ($stmt->rowCount() > 0) {

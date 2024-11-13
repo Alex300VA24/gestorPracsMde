@@ -3,7 +3,7 @@ CREATE OR ALTER PROCEDURE sp_movimiento_registrar (
     @codProducto INT,
     @codTipoMovimiento INT,
     @fechaMovimiento DATETIME,
-    @documento VARCHAR(150),
+    @documento VARCHAR(100),
     @cantidad INT,
     @precioUnitario DECIMAL(9,2)
 	
@@ -49,22 +49,26 @@ BEGIN
         SET stock = stock - @cantidad
         WHERE codProducto = @codProducto;
     END
-END;
+END
+GO
 
 
 --- LISTAR MOVIMIENTOS
 CREATE OR ALTER PROCEDURE sp_movimiento_listar (
 	@descripcion VARCHAR(100) = NULL,
-	@Codigo INT = NULL
+	@codUnidadMedida INT = NULL
 )
 AS
 BEGIN
-	select m.codMovimiento, p.codProducto,tp.codTipoMovimiento, m.fechaMovimiento, m.cantidad, m.precioUnitario, 
-	m.precioTotal, p.descripcion, tp.descripcion AS 'descripcionTipoMov', p.unidadMedida, m.documento
+	select m.codMovimiento, p.codProducto,tp.codTipoMovimiento, m.fechaMovimiento, m.cantidad, 
+	m.precioUnitario, m.precioTotal, p.descripcion, tp.descripcion AS 'descripcionTipoMov', 
+	um.codUnidadMedida, um.descripcion AS 'descripcionUnidadMedida', m.documento
 	from
 	Movimientos m
 	INNER JOIN Productos p ON m.codProducto = p.codProducto
 	INNER JOIN TipoMovimiento tp ON m.codTipoMovimiento = tp.codTipoMovimiento
+	INNER JOIN UnidadMedida um ON p.codUnidadMedida = um.codUnidadMedida
 	WHERE (@descripcion IS NULL OR p.descripcion LIKE @descripcion + '%')
-	AND (@Codigo IS NULL OR p.codigo = @Codigo);
-END;
+	AND (@codUnidadMedida IS NULL OR p.codUnidadMedida = @codUnidadMedida);
+END
+GO

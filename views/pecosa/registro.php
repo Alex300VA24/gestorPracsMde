@@ -1,4 +1,4 @@
-<div id="modalRegistrarPecosa" class="modal modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div id="modalRegistrarPecosa" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modalPecosa modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,11 +8,13 @@
                 <div class="modal-body">
                     <div class="grid-container">
                         <div class="form-section">
-                            <h3>Datos de pecosa</h3>
+                            <div class="header_container_data">
+                                <h2>Datos de pecosa</h2>
+                            </div>
                             <form>
                                 <div class="two-column">
-                                    <label for="comite">Comite (*):</label>
-                                    <select id="cboComite" class="form-select">
+                                    <label for="clubMadres">Club de Madres (*):</label>
+                                    <select id="cboClubMadres" class="form-select">
                                     </select>
                                 </div>
 
@@ -47,13 +49,8 @@
                                 </div>
 
                                 <div class="two-column">
-                                    <label for="observación">Observación (*):</label>
-                                    <input 
-                                        type="text" 
-                                        id="observacion" 
-                                        autocomplete="off"
-                                        maxlength="100"
-                                    >
+                                    <label for="observación" class="form-label col-sm-4">Observación (*):</label>
+                                    <textarea id="obervacion" class="form-control"></textarea>
                                 </div>
 
                             </form>
@@ -61,7 +58,9 @@
                         </div>
 
                         <div class="form-section">
-                            <h3>Datos del producto</h3>
+                            <div class="header_container_data">
+                                <h2>Datos de producto</h2>
+                            </div>
                             <form>
                                 <div class="two-column">
                                     <label for="descripcion">Descripcion (*):</label>

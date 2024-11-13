@@ -1,10 +1,9 @@
-
--- REGISTRO PRODUCTOS
-CREATE OR ALTER PROCEDURE sp_producto_registrar
-	@codigo INT,
+--Registrar productos---
+CREATE PROCEDURE sp_producto_registrar (
     @descripcion VARCHAR(100),
     @abreviatura VARCHAR(5),
-    @unidadMedida VARCHAR(30)
+    @codUnidadMedida VARCHAR(30)
+)
 AS
 BEGIN
     BEGIN
@@ -13,41 +12,43 @@ BEGIN
 
 		SELECT @codEstadoProducto = codEstado FROM Estados WHERE abreviatura = 'a';
 
-        INSERT INTO Productos (codigo, descripcion, abreviatura, unidadMedida, codEstado, stock)
-        VALUES (@codigo, @descripcion, @abreviatura, @unidadMedida, @codEstadoProducto, 0);
+        INSERT INTO Productos (descripcion, abreviatura, codUnidadMedida, codEstado, stock)
+        VALUES (@descripcion, @abreviatura, @codUnidadMedida, @codEstadoProducto, 0);
 
     END
 	
-END;
+END
+GO
 
---- LISTA DE PRODUCTOS
-CREATE OR ALTER PROCEDURE sp_producto_listar (
+
+---Lista de productos---
+CREATE PROCEDURE sp_producto_listar (
     @Descripcion VARCHAR(100) = NULL,
-    @Codigo INT = NULL
- 
+    @codUnidadMedida INT = NULL
 )
 AS
 BEGIN
-    SELECT p.*, e.abreviatura 'abreviaturaEstado', e.descripcion 'descripcionEstado'
+    SELECT p.*, e.abreviatura 'abreviaturaEstado', e.descripcion 'descripcionEstado',
+	um.codUnidadMedida, um.descripcion AS 'descripcionUnidadMedida'
 	FROM Productos p
 	INNER JOIN Estados e ON p.codEstado = e.codEstado
+	INNER JOIN UnidadMedida um ON p.codUnidadMedida =um.codUnidadMedida
     WHERE (@Descripcion IS NULL OR p.descripcion LIKE @Descripcion + '%')
-    AND (@Codigo IS NULL OR p.codigo = @Codigo);
-END;
+    AND (@codUnidadMedida IS NULL OR p.codUnidadMedida = @codUnidadMedida);
+END
+GO
 
-
-
----ACTUALIZAR PRODUCTOS
-CREATE OR ALTER PROCEDURE sp_producto_actualizar (
+---Actualizar productos---
+CREATE PROCEDURE sp_producto_actualizar (
 	@codProducto INT,
-	@codigo INT,
 	@descripcion VARCHAR(100),
     @abreviatura VARCHAR(5),
-    @unidadMedida VARCHAR(30)
+    @codUnidadMedida VARCHAR(30)
 )
 AS
 BEGIN
-	UPDATE Productos SET codigo = @codigo, descripcion = @descripcion, abreviatura = @abreviatura, 
-	unidadMedida = @unidadMedida
+	UPDATE Productos SET descripcion = @descripcion, abreviatura = @abreviatura, 
+	codUnidadMedida = @codUnidadMedida
 	WHERE codProducto = @codProducto
 END
+GO

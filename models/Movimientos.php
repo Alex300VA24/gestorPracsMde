@@ -19,7 +19,7 @@ class Movimientos{
     }
 
     public function getCodProducto(): int{
-        return $this->getCodProducto;
+        return $this->codProducto;
     }
 
     public function setCodProducto(int $codProducto): void{
@@ -74,13 +74,13 @@ class Movimientos{
         $this->precioTotal = $precioTotal;
     }
 
-    public function listarMovimientos($codigo, $descripcion){
-        $sql = "EXEC sp_movimiento_listar :codigo, :descripcion";
+    public function listarMovimientos($descripcion, $codUnidadMedida){
+        $sql = "EXEC sp_movimiento_listar :descripcion, :codUnidadMedida";
 
         try{
             $stmt = DataBase::connect()->prepare($sql);
-            $stmt->bindParam('codigo',$codigo, PDO::PARAM_INT);
             $stmt->bindParam('descripcion',$descripcion, PDO::PARAM_STR);
+            $stmt->bindParam('codUnidadMedida',$codUnidadMedida, PDO::PARAM_INT);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             
@@ -132,7 +132,7 @@ class Movimientos{
                     'code' => 400,
                     'message' => 'No se pudo registrar el movimiento, verifica los datos',
                     'action' => 'guardarMovimiento',
-                    'module' => 'movimiento',
+                    'module' => 'movimientos',
                     'data' => [],
                 ];
             }
@@ -143,7 +143,7 @@ class Movimientos{
                 'code' => 500,
                 'message' => 'Ocurrio un error al momento de guardar los movimientos',
                 'action' => 'guardarMovimiento',
-                'module' => 'movimiento',
+                'module' => 'movimientos',
                 'data' => [],
                 'info' => $e->getMessage()
             ]; 
@@ -155,13 +155,13 @@ class Movimientos{
 
         try{
             $stmt = DataBase::connect()->prepare($sql);
-            $stmt->bindParam('codMovimiento',$this->codProducto, PDO::PARAM_INT);
-            $stmt->bindParam('codProducto',$this->codigo, PDO::PARAM_INT);
-            $stmt->bindParam('precioUnitario',$this->descripcion, PDO::PARAM_STR);
-            $stmt->bindParam('fechaMovimiento',$this->abreviatura, PDO::PARAM_STR);
-            $stmt->bindParam('documento',$this->abreviatura, PDO::PARAM_STR);
-            $stmt->bindParam('cantidad',$this->abreviatura, PDO::PARAM_INT);
-            $stmt->bindParam('codTipoMovimiento',$this->unidadMedida, PDO::PARAM_INT); 
+            $stmt->bindParam('codMovimiento',$this->codMovimiento, PDO::PARAM_INT);
+            $stmt->bindParam('codProducto',$this->codProducto, PDO::PARAM_INT);
+            $stmt->bindParam('precioUnitario',$this->precioUnitario, PDO::PARAM_STR);
+            $stmt->bindParam('fechaMovimiento',$this->fechaMovimiento, PDO::PARAM_STR);
+            $stmt->bindParam('documento',$this->documento, PDO::PARAM_STR);
+            $stmt->bindParam('cantidad',$this->cantidad, PDO::PARAM_INT);
+            $stmt->bindParam('codTipoMovimiento',$this->codTipoMovimiento, PDO::PARAM_INT); 
             $stmt->execute();
 
             if ($stmt->rowCount() > 0) {
