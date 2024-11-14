@@ -26,7 +26,7 @@ require_once "../../config/parameters.php"
     <table class="tableAsociaciones">
         <thead>
         <tr>
-            <th>Cod Club</th>
+            <th>Código Club</th>
             <th>Nombre</th>
             <th>Sector y Zona</th>
             <th>Dirección</th>

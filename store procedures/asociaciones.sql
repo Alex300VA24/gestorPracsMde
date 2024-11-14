@@ -9,7 +9,7 @@ BEGIN
 
 	SELECT @codEstadoPresidenta = codCargo FROM Cargos WHERE descripcion = 'presidenta'
 
-	SELECT a.codAsociacion, a.nombreAsociacion, sz.codSectorZona, CONCAT(s.descripcion, ' - ', z.descripcion) 'sector', a.direccion, a.numeroFinca, a.observaciones,
+	SELECT a.codAsociacion, a.codigoAsociacion ,a.nombreAsociacion, sz.codSectorZona, CONCAT(s.descripcion, ' - ', z.descripcion) 'sector', a.direccion, a.numeroFinca, a.observaciones,
 	a.codTipoLocal, t.descripcion 'tipoLocal',
 	CONCAT(p.nombres, ' ', p.apellidoPaterno, ' ', p.apellidoMaterno) 'presidenta', COUNT(b.codBeneficiario) 'cantidadBeneficiarios',
 	r.documento, e.abreviatura, e.descripcion 'estado'
@@ -29,14 +29,16 @@ BEGIN
 	AND 
 	(@nombreAsociacion IS NULL OR a.nombreAsociacion LIKE @nombreAsociacion+'%')	
 	AND (d.codCargo IS NULL OR d.codCargo = @codEstadoPresidenta)	
-	GROUP BY a.codAsociacion, a.nombreAsociacion, sz.codSectorZona, s.descripcion, z.descripcion,
+	GROUP BY a.codAsociacion, a.codigoAsociacion, a.nombreAsociacion, sz.codSectorZona, s.descripcion, z.descripcion,
 	a.direccion, p.nombres, p.apellidoPaterno, p.apellidoMaterno, e.descripcion, r.documento,
-	e.abreviatura, a.numeroFinca, a.observaciones, a.codTipoLocal, t.descripcion
+	e.abreviatura, a.numeroFinca, a.observaciones, a.codTipoLocal, t.descripcion, a.fechaRegistro
+  ORDER BY a.fechaRegistro DESC
 END
 GO
 
 --- registrar asociacion ---
 CREATE PROCEDURE sp_asociacion_registrar(
+  @codigoAsociacion VARCHAR(20),
 	@nombreAsociacion VARCHAR(100),
 	@codSectorZona INT,
 	@direccion VARCHAR(200),
@@ -50,14 +52,15 @@ BEGIN
 
 	SELECT @codEstadoPendienteResolucion = codEstado FROM Estados WHERE abreviatura = 'pr';	
 
-	INSERT INTO Asociaciones(nombreAsociacion, codSectorZona, codTipoLocal, direccion, numeroFinca, observaciones, codEstado)
-	VALUES(@nombreAsociacion, @codSectorZona, @codTipoLocal, @direccion, @numeroFinca, @observacion, @codEstadoPendienteResolucion)
+	INSERT INTO Asociaciones(codigoAsociacion, nombreAsociacion, codSectorZona, codTipoLocal, direccion, numeroFinca, observaciones, codEstado)
+	VALUES(@codigoAsociacion, @nombreAsociacion, @codSectorZona, @codTipoLocal, @direccion, @numeroFinca, @observacion, @codEstadoPendienteResolucion)
 END
 GO
 
 --- actualizar asociacion ---
 CREATE PROCEDURE sp_asociacion_actualizar(
 	@codAsociacion INT,
+  @codigoAsociacion VARCHAR(20),
 	@nombreAsociacion VARCHAR(100),
 	@codSectorZona INT,
 	@direccion VARCHAR(200),
@@ -67,7 +70,7 @@ CREATE PROCEDURE sp_asociacion_actualizar(
 )
 AS
 BEGIN
-	UPDATE Asociaciones SET nombreAsociacion = @nombreAsociacion, codSectorZona = @codSectorZona, 
+	UPDATE Asociaciones SET codigoAsociacion = @codigoAsociacion, nombreAsociacion = @nombreAsociacion, codSectorZona = @codSectorZona, 
 	codTipoLocal= @codTipoLocal, direccion = @direccion, numeroFinca = @numeroFinca, observaciones = @observacion 
 	WHERE codAsociacion = @codAsociacion
 END

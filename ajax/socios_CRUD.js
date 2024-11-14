@@ -82,7 +82,7 @@ $(document).ready(function () {
 
         if (optionSelected === 1){
             $("#fechaNacimientoBeneficiarioRegistro").val($(this).val());
-            $("#edadBeneficiarioRegistro").val($(this).val());
+            $("#edadBeneficiarioRegistro").val($("#edadSocioRegistro").val());
         }
     })
 
@@ -123,6 +123,8 @@ $(document).ready(function () {
             $("#telefonoBeneficiarioRegistro").val($("#telefonoSocioRegistro").val());
             $("#celularBeneficiarioRegistro").val($("#celularSocioRegistro").val());
             $("#fechaNacimientoBeneficiarioRegistro").val($("#fechaNacimientoSocioRegistro").val());
+            $("#edadBeneficiarioRegistro").val($("#edadSocioRegistro").val());
+
 
             // deshabilitar input de beneficiarios
             $("#dniBeneficiarioRegistro").prop("disabled", true).addClass("colorDisable")

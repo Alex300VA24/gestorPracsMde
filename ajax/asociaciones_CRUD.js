@@ -16,13 +16,14 @@ $(document).ready(function () {
                     let row = '';
                     if (data && Array.isArray(data) && data.length > 0) {
                         row = data.map(({
-                                            codAsociacion, nombreAsociacion, codSectorZona,
+                                            codAsociacion, codigoAsociacion, nombreAsociacion, codSectorZona,
                                             sector, direccion, presidenta, cantidadBeneficiarios,
                                             documento, abreviatura, estado, numeroFinca, observaciones, codTipoLocal, tipoLocal
                                         }) => {
                             return `
                                 <tr>
-                                    <td>${codAsociacion}</td>
+                                    <td>${codigoAsociacion}</td>
+                                    <td hidden="hidden">${codAsociacion}</td>
                                     <td>${nombreAsociacion}</td>                                   
                                     <td hidden="hidden">${codSectorZona}</td>
                                     <td>${sector}</td>                                   
@@ -89,13 +90,14 @@ $(document).ready(function () {
         modalRegistrar.modal('show');
 
         modalRegistrar.one('shown.bs.modal', function() {
-            $("#nombresNuevo").focus();
+            $("#codigoAsociacion").focus();
         });
     });
 
 //     registrar asociacion
     $(document).off("submit", "#registrarAsociacionForm").on('submit', '#registrarAsociacionForm', function(e) {
         e.preventDefault();
+        const codigoAsociacion = $.trim($('#codigoAsociacion').val());
         const nombre = $.trim($('#nombreAsociacion').val());
         const sector = Number($.trim($('#cboSectoresZonas').val()));
         const direccion = $.trim($('#direccion').val()).toUpperCase();
@@ -103,12 +105,12 @@ $(document).ready(function () {
         const numeroFinca = $.trim($('#numeroFinca').val());
         const observacion = $.trim($('#obervacionAsociacion').val());
 
-        if (isFiledsValid(nombre, sector, direccion, tipoLocal)){
+        if (isFiledsValid(codigoAsociacion, nombre, sector, direccion, tipoLocal)){
             $.ajax({
                 url: './controllers/asociacion/registrar.php',
                 method: 'POST',
                 dataType: 'json',
-                data: {nombre, sector, direccion, tipoLocal, numeroFinca, observacion},
+                data: {codigoAsociacion, nombre, sector, direccion, tipoLocal, numeroFinca, observacion},
                 success: function (response) {
                     const {code, message, info, data} = response;
 
@@ -132,18 +134,17 @@ $(document).ready(function () {
         e.preventDefault();
         let modalEditar = $("#modalEditarAsociacion");
         let fila = $(this).closest("tr");
-        let codAsociacion = fila.find('td:eq(0)').text();
-        let nombreAsociacion = fila.find('td:eq(1)').text();
-        let codSectorZona = fila.find('td:eq(2)').text();
-        let direccion = fila.find('td:eq(4)').text();
-        let numeroFinca = fila.find('td:eq(10)').text();
-        let observaciones = fila.find('td:eq(11)').text();
-        let tipoLocal = fila.find('td:eq(12)').text();
-
-        console.log({codAsociacion, nombreAsociacion})
-
+        let codigoAsociacion = fila.find('td:eq(0)').text();
+        let codAsociacion = fila.find('td:eq(1)').text();
+        let nombreAsociacion = fila.find('td:eq(2)').text();
+        let codSectorZona = fila.find('td:eq(3)').text();
+        let direccion = fila.find('td:eq(5)').text();
+        let numeroFinca = fila.find('td:eq(11)').text();
+        let observaciones = fila.find('td:eq(12)').text();
+        let tipoLocal = fila.find('td:eq(13)').text();
 
         $("#codAsociacion").val(codAsociacion.trim());
+        $("#codigoAsociacionEdit").val(codigoAsociacion.trim());
         $("#nombreAsociacionEdit").val(nombreAsociacion.trim());
         $("#cboSectoresZonasEdit").val(codSectorZona);
         $("#cboTiposLocalesEdit").val(tipoLocal);
@@ -159,7 +160,7 @@ $(document).ready(function () {
         modalEditar.modal('show');
 
         modalEditar.one('shown.bs.modal', function() {
-            $("#nombreAsociacionEdit").focus();
+            $("#codigoAsociacionEdit").focus();
         });
     });
 
@@ -167,6 +168,7 @@ $(document).ready(function () {
     $(document).off("submit", "#editarAsociacionForm").on('submit', '#editarAsociacionForm', function(e) {
         e.preventDefault();
         const codAsociacion = $.trim($('#codAsociacion').val());
+        const codigoAsociacion = $.trim($('#codigoAsociacionEdit').val());
         const nombre = $.trim($('#nombreAsociacionEdit').val());
         const sector = Number($.trim($('#cboSectoresZonasEdit').val()));
         const direccion = $.trim($('#direccionEdit').val()).toUpperCase();
@@ -176,12 +178,12 @@ $(document).ready(function () {
 
         console.log({codAsociacion, nombre, sector, direccion, direccion, tipoLocal, numeroFinca, observacion})
 
-        if (isFiledsValid(nombre, sector, direccion, tipoLocal)){
+        if (isFiledsValid(codigoAsociacion, nombre, sector, direccion, tipoLocal)){
             $.ajax({
                 url: './controllers/asociacion/actualizar.php',
                 method: 'POST',
                 dataType: 'json',
-                data: {codAsociacion, nombre, sector, direccion, tipoLocal, numeroFinca, observacion},
+                data: {codAsociacion, codigoAsociacion, nombre, sector, direccion, tipoLocal, numeroFinca, observacion},
                 success: function (response) {
                     const {code, message, info, data} = response;
 
@@ -316,8 +318,8 @@ $(document).ready(function () {
     });
 
 
-    function isFiledsValid(nombre, sector, direccion, tipoLocal) {
-        if (nombre === '' || sector == '' || sector === 0 || direccion == '' || tipoLocal == '' || tipoLocal === 0) {
+    function isFiledsValid(codigoAsociacion, nombre, sector, direccion, tipoLocal) {
+        if (codigoAsociacion == 0 || codigoAsociacion === '' || nombre === '' || sector == '' || sector === 0 || direccion == '' || tipoLocal == '' || tipoLocal === 0) {
             Swal.fire({
                 title: "¡Advertencia!",
                 text: 'Campos incompletos',

@@ -12,6 +12,15 @@
                         hidden="hidden"
                     >
                     <div class="two-column">
+                        <label for="nombreAsociacion">Código (*):</label>
+                        <input
+                                type="text"
+                                id="codigoAsociacionEdit"
+                                autocomplete="off"
+                                maxlength="100"
+                        >
+                    </div>
+                    <div class="two-column">
                         <label for="nombreAsociacion">Nombre (*):</label>
                         <input
                             type="text"

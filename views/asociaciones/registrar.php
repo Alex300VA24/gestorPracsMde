@@ -7,6 +7,15 @@
             <form class="formArea" id="registrarAsociacionForm" action="" method="post">
                 <div class="modal-body">
                     <div class="two-column">
+                        <label for="codigoAsociacion">código (*):</label>
+                        <input
+                                type="text"
+                                id="codigoAsociacion"
+                                autocomplete="off"
+                                maxlength="20"
+                        >
+                    </div>
+                    <div class="two-column">
                         <label for="nombreAsociacion">Nombre (*):</label>
                         <input
                                 type="text"

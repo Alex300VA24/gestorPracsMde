@@ -2,6 +2,7 @@
 
 class Asociacion{
     private int $codAsociacion;
+    private string $codigoAsociacion;
     private string $nombreAsociacion;
     private int $codSectorZona;
     private int $codSector;
@@ -19,6 +20,14 @@ class Asociacion{
 
     public function setCodAsociacion(int $codAsociacion): void{
         $this->codAsociacion = $codAsociacion;
+    }
+
+    public function getCodigoAsociacion(): string{
+        return $this->codigoAsociacion;
+    }
+
+    public function setCodigoAsociacion(string $codigoAsociacion): void{
+        $this->codigoAsociacion = $codigoAsociacion;
     }
 
     public function getNombreAsociacion(): string{
@@ -136,10 +145,11 @@ class Asociacion{
     }
 
     public function guardarAsociacion(){
-        $sql = "EXEC sp_asociacion_registrar :nombreAsociacion, :codSectorZona, :direccion, :codTipoLocal, :numeroFinca, :observacion";
+        $sql = "EXEC sp_asociacion_registrar :codigoAsociacion, :nombreAsociacion, :codSectorZona, :direccion, :codTipoLocal, :numeroFinca, :observacion";
 
         try {
             $stmt = DataBase::connect()->prepare($sql);
+            $stmt->bindParam('codigoAsociacion',$this->codigoAsociacion, PDO::PARAM_STR);
             $stmt->bindParam('nombreAsociacion',$this->nombreAsociacion, PDO::PARAM_STR);
             $stmt->bindParam('codSectorZona',$this->codSectorZona, PDO::PARAM_INT);
             $stmt->bindParam('codSectorZona',$this->codSectorZona, PDO::PARAM_INT);
@@ -182,11 +192,12 @@ class Asociacion{
     }
 
     public function actualizarAsociacion(){
-        $sql = "EXEC sp_asociacion_actualizar :codAsociacion, :nombreAsociacion, :codSectorZona, :direccion, :codTipoLocal, :numeroFinca, :observacion";
+        $sql = "EXEC sp_asociacion_actualizar :codAsociacion, :codigoAsociacion, :nombreAsociacion, :codSectorZona, :direccion, :codTipoLocal, :numeroFinca, :observacion";
 
         try {
             $stmt = DataBase::connect()->prepare($sql);
             $stmt->bindParam('codAsociacion',$this->codAsociacion, PDO::PARAM_INT);
+            $stmt->bindParam('codigoAsociacion',$this->codigoAsociacion, PDO::PARAM_STR);
             $stmt->bindParam('nombreAsociacion',$this->nombreAsociacion, PDO::PARAM_STR);
             $stmt->bindParam('codSectorZona',$this->codSectorZona, PDO::PARAM_INT);
             $stmt->bindParam('codSectorZona',$this->codSectorZona, PDO::PARAM_INT);

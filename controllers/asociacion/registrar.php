@@ -4,6 +4,7 @@ include_once "../../models/Asociacion.php";
 
 $asociacionObj = new Asociacion();
 
+$codigoAsociacion = $_POST['codigoAsociacion'] ?? null;
 $nombreAsociacion = $_POST['nombre'] ?? null;
 $codSectorZona = $_POST['sector'] ?? null;
 $direccion = $_POST['direccion'] ?? null;
@@ -11,6 +12,7 @@ $codTipoLocal = $_POST['tipoLocal'] ?? null;
 $numeroFinca = $_POST['numeroFinca'] ?? null;
 $observacion = $_POST['observacion'] ?? null;
 
+$asociacionObj->setCodigoAsociacion($codigoAsociacion);
 $asociacionObj->setNombreAsociacion($nombreAsociacion);
 $asociacionObj->setCodSectorZona($codSectorZona);
 $asociacionObj->setDireccion($direccion);
