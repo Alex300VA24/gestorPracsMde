@@ -26,7 +26,6 @@ require_once "../../config/parameters.php"
                     <th>CodMovimiento</th>
                     <th>Producto</th>
                     <th>Fecha Movimiento</th>
-                    <th>Documento</th>
                     <th>Unidad de Medida</th>
                     <th>Cantidad</th>
                     <th>Precio Unitario</th>

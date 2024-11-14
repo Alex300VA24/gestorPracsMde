@@ -29,16 +29,7 @@
                                 id="fechaMovimiento" 
                                 autocomplete="off"
                                 maxlength="100"
-                                >
-                    </div>
-
-                    <div class="two-column">
-                        <label for="documento">Documento (*):</label>
-                        <input 
-                                type="text" 
-                                id="documento" 
-                                autocomplete="off"
-                                maxlength="100"
+                                disabled
                                 >
                     </div>
 

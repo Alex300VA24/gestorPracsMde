@@ -38,16 +38,6 @@
                     </div>
 
                     <div class="two-column">
-                        <label for="documento">Documento (*):</label>
-                        <input 
-                                type="text" 
-                                id="documentoEdit" 
-                                autocomplete="off"
-                                maxlength="100"
-                                >
-                    </div>
-
-                    <div class="two-column">
                         <label for="cantidad">Cantidad (*):</label>
                         <input 
                                 type="text" 

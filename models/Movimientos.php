@@ -5,7 +5,6 @@ class Movimientos{
     private int $codProducto;
     private int $codTipoMovimiento;
     private string $fechaMovimiento;
-    private string $documento;
     private int $cantidad;
     private string $precioUnitario;
     private string $precioTotal;
@@ -40,14 +39,6 @@ class Movimientos{
 
     public function setFechaMovimiento(string $fechaMovimiento): void{
         $this->fechaMovimiento = $fechaMovimiento;
-    }
-
-    public function getDocumento(): string{
-        return $this->documento;
-    }
-
-    public function setDocumento(string $documento): void{
-        $this->documento = $documento;
     }
 
     public function getCantidad(): int{
@@ -107,14 +98,13 @@ class Movimientos{
     }
 
     public function guardarMovimientos(){
-        $sql = "EXEC sp_movimiento_registrar :codProducto, :codTipoMovimiento, :fechaMovimiento, :documento, :cantidad, :precioUnitario";
+        $sql = "EXEC sp_movimiento_registrar :codProducto, :codTipoMovimiento, :fechaMovimiento, :cantidad, :precioUnitario";
 
         try {
             $stmt = DataBase::connect()->prepare($sql);
             $stmt->bindParam('codProducto',$this->codProducto, PDO::PARAM_INT);
             $stmt->bindParam('codTipoMovimiento',$this->codTipoMovimiento, PDO::PARAM_INT);
             $stmt->bindParam('fechaMovimiento',$this->fechaMovimiento, PDO::PARAM_STR);
-            $stmt->bindParam('documento',$this->documento, PDO::PARAM_STR);
             $stmt->bindParam('cantidad',$this->cantidad, PDO::PARAM_INT);
             $stmt->bindParam('precioUnitario',$this->precioUnitario, PDO::PARAM_STR); 
             $stmt->execute();
@@ -151,7 +141,7 @@ class Movimientos{
     }
 
     public function actualizarMovimientos(){
-        $sql="sp_movimiento_actualizar :codMovimiento, :codProducto, :precioUnitario, :fechaMovimiento, :documento, :cantidad, :codTipoMovimiento";
+        $sql="sp_movimiento_actualizar :codMovimiento, :codProducto, :precioUnitario, :fechaMovimiento, :cantidad, :codTipoMovimiento";
 
         try{
             $stmt = DataBase::connect()->prepare($sql);
@@ -159,7 +149,6 @@ class Movimientos{
             $stmt->bindParam('codProducto',$this->codProducto, PDO::PARAM_INT);
             $stmt->bindParam('precioUnitario',$this->precioUnitario, PDO::PARAM_STR);
             $stmt->bindParam('fechaMovimiento',$this->fechaMovimiento, PDO::PARAM_STR);
-            $stmt->bindParam('documento',$this->documento, PDO::PARAM_STR);
             $stmt->bindParam('cantidad',$this->cantidad, PDO::PARAM_INT);
             $stmt->bindParam('codTipoMovimiento',$this->codTipoMovimiento, PDO::PARAM_INT); 
             $stmt->execute();

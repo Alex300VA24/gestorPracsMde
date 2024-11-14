@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    let fechaActual = new Date();
+    let fechaFormateada = fechaActual.toISOString().split('T')[0];
 
     function listarMovimientos(codigo, descripcion) {
         $.ajax({
@@ -14,15 +16,14 @@ $(document).ready(function () {
                     if (data && Array.isArray(data) && data.length > 0) {
                         row = data.map(({
                                             codMovimiento, codProducto, descripcion,fechaMovimiento, cantidad, codUnidadMedida,
-                                            descripcionUnidadMedida, precioUnitario, precioTotal, documento, codTipoMovimiento, descripcionTipoMov
+                                            descripcionUnidadMedida, precioUnitario, precioTotal, codTipoMovimiento, descripcionTipoMov
                                         }) => {
                             return `
                                 <tr>
                                     <td>${codMovimiento}</td>
                                     <td hidden="hidden">${codProducto}</td>
                                     <td>${descripcion}</td>
-                                    <td>${fechaMovimiento.split(' ')[0]}</td> 
-                                    <td>${documento}</td>                                                                     
+                                    <td>${fechaMovimiento.split(' ')[0]}</td>                                                                     
                                     <td hidden="hidden">${codUnidadMedida}</td>                                   
                                     <td>${descripcionUnidadMedida}</td>
                                     <td>${cantidad}</td>
@@ -64,6 +65,7 @@ $(document).ready(function () {
         e.preventDefault();
         let modalRegistrar = $("#modalRegistrarMovimiento");
         $("#registrarMovimientoForm").trigger("reset");
+        $("#fechaMovimiento").val(fechaFormateada)
     
         modalRegistrar.modal({
             backdrop: 'static',
@@ -84,17 +86,16 @@ $(document).ready(function () {
         const producto = $.trim($('#cboProducto').val());
         const tipoMovimiento = $.trim($('#cboTipoMovimiento').val());
         const fechaMovimiento = $.trim($('#fechaMovimiento').val());
-        const documento = $.trim($('#documento').val());
         const cantidad = $.trim($('#cantidad').val());
         const precioUnitario = $.trim($('#precioUnitario').val());
-        //console.log({producto, tipoMovimiento, fechaMovimiento, documento, cantidad, precioUnitario})
+        //console.log({producto, tipoMovimiento, fechaMovimiento, cantidad, precioUnitario})
 
-        if (isFiledsValid(producto, tipoMovimiento, fechaMovimiento, documento, cantidad, precioUnitario)){
+        if (isFiledsValid(producto, tipoMovimiento, fechaMovimiento, cantidad, precioUnitario)){
             $.ajax({
                 url: './controllers/movimientos/registrarMovimientos.php',
                 method: 'POST',
                 dataType: 'json',
-                data: {producto, tipoMovimiento, fechaMovimiento, documento, cantidad, precioUnitario},
+                data: {producto, tipoMovimiento, fechaMovimiento, cantidad, precioUnitario},
                 success: function (response) {
                     console.log(response)
                     const {code, message, info, data} = response;
@@ -123,10 +124,9 @@ $(document).ready(function () {
         let codMovimiento = fila.find('td:eq(0)').text();
         let codProducto = fila.find('td:eq(1)').text();
         let fechaMovimiento = fila.find('td:eq(3)').text();
-        let documento = fila.find('td:eq(4)').text();
-        let cantidad = fila.find('td:eq(7)').text();
-        let precioUnitario = fila.find('td:eq(8)').text();
-        let codTipoMovimiento = fila.find('td:eq(10)').text();
+        let cantidad = fila.find('td:eq(6)').text();
+        let precioUnitario = fila.find('td:eq(7)').text();
+        let codTipoMovimiento = fila.find('td:eq(9)').text();
 
         console.log({codMovimiento, codProducto, precioUnitario})
 
@@ -135,7 +135,6 @@ $(document).ready(function () {
         $("#fechaMovimientoEdit").val(fechaMovimiento.trim());
         $("#cantidadEdit").val(cantidad.trim());
         $("#precioUnitarioEdit").val(precioUnitario.trim());
-        $("#documentoEdit").val(documento.trim());
         $("#cboTipoMovimientoEdit").val(codTipoMovimiento);
 
         modalEditar.modal({
@@ -157,18 +156,17 @@ $(document).ready(function () {
         const producto = $.trim($('#cboProductoEdit').val());
         const tipoMovimiento = $.trim($('#cboTipoMovimientoEdit').val());
         const fechaMovimiento = $.trim($('#fechaMovimientoEdit').val());
-        const documento = $.trim($('#documentoEdit').val());
         const cantidad = $.trim($('#cantidadEdit').val());
         const precioUnitario = $.trim($('#precioUnitarioEdit').val());
 
-        console.log({codMovimiento, producto, tipoMovimiento, fechaMovimiento, documento, cantidad, precioUnitario})
+        console.log({codMovimiento, producto, tipoMovimiento, fechaMovimiento, cantidad, precioUnitario})
 
-        if (isFiledsValid(producto, tipoMovimiento, fechaMovimiento, documento, cantidad, precioUnitario)){
+        if (isFiledsValid(producto, tipoMovimiento, fechaMovimiento, cantidad, precioUnitario)){
             $.ajax({
                 url: './controllers/movimientos/actualizar.php',
                 method: 'POST',
                 dataType: 'json',
-                data: {codMovimiento, producto, tipoMovimiento, fechaMovimiento, documento, cantidad, precioUnitario},
+                data: {codMovimiento, producto, tipoMovimiento, fechaMovimiento, cantidad, precioUnitario},
                 success: function (response) {
                     console.log(response)
                     const {code, message, info, data} = response;
@@ -188,8 +186,9 @@ $(document).ready(function () {
         }
     })
 
-    function isFiledsValid(producto, tipoMovimiento, fechaMovimiento, documento, cantidad, precioUnitario) {
-        if (producto === '' || producto === 0 || tipoMovimiento == '' || tipoMovimiento == 0 || fechaMovimiento === '' || documento == '' || cantidad == '' || precioUnitario === '') {
+    function isFiledsValid(producto, tipoMovimiento, fechaMovimiento, cantidad, precioUnitario) {
+        console.log({producto, tipoMovimiento, fechaMovimiento, cantidad, precioUnitario})
+        if (producto === '' || producto === 0 || tipoMovimiento == '' || tipoMovimiento == 0 || fechaMovimiento === '' || cantidad == '' || precioUnitario === '') {
             Swal.fire({
                 title: "¡Advertencia!",
                 text: 'Campos incompletos',
