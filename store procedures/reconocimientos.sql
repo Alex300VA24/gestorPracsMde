@@ -79,7 +79,7 @@ BEGIN
 		SELECT @codCargoVocal = codCargo FROM Cargos WHERE descripcion = 'vocal';
 		SELECT @codCargoCoordinadora = codCargo FROM Cargos WHERE descripcion = 'coordinadora';
 		SELECT @codCargoAlmacenera = codCargo FROM Cargos WHERE descripcion = 'almacenera';
-		SELECT @codCargoFiscalizador = codCargo FROM Cargos WHERE descripcion = 'fizcalizador';						
+		SELECT @codCargoFiscalizador = codCargo FROM Cargos WHERE descripcion = 'fiscal';						
 
 		INSERT INTO Directivas(codReconocimiento, codSocio, codCargo, codEstado)
 		VALUES

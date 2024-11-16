@@ -44,6 +44,8 @@ require_once "../../config/parameters.php"
 
 <?php require_once "registro.php" ?>
 
-<script src="<?= base_url?>ajax/socios_CRUD.js"></script>
 <script src="<?= base_url?>ajax/sectoresZona_llenarCboSectoresZona.js"></script>
 <script src="<?= base_url?>ajax/asociaciones_llenarCboAsocNuevaRecVencidoRecPendiente.js"></script>
+<script src="<?= base_url?>ajax/parentescos_llenarCboParentescos.js"></script>
+<script src="<?= base_url?>ajax/tiposBeneficio_llenarCboTiposBeneficio.js"></script>
+<script src="<?= base_url?>ajax/socios_CRUD.js"></script>
