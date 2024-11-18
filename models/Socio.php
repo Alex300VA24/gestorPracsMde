@@ -87,6 +87,37 @@ class Socio extends Persona {
         $this->descripcionEstado = $descripcionEstado;
     }
 
+    public function listarSocios($dniOApellidosNombres, $codAsociacion){
+        $sql = "EXEC sp_socio_listar :dni_o_apellidos_nombres, :codAsociacion";
+
+        try {
+            $stmt = DataBase::connect()->prepare($sql);
+            $stmt->bindParam('dni_o_apellidos_nombres',$dniOApellidosNombres, PDO::PARAM_STR);
+            $stmt->bindParam('codAsociacion',$codAsociacion, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return [
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'lista de socios',
+                'data' => $result,
+            ];
+
+        }catch (Exception $e){
+            return [
+                'status' => 'failed',
+                'code' => 500,
+                'message' => 'Ocurrio un error al momento de listar los socios',
+                'action' => 'listarSocios',
+                'module' => 'socios',
+                'data' => [],
+                'info' => $e->getMessage()
+            ];
+        }
+    }
+
+
     public function buscarByDNI(string $dni){
         $sql = "EXEC sp_socio_buscar_por_dni :codAsociacion, :dni";
 

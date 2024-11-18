@@ -1,5 +1,8 @@
 $(document).ready(function () {
 
+    let dniOApellidosNombres;
+    let codAsociacion;
+
     let optionSelected = 0
 
     let tiposBeneficio = [];
@@ -13,6 +16,79 @@ $(document).ready(function () {
     const fechaFormateada = fechaActual.toISOString().split('T')[0]; // Formatea la fecha como 'YYYY-MM-DD'
     inputFechaSocio.setAttribute('max', fechaFormateada);
     inputFechaBeneficiario.setAttribute('max', fechaFormateada);
+
+    listarSocios(dniOApellidosNombres, codAsociacion);
+
+    function listarSocios(dniOApellidosNombres, codAsociacion) {
+        $.ajax({
+            url: './controllers/socio/listar.php',
+            method: 'GET',
+            dataType: 'json',
+            data: {dniOApellidosNombres, codAsociacion},
+            success: function (response) {
+                console.log(response)
+                const {code, message, info, data} = response;
+
+                if (code === 200) {
+                    let row = '';
+                    if (data && Array.isArray(data) && data.length > 0) {
+                        row = data.map(({codSocio, codPersona, nombres, apellidoPaterno,
+                                            apellidoMaterno, sexo, fechaNacimiento, codSectorZona,
+                                            direccion, aniosNacido, dni, observaciones, codAsociacion,
+                                            nombreAsociacion, cargo, fechaInicio, abreviatura, estado
+                                        }) => {
+                            return `
+                                <tr>
+                                    <td>${codSocio}</td>
+                                    <td hidden="hidden">${codPersona}</td>
+                                    <td>${nombres + ' ' + apellidoPaterno + ' ' + apellidoMaterno}</td>                                   
+                                    <td hidden="hidden">${sexo}</td>                                   
+                                    <td hidden="hidden">${fechaNacimiento}</td>                                   
+                                    <td hidden="hidden">${codSectorZona}</td>                                   
+                                    <td hidden="hidden">${direccion}</td>                                                                                                       
+                                    <td>${aniosNacido}</td>                                                                                                       
+                                    <td>${dni}</td>                                                                                                       
+                                    <td hidden="hidden">${observaciones}</td>                                                                                                       
+                                    <td hidden="hidden">${codAsociacion}</td>                                                                                                       
+                                    <td>${nombreAsociacion}</td>                                                                                                       
+                                    <td>${cargo}</td>                                                                                                       
+                                    <td>${fechaInicio.split(' ')[0]}</td>                                                                                                                                                                                                                                                 
+                                    <td>
+                                        <span class="estado ${abreviatura === "a" ? 'active' : abreviatura === 'v' ? 'vencido' : 'inactive'}">
+                                            ${estado}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="actions actions_socios">     
+                                            ${abreviatura == 'a' ?
+                                            `<img id="btnEditarAsociacion" class="action" src="./assets/icons/action_edit.svg">
+                                            <img class="action" src="./assets/icons/action_ver_detalle.svg">
+                                            <img class="action" src="./assets/icons/action_ver_beneficiarios.svg">
+                                            <img class="action" src="./assets/icons/action_agregar_beneficiario.svg">
+                                            <img class="action" src="./assets/icons/action_deshabilitar.svg">
+                                            ` : ''}                                            
+                                        </div>
+                                    </td>
+                                </tr>
+                            `
+                        })
+                        $("#listaSocios").html(row)
+                    } else {
+                        row = `<tr><td colspan="10">Aún no existen socios en el sistema</td></tr>`
+                    }
+                    $("#listaSocios").html(row)
+                }
+
+                if (code === 500) {
+                    showErrorInternalServer(message, info)
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error('Error reconocimientos_CRUD.js: ', textStatus, errorThrown);
+            }
+        })
+    }
+
 
     //     nuevo socio y beneficiarios - abrir modal
     $(document).off("click", "#btnNuevoSocio").on("click", "#btnNuevoSocio", function(e) {

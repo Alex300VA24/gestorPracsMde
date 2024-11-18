@@ -11,7 +11,8 @@ BEGIN
 
 	SELECT a.codAsociacion, a.codigoAsociacion ,a.nombreAsociacion, sz.codSectorZona, CONCAT(s.descripcion, ' - ', z.descripcion) 'sector', a.direccion, a.numeroFinca, a.observaciones,
 	a.codTipoLocal, t.descripcion 'tipoLocal',
-	CONCAT(p.nombres, ' ', p.apellidoPaterno, ' ', p.apellidoMaterno) 'presidenta', COUNT(b.codBeneficiario) 'cantidadBeneficiarios',
+	CONCAT(p.nombres, ' ', p.apellidoPaterno, ' ', p.apellidoMaterno) 'presidenta', 
+  (SELECT COUNT(b.codBeneficiario) FROM Beneficiarios b INNER JOIN Socios s ON b.codSocio = s.codSocio WHERE s.codAsociacion = a.codAsociacion) 'cantidadBeneficiarios',
 	r.documento, e.abreviatura, e.descripcion 'estado'
 	FROM Asociaciones a 
 	INNER JOIN TiposLocal t ON a.codTipoLocal = t.codTipoLocal

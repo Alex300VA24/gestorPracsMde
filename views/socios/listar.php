@@ -23,7 +23,7 @@ require_once "../../config/parameters.php"
 </div>
 
 <div class="containerTable">
-    <table class="tableReconocimientos">
+    <table class="tableSocios">
         <thead>
         <tr>
             <th>Cod Socio</th>
