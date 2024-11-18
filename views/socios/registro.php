@@ -114,7 +114,7 @@
                         </div>
 
                         <div>
-                            <label for="direccionSocio">Número de finca (*):</label>
+                            <label for="direccionSocio">Número de finca:</label>
                             <input
                                     type="number"
                                     id="numeroFincaSocioRegistro"
@@ -138,19 +138,19 @@
                         </div>
 
                         <div class="observaciones">
-                            <label for="observaciones">Observaciones (*):</label>
-                            <textarea class="form-control"></textarea>
+                            <label for="observaciones">Observaciones:</label>
+                            <textarea id="observacionSocioRegistro" class="form-control"></textarea>
                         </div>
 
                         <div class="options_socio_beneficiario">
                             <label for="observaciones">Es socio y beneficiario (*):</label>
                             <div>
                                 <span>Sí</span>
-                                <input name="optionSocioBeneficiario" type="radio" value=1>
+                                <input id="optionSocioBeneficiarioSi" name="optionSocioBeneficiario" type="radio" value=1>
                             </div>
                             <div>
                                 <span>No</span>
-                                <input name="optionSocioBeneficiario" type="radio" value=0 checked>
+                                <input id="optionSocioBeneficiarioNo" name="optionSocioBeneficiario" type="radio" value=0 checked>
                             </div>
                         </div>
                     </div>
@@ -258,44 +258,36 @@
                             <label for="direccionSocio">Dirección (*):</label>
                             <input
                                     type="text"
-                                    id="direccionSocioRegistro"
+                                    id="direccionBeneficiarioRegistro"
                                     autocomplete="off"
                                     maxlength="100"
                             >
                         </div>
 
                         <div>
-                            <label for="direccionSocio">Número de finca (*):</label>
+                            <label for="direccionSocio">Número de finca:</label>
                             <input
                                     type="number"
-                                    id="numeroFincaSocioRegistro"
+                                    id="numeroFincaBeneficiarioRegistro"
                                     autocomplete="off"
                             >
                         </div>
 
                         <div>
                             <label for="parentesco">Parentesco (*):</label>
-                            <select class="form-control" id="cboParentescoRegistroSocio"></select>
+                            <select class="form-control" id="cboParentescoRegistroBeneficiario"></select>
                         </div>
 
                         <div>
                             <label for="tipoBeneficio">Tipo Beneficio (*):</label>
-                            <select class="form-control" id="cboTipoBeneficioRegistroSocio"></select>
-                        </div>
-
-                        <div>
-                            <label for="fechaNacimiento">Fecha Inicio (*):</label>
-                            <input
-                                    type="date"
-                                    id="fechaInicioSocioRegistro"
-                            >
+                            <select class="form-control" id="cboTipoBeneficioRegistroBeneficiario"></select>
                         </div>
 
                         <div>
                             <label for="peso">Peso (kg):</label>
                             <input
                                     type="number"
-                                    id="pesoSocioRegistro"
+                                    id="pesoBeneficiarioRegistro"
                                     autocomplete="off"
                             >
                         </div>
@@ -304,7 +296,7 @@
                             <label for="peso">Talla (cm):</label>
                             <input
                                     type="number"
-                                    id="tallaSocioRegistro"
+                                    id="tallaBeneficiarioRegistro"
                                     autocomplete="off"
                             >
                         </div>
@@ -313,8 +305,44 @@
                             <label for="hmg">Hmg:</label>
                             <input
                                     type="number"
-                                    id="hmgSocioRegistro"
+                                    id="hmgBeneficiarioRegistro"
                                     autocomplete="off"
+                            >
+                        </div>
+
+                        <div class="boxFum" hidden="hidden">
+                            <label for="fechaNacimiento">FUM (*):</label>
+                            <input
+                                    type="date"
+                                    id="fumBeneficiarioRegistro"
+                            >
+                        </div>
+
+                        <div class="boxFechaProbableParto" hidden="hidden">
+                            <label for="fechaNacimiento">Fecha probable de parto (*):</label>
+                            <input
+                                    disabled
+                                    class="colorDisable"
+                                    type="date"
+                                    id="fechaProbableDePartoBeneficiarioRegistro"
+                            >
+                        </div>
+
+                        <div class="boxFechaParto" hidden="hidden">
+                            <label for="fechaNacimiento">Fecha de parto (*):</label>
+                            <input
+                                    type="date"
+                                    id="fechaPartoBeneficiarioRegistro"
+                            >
+                        </div>
+
+                        <div class="boxFechaFin" hidden="hidden">
+                            <label for="fechaNacimiento">Fecha fin (*):</label>
+                            <input
+                                    disabled
+                                    class="colorDisable"
+                                    type="date"
+                                    id="fechaFinBeneficiarioRegistro"
                             >
                         </div>
 
@@ -329,11 +357,11 @@
                         <h2>Detalle de los beneficiarios</h2>
                     </div>
                     <div class="containerTable">
-                        <table class="tableReconocimientos">
+                        <table class="tableDetalleBeneficiariosRegistro">
                             <thead>
                             <tr>
-                                <th>Nombres</th>
                                 <th>DNI</th>
+                                <th>Nombres</th>
                                 <th>Edad</th>
                                 <th>Beneficio</th>
                                 <th>Parentesco</th>
@@ -343,7 +371,7 @@
                                 <th>Acciones</th>
                             </tr>
                             </thead>
-                            <tbody id="listaSocios">
+                            <tbody id="listaDetalleBeneficiarios">
                             </tbody>
                         </table>
                     </div>

@@ -11,7 +11,7 @@ insert into SectoresZona(codSector, codZona) values(1, 1),(1,2),(2, 2),(3, 1),(3
 
 insert into TiposLocal(descripcion) values('propio'),('provisional'),('municipalidad');
 
-insert into Parentescos(descripcion) values('Hijo(a)'), ('Nieto(a)'), ('Sobrino(a)');
+insert into Parentescos(descripcion) values('Hijo(a)'), ('Nieto(a)'), ('Sobrino(a)'), ('Socio');
 
 insert into TiposBeneficio(descripcion, edadMinima, edadMaxima, prioridad, observaciones)
 values('niño (0-6 años)', 0, 6, 1, ''),('niño (7-13 años)', 7, 13, 2, ''),
