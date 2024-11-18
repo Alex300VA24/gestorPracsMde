@@ -21,6 +21,7 @@ BEGIN
   a.nombreAsociacion,
   c.descripcion 'cargo',
   s.fechaInicio,
+  s.fechaFin,
   e.abreviatura,
   e.descripcion 'estado'
   FROM Socios s

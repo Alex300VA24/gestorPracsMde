@@ -31,8 +31,9 @@ require_once "../../config/parameters.php"
             <th>Edad</th>
             <th>DNI</th>
             <th>Club de madre</th>
+            <th>Cargo</th>
             <th>Fecha Inicio</th>
-            <th>Fecha Termino</th>
+            <th>Fecha Fin</th>
             <th>Estado</th>
             <th>Acciones</th>
         </tr>

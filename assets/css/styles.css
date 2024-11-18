@@ -804,6 +804,16 @@ input:focus-visible{
     width: 200px;
 }
 
+/* ---- columna edad ---*/
+.containerTable .tableSocios tr td:nth-child(8){
+    width: 60px;
+}
+
+/* ---- columna dni ---*/
+.containerTable .tableSocios tr td:nth-child(9){
+    width: 90px;
+}
+
 .containerTable .tableSocios tr td:nth-child(12){
     width: 200px;
 }
@@ -812,11 +822,16 @@ input:focus-visible{
     width: 100px;
 }
 
-.containerTable .tableSocios tr td:last-child{
+.containerTable .tableSocios tr td:nth-child(15){
     width: 120px;
+}
+
+.containerTable .tableSocios tr td:last-child{
+    width: 200px;
 }
 
 .actions_socios{
     width: 120px;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    /*grid-template-columns: repeat(3, 1fr);*/
 }

@@ -35,7 +35,7 @@ $(document).ready(function () {
                         row = data.map(({codSocio, codPersona, nombres, apellidoPaterno,
                                             apellidoMaterno, sexo, fechaNacimiento, codSectorZona,
                                             direccion, aniosNacido, dni, observaciones, codAsociacion,
-                                            nombreAsociacion, cargo, fechaInicio, abreviatura, estado
+                                            nombreAsociacion, cargo, fechaInicio, fechaFin, abreviatura, estado
                                         }) => {
                             return `
                                 <tr>
@@ -53,6 +53,7 @@ $(document).ready(function () {
                                     <td>${nombreAsociacion}</td>                                                                                                       
                                     <td>${cargo}</td>                                                                                                       
                                     <td>${fechaInicio.split(' ')[0]}</td>                                                                                                                                                                                                                                                 
+                                    <td>${fechaFin ? fechaFin.split(' ')[0] : ''}</td>                                                                                                                                                                                                                                                 
                                     <td>
                                         <span class="estado ${abreviatura === "a" ? 'active' : abreviatura === 'v' ? 'vencido' : 'inactive'}">
                                             ${estado}
