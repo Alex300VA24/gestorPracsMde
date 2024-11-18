@@ -6,7 +6,8 @@
     <h1>Lista de Productos</h1>
     <div class="filters_btn_new">
         <div class="filters">
-            <input type="text" placeholder="Buscar por nombre o codigo">
+            <input type="text" id="descripcionProductoFiltro" placeholder="Buscar por descripcion">
+
             <div class="container_clear_filters">
                 <img src="<?=base_url?>/assets/icons/clearFilters.svg">
             </div>

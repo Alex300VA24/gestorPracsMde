@@ -1,11 +1,14 @@
 $(document).ready(function () {
 
-    function listarProductos(codigo, descripcion) {
+    let descripcionProducto
+
+    function listarProductos(descripcion) {
+        console.log(descripcion)
         $.ajax({
             url: './controllers/productos/listarProductos.php',
             method: 'GET',
             dataType: 'json',
-            data: {codigo, descripcion},
+            data: {descripcion},
             success: function (response) {
                 const {code, message, info, data} = response;
 
@@ -179,6 +182,12 @@ $(document).ready(function () {
             })
         }
     })
+
+    // Filtrar por nombre del producto
+    $(document).off("input", "#descripcionProductoFiltro").on("input", "#descripcionProductoFiltro", function(e){
+        descripcionProducto = $(this).val();
+        listarProductos(descripcionProducto)
+    });
 
 
     function isFiledsValid(descripcion, abreviatura, unidadMedida) {

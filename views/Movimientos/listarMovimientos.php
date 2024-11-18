@@ -6,7 +6,7 @@ require_once "../../config/parameters.php"
     <h1>Lista de Movimientos</h1>
     <div class="filters_btn_new">
         <div class="filters">
-            <input type="text" placeholder="Buscar por nombre o codigo">
+            <input type="text" id="productoFiltro" placeholder="Buscar por producto">
             
             <div class="container_clear_filters">
                 <img src="<?=base_url?>/assets/icons/clearFilters.svg">

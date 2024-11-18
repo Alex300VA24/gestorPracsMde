@@ -65,13 +65,12 @@ class Movimientos{
         $this->precioTotal = $precioTotal;
     }
 
-    public function listarMovimientos($descripcion, $codUnidadMedida){
-        $sql = "EXEC sp_movimiento_listar :descripcion, :codUnidadMedida";
+    public function listarMovimientos($descripcion){
+        $sql = "EXEC sp_movimiento_listar :descripcion";
 
         try{
             $stmt = DataBase::connect()->prepare($sql);
             $stmt->bindParam('descripcion',$descripcion, PDO::PARAM_STR);
-            $stmt->bindParam('codUnidadMedida',$codUnidadMedida, PDO::PARAM_INT);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             

@@ -1,13 +1,14 @@
 $(document).ready(function () {
+    let producto
     let fechaActual = new Date();
     let fechaFormateada = fechaActual.toISOString().split('T')[0];
 
-    function listarMovimientos(codigo, descripcion) {
+    function listarMovimientos(descripcion) {
         $.ajax({
             url: './controllers/movimientos/listarMovimientos.php',
             method: 'GET',
             dataType: 'json',
-            data: {codigo, descripcion},
+            data: {descripcion},
             success: function (response) {
                 const {code, message, info, data} = response;
 
@@ -185,6 +186,13 @@ $(document).ready(function () {
             })
         }
     })
+
+    $(document).off("input", "#productoFiltro").on("input", "#productoFiltro", function(e){
+        producto = $(this).val();
+        listarMovimientos(producto)
+    });
+
+
 
     function isFiledsValid(producto, tipoMovimiento, fechaMovimiento, cantidad, precioUnitario) {
         console.log({producto, tipoMovimiento, fechaMovimiento, cantidad, precioUnitario})

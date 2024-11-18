@@ -18,7 +18,7 @@
                                     </select>
                                 </div>
 
-                                <div class="two-column">
+                                <div class="two-column mt-2">
                                     <label for="presidenta">Presidenta (*):</label>
                                     <input 
                                         type="text" 
@@ -28,7 +28,7 @@
                                     >
                                 </div>
 
-                                <div class="two-column">
+                                <div class="two-column mt-2">
                                     <label for="fechaReparto">Fecha de Reparto (*):</label>
                                     <input 
                                         type="text" 
@@ -38,7 +38,7 @@
                                     >
                                 </div>
 
-                                <div class="two-column">
+                                <div class="two-column mt-2">
                                     <label for="cantidad">Cantidad (*):</label>
                                     <input 
                                         type="text" 
@@ -48,7 +48,7 @@
                                     >
                                 </div>
 
-                                <div class="two-column">
+                                <div class="two-column mt-2">
                                     <label for="observación" class="form-label col-sm-4">Observación (*):</label>
                                     <textarea id="obervacion" class="form-control"></textarea>
                                 </div>
@@ -57,7 +57,7 @@
 
                         </div>
 
-                        <div class="form-section">
+                        <div class="formDatosProducto">
                             <div class="header_container_data">
                                 <h2>Datos de producto</h2>
                             </div>
@@ -72,13 +72,13 @@
                                     >
                                 </div>
 
-                                <div class="two-column">
+                                <div class="two-column mt-2">
                                     <label for="prioridad">Prioridad (*):</label>
                                     <select id="cboPrioridad" class="form-select">
                                     </select>
                                 </div>
 
-                                <div class="two-column">
+                                <div class="two-column mt-2">
                                     <label for="fechaDesde">Fecha desde (*):</label>
                                     <input 
                                         type="date" 
@@ -88,7 +88,7 @@
                                     >
                                 </div>
 
-                                <div class="two-column">
+                                <div class="two-column mt-2">
                                     <label for="fechaHasta">Fecha hasta (*):</label>
                                     <input 
                                         type="date" 
@@ -98,7 +98,7 @@
                                     >
                                 </div>
 
-                                <div class="two-column">
+                                <div class="two-column mt-2">
                                     <label for="cantidad">Cantidad (*):</label>
                                     <input 
                                         type="text" 
@@ -108,7 +108,7 @@
                                     >
                                 </div>
 
-                                <div class="two-column">
+                                <div class="two-column mt-2">
                                     <label for="precioUnitario">Precio unitario (*):</label>
                                     <input 
                                         type="text" 
@@ -118,8 +118,9 @@
                                     >
                                 </div>
 
-                                <button type="button">Agregar</button>
-
+                                <div class="btnAgregarPecosa mt-2" id="btnAgregarProducto">
+                                    <p>Agregar</p>
+                                </div>
                             </form>
 
                         </div>
