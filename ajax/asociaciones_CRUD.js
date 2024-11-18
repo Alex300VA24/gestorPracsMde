@@ -212,13 +212,13 @@ $(document).ready(function () {
     $(document).off("click", "#btnDetalleAsociacion").on("click", "#btnDetalleAsociacion", function(e) {
 
         let fila = $(this).closest("tr");
-        let codAsociacion = fila.find('td:eq(0)').text();
-        let nombreAsociacion = fila.find('td:eq(1)').text();
-        let sectorZona = fila.find('td:eq(3)').text();
-        let direccion = fila.find('td:eq(4)').text();
-        let numeroFinca = fila.find('td:eq(10)').text();
-        let observaciones = fila.find('td:eq(11)').text();
-        let tipoLocal = fila.find('td:eq(13)').text();
+        let codAsociacion = fila.find('td:eq(1)').text();
+        let nombreAsociacion = fila.find('td:eq(2)').text();
+        let sectorZona = fila.find('td:eq(4)').text();
+        let direccion = fila.find('td:eq(5)').text();
+        let numeroFinca = fila.find('td:eq(11)').text();
+        let observaciones = fila.find('td:eq(12)').text();
+        let tipoLocal = fila.find('td:eq(14)').text();
 
         $.ajax({
             url: './controllers/reconocimiento/listar.php',
