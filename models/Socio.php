@@ -1,6 +1,7 @@
 <?php
 
 include_once "Persona.php";
+include_once "Beneficiario.php";
 
 class Socio extends Persona {
     private int $codSocio;
@@ -129,5 +130,162 @@ class Socio extends Persona {
             ];
         }
     }
+
+    public function registrarSocio(int $esSocioBeneficiario, $codParentesco, $codTipoBeneficio, $talla,
+                                   $peso, $hmg, $fechaUltimaMestruacion, $fechaProbableParto, $fechaParto, $fechaFinLactancia,
+                                   $beneficiarios){
+        $sql = "EXEC sp_socio_guardar :persona_nombres, :persona_apellidoPaterno, :persona_apellidoMaterno, 
+        :persona_dni, :persona_sexo, :persona_telefono, :persona_celular, :persona_fechaNacimiento, :persona_codSectorZona,
+        :persona_direccion, :persona_numeroFinca, :socio_codAsociacion, :socio_observacion, :es_socio_beneficiario, :beneficiario_codParentesco,
+        :historico_codTipoBeneficio, :historico_peso, :historico_talla, :historico_hmg, :historico_fechaUltimaMestruacion,
+        :historico_fechaProbableParto, :historico_fechaParto, :historico_fechaFinLactancia";
+
+        try {
+            $nombres = parent::getNombres();
+            $apellidoPaterno = parent::getApellidoPaterno();
+            $apellidoMaterno = parent::getApellidoMaterno();
+            $dni = parent::getDni();
+            $sexo = parent::getSexo();
+            $telefono = parent::getTelefono();
+            $celular = parent::getCelular();
+            $fechaNacimiento = parent::getFechaNacimiento();
+            $codSectorZona = parent::getCodSectorZona();
+            $direccion = parent::getDireccion();
+            $numeroFinca = parent::getNumeroFinca();
+
+            $peso = $peso == '' ? null : floatval($peso);
+            $hmg = $hmg == '' ? null : floatval($hmg);
+            $talla = $talla == '' ? null : floatval($talla);
+
+            $fechaUltimaMestruacion = $fechaUltimaMestruacion == '' ? null : $fechaUltimaMestruacion;
+            $fechaProbableParto = $fechaProbableParto == '' ? null : $fechaProbableParto;
+            $fechaParto = $fechaParto == '' ? null : $fechaParto;
+            $fechaFinLactancia = $fechaFinLactancia == '' ? null : $fechaFinLactancia;
+
+
+//            return [$peso, $hmg, $talla];
+
+            $stmt = DataBase::connect()->prepare($sql);
+            $stmt->bindParam('persona_nombres', $nombres, PDO::PARAM_STR);
+            $stmt->bindParam('persona_apellidoPaterno', $apellidoPaterno, PDO::PARAM_STR);
+            $stmt->bindParam('persona_apellidoMaterno', $apellidoMaterno, PDO::PARAM_STR);
+            $stmt->bindParam('persona_dni', $dni, PDO::PARAM_STR);
+            $stmt->bindParam('persona_sexo', $sexo, PDO::PARAM_STR);
+            $stmt->bindParam('persona_telefono', $telefono, PDO::PARAM_STR);
+            $stmt->bindParam('persona_celular', $celular, PDO::PARAM_STR);
+            $stmt->bindParam('persona_fechaNacimiento', $fechaNacimiento, PDO::PARAM_STR);
+            $stmt->bindParam('persona_codSectorZona', $codSectorZona, PDO::PARAM_INT);
+            $stmt->bindParam('persona_direccion', $direccion, PDO::PARAM_STR);
+            $stmt->bindParam('persona_numeroFinca', $numeroFinca, PDO::PARAM_INT);
+            $stmt->bindParam('socio_codAsociacion', $this->codAsociacion, PDO::PARAM_INT);
+            $stmt->bindParam('socio_observacion', $this->observaciones, PDO::PARAM_STR);
+            $stmt->bindParam('es_socio_beneficiario', $esSocioBeneficiario, PDO::PARAM_INT);
+            $stmt->bindParam('beneficiario_codParentesco', $codParentesco, PDO::PARAM_INT);
+            $stmt->bindParam('historico_codTipoBeneficio', $codTipoBeneficio, PDO::PARAM_INT);
+            $stmt->bindParam('historico_peso', $peso, PDO::PARAM_STR);
+            $stmt->bindParam('historico_talla', $talla, PDO::PARAM_STR);
+            $stmt->bindParam('historico_hmg', $hmg, PDO::PARAM_STR);
+            $stmt->bindParam('historico_fechaUltimaMestruacion', $fechaUltimaMestruacion, PDO::PARAM_STR);
+            $stmt->bindParam('historico_fechaProbableParto', $fechaProbableParto, PDO::PARAM_STR);
+            $stmt->bindParam('historico_fechaParto', $fechaParto, PDO::PARAM_STR);
+            $stmt->bindParam('historico_fechaFinLactancia', $fechaFinLactancia, PDO::PARAM_STR);
+
+//                        return [ $talla, $peso, $hmg, $fechaFinLactancia,$fechaUltimaMestruacion,
+//                $fechaProbableParto, $fechaParto ];
+
+
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if (isset($result[0]['codSocio']) && is_array($beneficiarios) && count($beneficiarios) > 0){
+                $codSocio = $result[0]['codSocio'];
+                $contadorBeneficiariosRegistrados = 0;
+                $response = [];
+
+                for ($i = 0; $i < count($beneficiarios); $i++ ){
+                    $nombresBenef = $beneficiarios[$i]['nombres'];
+                    $apellidoPaternoBenef = $beneficiarios[$i]['apellidoPaterno'];
+                    $apellidoMaternoBenef = $beneficiarios[$i]['apellidoMaterno'];
+                    $celularBenef = $beneficiarios[$i]['celular'];
+                    $telefonoBenef = $beneficiarios[$i]['telefono'];
+                    $direccionBenef = $beneficiarios[$i]['direccion'];
+                    $dniBenef = $beneficiarios[$i]['dni'];
+                    $tipoBeneficioBenef = $beneficiarios[$i]['tipoBeneficio'];
+                    $fechaNacimientoBenef = $beneficiarios[$i]['fechaNacimiento'];
+                    $fechaUltimaMestruacionBenef = $beneficiarios[$i]['fechaUltimaMestruacion'];
+                    $fechaProbablePartoBenef = $beneficiarios[$i]['fechaProbableParto'];
+                    $fechaPartoBenef = $beneficiarios[$i]['fechaParto'];
+                    $fechaFinLactanciaBenef = $beneficiarios[$i]['fechaFinLactancia'];
+                    $numeroFincaBenef = $beneficiarios[$i]['numeroFinca'];
+                    $parentescoBenef = $beneficiarios[$i]['parentesco'];
+                    $sectorYZonaBenef = $beneficiarios[$i]['sectorYZona'];
+                    $sexoBenef = $beneficiarios[$i]['sexo'];
+                    $pesoBenef = $beneficiarios[$i]['peso'];
+                    $hmgBenef = $beneficiarios[$i]['hmg'];
+                    $tallaBenef = $beneficiarios[$i]['talla'];
+
+                    $fechaUltimaMestruacionBenef = $fechaUltimaMestruacionBenef == '' ? null : $fechaUltimaMestruacionBenef;
+                    $fechaProbablePartoBenef = $fechaProbablePartoBenef == '' ? null : $fechaProbablePartoBenef;
+                    $fechaPartoBenef = $fechaPartoBenef == '' ? null : $fechaPartoBenef;
+                    $fechaFinLactanciaBenef = $fechaFinLactanciaBenef == '' ? null : $fechaFinLactanciaBenef;
+
+                    $objBeneficiario = new Beneficiario($nombresBenef, $apellidoPaternoBenef, $apellidoMaternoBenef, $dniBenef,
+                    $sexoBenef, $telefonoBenef, $celularBenef, $fechaNacimientoBenef, $sectorYZonaBenef, $direccionBenef,
+                    $numeroFincaBenef, 0, 0, (int) $codSocio, (int) $parentescoBenef, '');
+
+                    $response = $objBeneficiario->registrarBeneficiario((int) $tipoBeneficioBenef, $tallaBenef, $pesoBenef, $hmgBenef,
+                    $fechaUltimaMestruacionBenef, $fechaProbablePartoBenef, $fechaPartoBenef, $fechaFinLactanciaBenef);
+
+                    if ($response['code'] === 200){
+                        $contadorBeneficiariosRegistrados++;
+                    }
+                }
+
+//                return $response;
+
+                if ($contadorBeneficiariosRegistrados === count($beneficiarios)){
+                    return [
+                        'status' => 'success',
+                        'code' => 200,
+                        'message' => 'Socio y Beneficiario(s) registrados exitosamente',
+                        'data' => [],
+                    ];
+                }else{
+                    return $response;
+                }
+            }else{
+                if ($result[0]['status']!='error'){
+                    return [
+                        'status' => 'success',
+                        'code' => 200,
+                        'message' => 'Socio registrado exitosamente',
+                        'data' => [],
+                    ];
+                }else{
+                    return [
+                        'status' => 'failed',
+                        'code' => 500,
+                        'message' => 'Ocurrio un error al momento de registrar el socio',
+                        'action' => 'registrarSocio',
+                        'module' => 'socio',
+                        'data' => [],
+                        'info' => $result
+                    ];
+                }
+            }
+
+        }catch (PDOException $e){
+            return [
+                'status' => 'failed',
+                'code' => 500,
+                'message' => 'Ocurrio un error al momento de registrar el socio',
+                'action' => 'registrarSocio',
+                'module' => 'socio',
+                'data' => [],
+                'info' => $e->getMessage()
+            ];
+        }
+    }
+
 
 }

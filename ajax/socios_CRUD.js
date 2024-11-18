@@ -14,9 +14,10 @@ $(document).ready(function () {
     inputFechaSocio.setAttribute('max', fechaFormateada);
     inputFechaBeneficiario.setAttribute('max', fechaFormateada);
 
-    //     nueva asociacion - abrir modal
-    // $(document).off("click", "#btnNuevoSocio").on("click", "#btnNuevoSocio", function(e) {
-        // e.preventDefault();
+    //     nuevo socio y beneficiarios - abrir modal
+    $(document).off("click", "#btnNuevoSocio").on("click", "#btnNuevoSocio", function(e) {
+        e.preventDefault();
+        beneficiarios = []
         let modalRegistrar = $("#modalRegistrarSocioYBeneficiarios");
         $("#registrarSocioYBeneficiarioForm").trigger("reset");
         $("#fechaInicioSocioRegistro").val(fechaFormateada)
@@ -31,7 +32,97 @@ $(document).ready(function () {
         modalRegistrar.one('shown.bs.modal', function() {
             $("#dniSocioRegistro").focus();
         });
-    // });
+    });
+
+    //     registrar socios y beneficiarios
+    $(document).off("submit", "#registrarSocioYBeneficiarioForm").on('submit', '#registrarSocioYBeneficiarioForm', function(e) {
+        e.preventDefault();
+        const dniSocio = $.trim($('#dniSocioRegistro').val());
+        const nombresSocio = $.trim($('#nombresSocioRegistro').val());
+        const apellidoPaternoSocio = $.trim($('#apellidoPaternoSocioRegistro').val());
+        const apellidoMaternoSocio = $.trim($('#apellidoMaternoSocioRegistro').val());
+        const sexoSocio = $.trim($('#sexoSocioRegistro').val());
+        const telefonoSocio = $.trim($('#telefonoSocioRegistro').val());
+        const celularSocio = $.trim($('#celularSocioRegistro').val());
+        const fechaNacimientoSocio = $.trim($('#fechaNacimientoSocioRegistro').val());
+        const edadSocio = $.trim($('#edadSocioRegistro').val());
+        const sectorZonaSocio = $.trim($('#cboSectorZonaRegistroSocio').val());
+        const direccionSocio = $.trim($('#direccionSocioRegistro').val());
+        const numeroFincaSocio = $.trim($('#numeroFincaSocioRegistro').val());
+        const asociacionSocio = $.trim($('#cboClubDeMadresActivos').val());
+        const observacionesSocio = $.trim($('#observacionSocioRegistro').val());
+        const esSocioBeneficiario = parseInt($('input[name="optionSocioBeneficiario"]:checked').val());
+
+        let parentesco
+        let tipoBeneficio
+        let talla
+        let peso
+        let hmg
+        let fechaUltimaMestruacion
+        let fechaProbableParto
+        let fechaParto
+        let fechaFinLactancia
+
+
+        if (losCamposSocioSonValidos(dniSocio, nombresSocio, apellidoPaternoSocio, apellidoMaternoSocio, sexoSocio, telefonoSocio,
+            celularSocio, fechaNacimientoSocio, edadSocio, sectorZonaSocio, direccionSocio, numeroFincaSocio, asociacionSocio,
+            observacionesSocio)){
+
+            if (beneficiarios.length == 0){
+                Swal.fire({
+                    title: "¡Advertencia!",
+                    text: 'El socio debe contar con beneficiarios o él mismo debe ser un beneficiario.',
+                    icon: "warning",
+                    width: "350px",
+                    confirmButtonColor: "#13252E",
+                });
+                return;
+            }
+
+            if (esSocioBeneficiario === 1){
+                beneficiarios = beneficiarios.filter(beneficiario => {
+                    if(beneficiario.dni === dniSocio){
+                        parentesco = beneficiario.parentesco
+                        tipoBeneficio = beneficiario.tipoBeneficio
+                        talla = beneficiario.talla
+                        peso = beneficiario.peso
+                        hmg = beneficiario.hmg
+                        fechaUltimaMestruacion = beneficiario.fechaUltimaMestruacion
+                        fechaProbableParto = beneficiario.fechaProbableParto
+                        fechaParto = beneficiario.fechaParto
+                        fechaFinLactancia = beneficiario.fechaFinLactancia
+                    }
+
+                    return beneficiario.dni != dniSocio
+                })
+            }
+
+            $.ajax({
+                url: './controllers/socio/registrarSocioYBeneficiarios.php',
+                method: 'POST',
+                dataType: 'json',
+                data: {dniSocio, nombresSocio, apellidoPaternoSocio, apellidoMaternoSocio, sexoSocio, telefonoSocio,
+                celularSocio, fechaNacimientoSocio, sectorZonaSocio, direccionSocio, numeroFincaSocio, asociacionSocio,
+                observacionesSocio, esSocioBeneficiario, parentesco, tipoBeneficio, talla, peso, hmg,
+                fechaUltimaMestruacion, fechaProbableParto, fechaParto, fechaFinLactancia, beneficiarios},
+                success: function (response) {
+                    console.log(response)
+                    const {code, message, info, data} = response;
+
+                    if (code === 200) {
+                        showSuccessAlert(message);
+                    }
+
+                    if (code === 500) {
+                        showErrorInternalServer(message, info)
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error socios_CRUD.js: ', textStatus, errorThrown);
+                }
+            })
+        }
+    })
 
     $(document).off("input", "#dniSocioRegistro").on("input", "#dniSocioRegistro", function(e) {
         if (optionSelected === 1){
@@ -309,8 +400,6 @@ $(document).ready(function () {
 
     function calcularEdad(fechaNacimiento, fechaActual) {
         const fechaNac = new Date(`${fechaNacimiento}T00:00:00`);
-        console.log(fechaNac)
-        console.log(fechaActual)
 
         let edad = fechaActual.getFullYear() - fechaNac.getFullYear();
         const mes = fechaActual.getMonth() - fechaNac.getMonth();
@@ -354,11 +443,8 @@ $(document).ready(function () {
         let talla = $("#tallaBeneficiarioRegistro").val();
         let hmg = $("#hmgBeneficiarioRegistro").val();
 
-        console.log({dni, nombres, apellidoMaterno, apellidoPaterno, sexo, telefono, celular,
-        fechaNacimiento, sectorYZona, direccion, numeroFinca, parentesco, tipoBeneficio, optionSelected})
-
         if(losCamposBeneficiarioSonValidos(dni, nombres, apellidoMaterno, apellidoPaterno, sexo, telefono, celular,
-                fechaNacimiento, sectorYZona, direccion, numeroFinca, parentesco, tipoBeneficio, tipoBeneficioTexto,
+                fechaNacimiento, edad, sectorYZona, direccion, numeroFinca, parentesco, tipoBeneficio, tipoBeneficioTexto,
                 fechaUltimaMestruacion, fechaProbableParto, fechaParto, fechaFinLactancia, peso, talla, hmg, asociacion)){
 
             beneficiarios = [...beneficiarios, {dni, nombres, apellidoPaterno, apellidoMaterno, sexo, telefono, celular,
@@ -472,26 +558,93 @@ $(document).ready(function () {
     }
 
 
-    function losCamposSocioSonValidos(dni, nombres, apellidoMaterno, apellidoPaterno, sexo, telefono, celular,
-                                      fechaNacimiento, sectorYZona, direccion, numeroFinca, asociacion) {
+    function losCamposSocioSonValidos(dni, nombres, apellidoPaterno, apellidoMaterno, sexo, telefono, celular,
+                                      fechaNacimiento, edad, sectorYZona, direccion, numeroFinca, asociacion)
+    {
+
         if (dni === '' || nombres === '' || apellidoMaterno === '' || apellidoPaterno === '' || sexo == '' || sexo == 0 || fechaNacimiento === '' ||
             sectorYZona == '' || sectorYZona == 0 || direccion === '' || asociacion === '' || asociacion == 0){
+
             Swal.fire({
                 title: "¡Advertencia!",
-                text: 'Campos incompletos, debe ingresar los datos del socio',
+                text: 'Campos incompletos, debe ingresar los datos obligatorios del socio',
                 icon: "warning",
                 width: "350px",
                 confirmButtonColor: "#13252E",
             });
             return false;
         }
+
+        if (edad < 18 || edad > 150){
+            Swal.fire({
+                title: "¡Advertencia!",
+                text: 'El socio debe ser mayor de edad.',
+                icon: "warning",
+                width: "350px",
+                confirmButtonColor: "#13252E",
+            });
+            return false;
+        }
+
         return true;
     }
 
     function losCamposBeneficiarioSonValidos(dni, nombres, apellidoMaterno, apellidoPaterno, sexo, telefono, celular,
-                                             fechaNacimiento, sectorYZona, direccion, numeroFinca, parentesco, tipoBeneficio,
+                                             fechaNacimiento, edad, sectorYZona, direccion, numeroFinca, parentesco, tipoBeneficio,
                                              tipoBeneficioTexto, fechaUltimaMestruacion, fechaProbableParto,
                                              fechaParto, fechaFinMadreLactante, peso, talla, hmg, asociacion) {
+
+
+
+        if (tipoBeneficioTexto.includes("0") && tipoBeneficioTexto.includes("6")){
+            if (edad > 6 || edad < 0){
+                Swal.fire({
+                    title: "¡Advertencia!",
+                    text: 'Edad incorrecta para el tipo de beneficio: ' + tipoBeneficioTexto,
+                    icon: "warning",
+                    width: "350px",
+                    confirmButtonColor: "#13252E",
+                });
+                return false;
+            }
+        }
+
+        if (tipoBeneficioTexto.includes("7") && tipoBeneficioTexto.includes("13")){
+            if (edad > 13 || edad < 7){
+                Swal.fire({
+                    title: "¡Advertencia!",
+                    text: 'Edad incorrecta para el tipo de beneficio: ' + tipoBeneficioTexto,
+                    icon: "warning",
+                    width: "350px",
+                    confirmButtonColor: "#13252E",
+                });
+                return false;
+            }
+        }
+
+        if (tipoBeneficioTexto.includes("mayor")){
+            if (edad < 65){
+                Swal.fire({
+                    title: "¡Advertencia!",
+                    text: 'Edad incorrecta para el tipo de beneficio: ' + tipoBeneficioTexto,
+                    icon: "warning",
+                    width: "350px",
+                    confirmButtonColor: "#13252E",
+                });
+                return false;
+            }
+        }
+
+        if (optionSelected === 1 && edad < 18){
+            Swal.fire({
+                title: "¡Advertencia!",
+                text: 'El socio debe ser mayor de edad',
+                icon: "warning",
+                width: "350px",
+                confirmButtonColor: "#13252E",
+            });
+            return false;
+        }
 
         if (optionSelected === 1 && (asociacion === '' || asociacion == 0)){
             Swal.fire({
@@ -508,6 +661,7 @@ $(document).ready(function () {
         if (dni === '' || nombres === '' || apellidoMaterno === '' || apellidoPaterno === '' || sexo == '' || sexo == 0 || fechaNacimiento === '' ||
             sectorYZona == '' || sectorYZona == 0 || direccion === '' || parentesco == '' || parentesco == 0 || tipoBeneficio == '' ||
             tipoBeneficio == 0){
+
 
                 if (tipoBeneficioTexto.includes('gestante')){
                     if (fechaUltimaMestruacion === '' || fechaProbableParto === ''){
@@ -548,4 +702,24 @@ $(document).ready(function () {
         return true;
     }
 
+    function showErrorInternalServer(message, info) {
+        Swal.fire({
+            title: "¡Error!",
+            text: message + ' {' + info + '}',
+            icon: "error",
+            width: "350px",
+            confirmButtonColor: "#13252E",
+        });
+    }
+
+    function showSuccessAlert(message){
+        Swal.fire({
+            icon: "success",
+            title: "Registro Exitoso",
+            text: message
+        }).then(() => {
+            $('#modalRegistrarSocioYBeneficiarios').modal('hide');
+            // listarReconocimientos(documento, codAsociacion)
+        });
+    }
 })
