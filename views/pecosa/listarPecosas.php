@@ -56,3 +56,4 @@
 
 <script src="<?= base_url?>ajax/listarPecosas.js"></script>
 <script src="<?= base_url?>ajax/asociaciones_llenarCboAsocActivas.js"></script>
+<script src="<?= base_url?>ajax/productos_llenarCboProducto.js"></script>

@@ -31,17 +31,7 @@
                                 <div class="two-column mt-2">
                                     <label for="fechaReparto">Fecha de Reparto (*):</label>
                                     <input 
-                                        type="text" 
-                                        id="fechaReparto" 
-                                        autocomplete="off"
-                                        maxlength="100"
-                                    >
-                                </div>
-
-                                <div class="two-column mt-2">
-                                    <label for="cantidad">Cantidad (*):</label>
-                                    <input 
-                                        type="text" 
+                                        type="date" 
                                         id="fechaReparto" 
                                         autocomplete="off"
                                         maxlength="100"
@@ -64,17 +54,15 @@
                             <form>
                                 <div class="two-column">
                                     <label for="descripcion">Descripcion (*):</label>
-                                    <input 
-                                        type="text" 
-                                        id="presidenta" 
-                                        autocomplete="off"
-                                        maxlength="100"
-                                    >
+                                    <select id="cboProducto" class="form-select">
+                                    </select>
                                 </div>
 
                                 <div class="two-column mt-2">
                                     <label for="prioridad">Prioridad (*):</label>
                                     <select id="cboPrioridad" class="form-select">
+                                        <option value=1>Primera</option>
+                                        <option value=2>Segunda</option>
                                     </select>
                                 </div>
 
