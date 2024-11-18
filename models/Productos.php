@@ -66,13 +66,12 @@ class Productos{
         $this->codEstado = $codEstado;
     }
 
-    public function listarProductos($descripcion, $codUnidadMedida){
-        $sql = "EXEC sp_producto_listar :descripcion, :codUnidadMedida";
+    public function listarProductos($descripcion){
+        $sql = "EXEC sp_producto_listar :descripcion";
 
         try{
             $stmt = DataBase::connect()->prepare($sql);
             $stmt->bindParam('descripcion',$descripcion, PDO::PARAM_STR);
-            $stmt->bindParam('codUnidadMedida',$codUnidadMedida, PDO::PARAM_INT);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             

@@ -6,7 +6,14 @@
     <h1>Lista de Pecosas</h1>
     <div class="filters_btn_new">
         <div class="filters">
-            <input type="text" placeholder="Buscar por nombre o codigo">
+                <div class="d-flex gap-1 align-items-center fechaFiltroReporte">
+                    <label>Fecha Inicio: </label>
+                    <input class="m-0" type="date">
+                </div>
+                <div class="d-flex gap-1 align-items-center fechaFiltroReporte">
+                    <label>Fecha Fin: </label>
+                    <input class="m-0" type="date">
+                </div>
             <div class="container_clear_filters">
                 <img src="<?=base_url?>/assets/icons/clearFilters.svg">
             </div>

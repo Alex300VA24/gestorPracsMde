@@ -50,9 +50,8 @@ END
 GO
 
 --- LISTAR MOVIMIENTOS
-CREATE   PROCEDURE sp_movimiento_listar (
-	@descripcion VARCHAR(100) = NULL,
-	@codUnidadMedida INT = NULL
+CREATE PROCEDURE sp_movimiento_listar (
+	@descripcion VARCHAR(100) = NULL
 )
 AS
 BEGIN
@@ -65,6 +64,5 @@ BEGIN
 	INNER JOIN TipoMovimiento tp ON m.codTipoMovimiento = tp.codTipoMovimiento
 	INNER JOIN UnidadMedida um ON p.codUnidadMedida = um.codUnidadMedida
 	WHERE (@descripcion IS NULL OR p.descripcion LIKE @descripcion + '%')
-	AND (@codUnidadMedida IS NULL OR p.codUnidadMedida = @codUnidadMedida);
 END
 GO

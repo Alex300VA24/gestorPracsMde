@@ -23,8 +23,7 @@ GO
 
 ---Lista de productos---
 CREATE PROCEDURE sp_producto_listar (
-    @Descripcion VARCHAR(100) = NULL,
-    @codUnidadMedida INT = NULL
+    @Descripcion VARCHAR(100) = NULL
 )
 AS
 BEGIN
@@ -34,7 +33,7 @@ BEGIN
 	INNER JOIN Estados e ON p.codEstado = e.codEstado
 	INNER JOIN UnidadMedida um ON p.codUnidadMedida =um.codUnidadMedida
     WHERE (@Descripcion IS NULL OR p.descripcion LIKE @Descripcion + '%')
-    AND (@codUnidadMedida IS NULL OR p.codUnidadMedida = @codUnidadMedida);
+
 END
 GO
 
