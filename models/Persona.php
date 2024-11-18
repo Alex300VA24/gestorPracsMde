@@ -17,10 +17,10 @@ class Persona{
     private int $codSectorZona;
     private string $desSectorZona;
     private string $direccion;
-    private int $numeroFinca;
+    private $numeroFinca;
     private int $codEstado;
 
-    public function __construct(int $codPersona, string $nombres, string $apellidoPaterno, string $apellidoMaterno, string $dni, string $sexo, string $telefono, string $celular, string $fechaNacimiento, int $codSectorZona, string $direccion, int $numeroFinca)
+    public function __construct(int $codPersona, string $nombres, string $apellidoPaterno, string $apellidoMaterno, string $dni, string $sexo, string $telefono, string $celular, string $fechaNacimiento, int $codSectorZona, string $direccion, $numeroFinca)
     {
         $this->codPersona = $codPersona;
         $this->nombres = $nombres;
@@ -156,11 +156,11 @@ class Persona{
         $this->direccion = $direccion;
     }
 
-    public function getNumeroFinca(): int{
+    public function getNumeroFinca(){
         return $this->numeroFinca;
     }
 
-    public function setNumeroFinca(int $numeroFinca): void{
+    public function setNumeroFinca($numeroFinca): void{
         $this->numeroFinca = $numeroFinca;
     }
 

@@ -176,8 +176,7 @@ CREATE TABLE Socios(
 	fechaRegistro DATETIME DEFAULT GETDATE(),
 	fechaInicio DATETIME DEFAULT GETDATE(),
 	fechaFin DATETIME,
-	observaciones VARCHAR(255),
-	esApoderado BIT DEFAULT 0,
+	observaciones VARCHAR(255),	
 	codEstado INT NOT NULL,
 	PRIMARY KEY(codSocio),
 	FOREIGN KEY(codPersona) REFERENCES Personas(codPersona),
@@ -199,23 +198,23 @@ CREATE TABLE Directivas(
 
 CREATE TABLE Beneficiarios(
 	codBeneficiario INT NOT NULL IDENTITY(1,1),
-	codPersonaApoderado INT NOT NULL,
+	codPersona INT NOT NULL,
 	codSocio INT NOT NULL,
 	codParentesco INT NOT NULL,
 	fechaRegistro DATETIME DEFAULT GETDATE(),
 	PRIMARY KEY(codBeneficiario),
-	FOREIGN KEY(codPersonaApoderado) REFERENCES Personas(codPersona),
+	FOREIGN KEY(codPersona) REFERENCES Personas(codPersona),
 	FOREIGN KEY(codSocio) REFERENCES Socios(codSocio),
 	FOREIGN KEY(codParentesco) REFERENCES Parentescos(codParentesco),	
 );
 
 CREATE TABLE HistoricoBeneficiarios(
 	codHistoricoBeneficiario INT NOT NULL IDENTITY(1,1),
-	codtipoBeneficio INT NOT NULL,
+	codTipoBeneficio INT NOT NULL,
   codBeneficiario INT NOT NULL,
-	peso DECIMAL(3,3),
-	talla DECIMAL(3,2),
-	hmg DECIMAL(3,2),
+	peso DECIMAL(9,3),
+	talla DECIMAL(9,2),
+	hmg DECIMAL(9,2),
 	fechaInicio DATETIME DEFAULT GETDATE(),
 	fechaTermino DATETIME,
   fechaUltimaMestruacion DATE NULL,
@@ -223,9 +222,9 @@ CREATE TABLE HistoricoBeneficiarios(
   fechaDeParto DATE NULL,
   fechaFinLactancia DATE NULL,
 	codEstado INT NOT NULL,
-	codMotivoInhabilitacion INT NOT NULL,
+	codMotivoInhabilitacion INT,
 	PRIMARY KEY(codHistoricoBeneficiario),
-	FOREIGN KEY(codtipoBeneficio) REFERENCES TiposBeneficio(codtipoBeneficio),
+	FOREIGN KEY(codTipoBeneficio) REFERENCES TiposBeneficio(codTipoBeneficio),
   FOREIGN KEY(codBeneficiario) REFERENCES Beneficiarios(codBeneficiario),
 	FOREIGN KEY(codMotivoInhabilitacion) REFERENCES MotivosInhabilitacion(codMotivoInhabilitacion)
 );
