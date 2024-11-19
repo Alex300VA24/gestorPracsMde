@@ -1,3 +1,57 @@
+--- listar beneficiarios ---
+CREATE PROCEDURE sp_beneficiario_listar(
+  @dni_o_apellidos_y_nombres VARCHAR(200) = NULL,
+  @codAsociacion INT = NULL,
+  @edad_minima INT = NULL,
+  @edad_maxima INT = NULL
+)
+AS
+BEGIN
+  SELECT 
+  b.codBeneficiario,
+  p.nombres,
+  p.apellidoPaterno,
+  p.apellidoMaterno,
+  p.aniosNacido,
+  p.dni,
+  p.sexo,
+  p.fechaNacimiento,
+  p.codSectorZona,
+  p.direccion,
+  b.codParentesco,
+  hb.fechaInicio,
+  s.codAsociacion,
+  tb.codTipoBeneficio,
+  tb.descripcion 'tipoBeneficio',
+  hb.peso,
+  hb.talla,
+  hb.hmg,
+  e.codEstado,
+  e.abreviatura,
+  e.descripcion 'estado',
+  mi.codMotivoInhabilitacion,
+  mi.descripcion
+  FROM Beneficiarios b 
+  INNER JOIN Personas p ON b.codPersona = p.codPersona
+  INNER JOIN HistoricoBeneficiarios hb ON b.codBeneficiario = hb.codBeneficiario
+  INNER JOIN TiposBeneficio tb ON hb.codTipoBeneficio = tb.codTipoBeneficio
+  INNER JOIN Socios s ON b.codSocio = s.codSocio
+  LEFT JOIN MotivosInhabilitacion mi ON hb.codMotivoInhabilitacion = mi.codMotivoInhabilitacion
+  INNER JOIN Estados e ON hb.codEstado = e.codEstado
+  WHERE 
+  e.abreviatura = 'a'
+  AND (
+    (@dni_o_apellidos_y_nombres IS NULL OR p.dni LIKE @dni_o_apellidos_y_nombres + '%')
+    OR (@dni_o_apellidos_y_nombres IS NULL OR CONCAT(p.apellidoPaterno, ' ', p.apellidoMaterno, ' ', p.nombres) LIKE @dni_o_apellidos_y_nombres + '%')
+  )
+  AND (@codAsociacion IS NULL OR s.codAsociacion = @codAsociacion)
+  AND (
+  (@edad_minima IS NULL OR p.aniosNacido >= @edad_minima)
+  AND (@edad_maxima IS NULL OR p.aniosNacido <= @edad_maxima)
+)
+END
+GO
+
 --- guardar beneficiario ---
 CREATE PROCEDURE sp_beneficiario_guardar(
   @persona_nombres VARCHAR(100),

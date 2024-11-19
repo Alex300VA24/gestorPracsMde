@@ -6,7 +6,7 @@ $socioOjb = new Socio(0, 0, 0, '', '',
 '', '', '', '', '', '', 0,
 '', 0);
 
-$dniOApellidosNombres = $_GET['dni_apellidos_nombres'] ?? null;
+$dniOApellidosNombres = $_GET['dniOApellidosNombres'] ?? null;
 $codAsociacion = $_GET['codAsociacion'] ?? null;
 
 $response = $socioOjb->listarSocios($dniOApellidosNombres, $codAsociacion);

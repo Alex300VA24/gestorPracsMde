@@ -41,7 +41,7 @@ $(document).ready(function () {
                                 <tr>
                                     <td>${codSocio}</td>
                                     <td hidden="hidden">${codPersona}</td>
-                                    <td>${nombres + ' ' + apellidoPaterno + ' ' + apellidoMaterno}</td>                                   
+                                    <td>${apellidoPaterno + ' ' + apellidoMaterno + ' ' + nombres}</td>                                   
                                     <td hidden="hidden">${sexo}</td>                                   
                                     <td hidden="hidden">${fechaNacimiento}</td>                                   
                                     <td hidden="hidden">${codSectorZona}</td>                                   
@@ -51,7 +51,7 @@ $(document).ready(function () {
                                     <td hidden="hidden">${observaciones}</td>                                                                                                       
                                     <td hidden="hidden">${codAsociacion}</td>                                                                                                       
                                     <td>${nombreAsociacion}</td>                                                                                                       
-                                    <td>${cargo}</td>                                                                                                       
+                                    <td>${cargo ? cargo : ''}</td>                                                                                                       
                                     <td>${fechaInicio.split(' ')[0]}</td>                                                                                                                                                                                                                                                 
                                     <td>${fechaFin ? fechaFin.split(' ')[0] : ''}</td>                                                                                                                                                                                                                                                 
                                     <td>
@@ -778,6 +778,27 @@ $(document).ready(function () {
 
         return true;
     }
+
+    // Filtrar por dni o nombre
+    $(document).off("input", "#btnDNIApellidosFiltroSocio").on("input", "#btnDNIApellidosFiltroSocio", function(e) {
+        dniOApellidosNombres = $(this).val();
+        listarSocios(dniOApellidosNombres, codAsociacion)
+    });
+
+    // Filtrar por sector
+    $(document).off("input", "#cboClubDeMadresFiltroSocio").on("input", "#cboClubDeMadresFiltroSocio", function(e) {
+        codAsociacion = $(this).val();
+        if (codAsociacion === 0 || codAsociacion === '0'){
+            codAsociacion = undefined
+        }else{
+            codAsociacion = parseInt(codAsociacion)
+        }
+
+        console.log({dniOApellidosNombres, codAsociacion})
+        listarSocios(dniOApellidosNombres, codAsociacion)
+    });
+
+
 
     function showErrorInternalServer(message, info) {
         Swal.fire({

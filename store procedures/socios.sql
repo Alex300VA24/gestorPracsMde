@@ -1,5 +1,5 @@
 --- listar socios ---
-CREATE PROCEDURE sp_socio_listar(
+ALTER PROCEDURE sp_socio_listar(
   @dni_o_apellidos_y_nombres VARCHAR(200) = NULL,
   @codAsociacion INT = NULL
 )
@@ -31,9 +31,9 @@ BEGIN
   LEFT JOIN Directivas d ON s.codSocio = d.codSocio
   LEFT JOIN Cargos c ON d.codCargo = c.codCargo
   WHERE
-  (@dni_o_apellidos_y_nombres IS NULL OR p.dni LIKE @dni_o_apellidos_y_nombres + '%')
+  ((@dni_o_apellidos_y_nombres IS NULL OR p.dni LIKE @dni_o_apellidos_y_nombres + '%')
   OR
-  (@dni_o_apellidos_y_nombres IS NULL OR CONCAT(p.apellidoPaterno, ' ', p.apellidoMaterno, ' ', p.nombres) LIKE @dni_o_apellidos_y_nombres + '%')
+  (@dni_o_apellidos_y_nombres IS NULL OR CONCAT(p.apellidoPaterno, ' ', p.apellidoMaterno, ' ', p.nombres) LIKE @dni_o_apellidos_y_nombres + '%'))
   AND
   (@codAsociacion IS NULL OR a.codAsociacion = @codAsociacion)
 END
