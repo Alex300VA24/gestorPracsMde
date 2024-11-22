@@ -835,3 +835,8 @@ input:focus-visible{
     display: flex;
     /*grid-template-columns: repeat(3, 1fr);*/
 }
+
+.actions_beneficiarios{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}

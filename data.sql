@@ -1,5 +1,6 @@
 insert into Roles(descripcion) values('administrador'),('usuario');
 insert into Estados(abreviatura,descripcion) values('a', 'activo'),('i', 'inactivo'),('h', 'historico'),('pr', 'reconocimiento pendiente'),('rv', 'reconocimiento vencido');
+insert into MotivosInhabilitacion(descripcion) values('pasó la fecha de parto'),('pasó la fecha de lactancia'),('niño mayor de 6 años'),('niño mayor de 13 años');
 insert into Cargos(descripcion) values('presidenta'),('vice presidenta'),('almacenera'),('tesorera'),('secretaria'),('vocal'),('coordinadora'),('fiscal');
 
 ------------------- SECUNDARIA ----------------------------

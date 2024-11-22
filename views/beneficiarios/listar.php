@@ -43,4 +43,4 @@ require_once "../../config/parameters.php"
 <script src="<?= base_url?>ajax/asociaciones_llenarCboAsocNuevaRecVencidoRecPendiente.js"></script>
 <script src="<?= base_url?>ajax/parentescos_llenarCboParentescos.js"></script>
 <script src="<?= base_url?>ajax/tiposBeneficio_llenarCboTiposBeneficio.js"></script>
-<script src="<?= base_url?>ajax/socios_CRUD.js"></script>
+<script src="<?= base_url?>ajax/beneficiarios_CRUD.js"></script>

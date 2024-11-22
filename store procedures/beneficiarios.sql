@@ -9,6 +9,7 @@ AS
 BEGIN
   SELECT 
   b.codBeneficiario,
+  p.codPersona,
   p.nombres,
   p.apellidoPaterno,
   p.apellidoMaterno,
@@ -30,7 +31,7 @@ BEGIN
   e.abreviatura,
   e.descripcion 'estado',
   mi.codMotivoInhabilitacion,
-  mi.descripcion
+  mi.descripcion 'motivoInhabilitacion'
   FROM Beneficiarios b 
   INNER JOIN Personas p ON b.codPersona = p.codPersona
   INNER JOIN HistoricoBeneficiarios hb ON b.codBeneficiario = hb.codBeneficiario
