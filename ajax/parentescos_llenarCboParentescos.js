@@ -4,7 +4,6 @@ $(document).ready(function () {
         method: 'GET',
         dataType: 'json',
         success: function (response) {
-            console.log(response)
             const { code, data } = response;
 
             if (code === 200) {

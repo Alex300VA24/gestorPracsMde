@@ -287,9 +287,6 @@ $(document).ready(function () {
         const numeroFinca = $.trim($('#numeroFincaSocioEditar').val());
         const observacion = $.trim($('#observacionSocioEditar').val());
 
-        console.log({codSocio, codPersona, dni, nombre, apellidoPaterno, apellidoMaterno, sexo, asociacion,
-            sectorZona, telefono, celular, fechaNacimiento, direccion, numeroFinca, observacion})
-
         if (losCamposSocioSonValidos(dni, nombre, apellidoPaterno, apellidoMaterno, sexo,
             telefono, celular, fechaNacimiento, edad, sectorZona, direccion, numeroFinca, asociacion)){
             $.ajax({
@@ -299,7 +296,6 @@ $(document).ready(function () {
                 data: {codSocio, codPersona, dni, nombre, apellidoPaterno, apellidoMaterno, sexo, asociacion,
                 sectorZona, telefono, celular, fechaNacimiento, direccion, numeroFinca, observacion},
                 success: function (response) {
-                    console.log(response)
                     const {code, message, info, data} = response;
 
                     if (code === 200) {
@@ -929,7 +925,6 @@ $(document).ready(function () {
             codAsociacion = parseInt(codAsociacion)
         }
 
-        console.log({dniOApellidosNombres, codAsociacion})
         listarSocios(dniOApellidosNombres, codAsociacion)
     });
 

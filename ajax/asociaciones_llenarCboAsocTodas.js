@@ -9,7 +9,6 @@ $(document).ready(function () {
         dataType: 'json',
         data: {nombreAsociacion, codSector},
         success: function (response) {
-            console.log(response)
             const {code, data, message, info} = response;
 
             if (code === 200) {
@@ -25,7 +24,7 @@ $(document).ready(function () {
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            console.error('Error asociaciones_llenarCboAsocActivas.js: ', textStatus, errorThrown);
+            console.error('Error asociaciones_llenarCboAsocTodas.js: ', textStatus, errorThrown);
         }
     });
 
