@@ -12,6 +12,7 @@ $(document).ready(function () {
                         return `<option value="${codAsociacion}">${nombreAsociacion}</option>`
                     })
                 $('#cboClubDeMadresActivos').html(options);
+                $('#cboClubDeMadresActivosEditar').html(options);
             }
 
             if (code === 500) {

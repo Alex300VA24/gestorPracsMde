@@ -9,6 +9,9 @@ $(document).ready(function () {
 
     let beneficiarios = [];
 
+    let fechaNacimientoActual;
+    let edadActual;
+
     const inputFechaSocio = document.querySelector('#fechaNacimientoSocioRegistro');
     const inputFechaBeneficiario = document.querySelector('#fechaNacimientoBeneficiarioRegistro');
     const fechaActual = new Date();
@@ -34,6 +37,7 @@ $(document).ready(function () {
                     if (data && Array.isArray(data) && data.length > 0) {
                         row = data.map(({codSocio, codPersona, nombres, apellidoPaterno,
                                             apellidoMaterno, sexo, fechaNacimiento, codSectorZona,
+                                            telefono, celular, numeroFinca,
                                             direccion, aniosNacido, dni, observaciones, codAsociacion,
                                             nombreAsociacion, cargo, fechaInicio, fechaFin, abreviatura, estado
                                         }) => {
@@ -50,10 +54,16 @@ $(document).ready(function () {
                                     <td>${dni}</td>                                                                                                       
                                     <td hidden="hidden">${observaciones}</td>                                                                                                       
                                     <td hidden="hidden">${codAsociacion}</td>                                                                                                       
-                                    <td>${nombreAsociacion}</td>                                                                                                       
-                                    <td>${cargo ? cargo : ''}</td>                                                                                                       
-                                    <td>${fechaInicio.split(' ')[0]}</td>                                                                                                                                                                                                                                                 
-                                    <td>${fechaFin ? fechaFin.split(' ')[0] : ''}</td>                                                                                                                                                                                                                                                 
+                                    <td >${nombreAsociacion}</td>                                                                                                       
+                                    <td >${cargo ? cargo : ''}</td>                                                                                                       
+                                    <td >${fechaInicio.split(' ')[0]}</td>                                                                                                                                                                                                                                                 
+                                    <td >${fechaFin ? fechaFin.split(' ')[0] : ''}</td>                                   
+                                    <td hidden="hidden">${nombres}</td>                                   
+                                    <td hidden="hidden">${apellidoPaterno}</td>                                   
+                                    <td hidden="hidden">${apellidoMaterno}</td>                                   
+                                    <td hidden="hidden">${telefono}</td>                                   
+                                    <td hidden="hidden">${celular}</td>                                   
+                                    <td hidden="hidden">${numeroFinca}</td>                                   
                                     <td>
                                         <span class="estado ${abreviatura === "a" ? 'active' : abreviatura === 'v' ? 'vencido' : 'inactive'}">
                                             ${estado}
@@ -62,7 +72,7 @@ $(document).ready(function () {
                                     <td>
                                         <div class="actions actions_socios">     
                                             ${abreviatura == 'a' ?
-                                            `<img id="btnEditarAsociacion" class="action" src="./assets/icons/action_edit.svg">
+                                            `<img id="btnEditarSocio" class="action" src="./assets/icons/action_edit.svg">
                                             <img class="action" src="./assets/icons/action_ver_detalle.svg">
                                             <img class="action" src="./assets/icons/action_ver_beneficiarios.svg">
                                             <img class="action" src="./assets/icons/action_agregar_beneficiario.svg">
@@ -201,6 +211,112 @@ $(document).ready(function () {
         }
     })
 
+    // editar socio
+    $(document).off("click", "#btnEditarSocio").on("click", "#btnEditarSocio", function(e) {
+        e.preventDefault();
+        let modalEditar = $("#modalEditarSocio");
+        let fila = $(this).closest("tr");
+
+        let codSocio = fila.find('td:eq(0)').text();
+        let codPersona = fila.find('td:eq(1)').text();
+        let sexo = fila.find('td:eq(3)').text();
+        let dni = fila.find('td:eq(8)').text();
+        let nombres = fila.find('td:eq(15)').text();
+        let apellidoPaterno = fila.find('td:eq(16)').text();
+        let apellidoMaterno = fila.find('td:eq(17)').text();
+        let telefono = fila.find('td:eq(18)').text();
+        let celular = fila.find('td:eq(19)').text();
+        let fechaNacimiento = fila.find('td:eq(4)').text();
+        fechaNacimientoActual = fila.find('td:eq(4)').text();
+        let edad = fila.find('td:eq(7)').text();
+        edadActual = fila.find('td:eq(7)').text();
+        let direccion = fila.find('td:eq(6)').text();
+        let numeroFinca = fila.find('td:eq(20)').text();
+        let asociacion = fila.find('td:eq(10)').text();
+        let zonaSector = fila.find('td:eq(5)').text();
+        let observaciones = fila.find('td:eq(9)').text();
+
+
+        $("#codSocioEditar").val(codSocio);
+        $("#codPersonaEditarSocio").val(codPersona);
+
+        $("#dniSocioEditar").val(dni.trim());
+        $("#nombresSocioEditar").val(nombres.trim());
+        $("#apellidoPaternoSocioEditar").val(apellidoPaterno.trim());
+        $("#apellidoMaternoSocioEditar").val(apellidoMaterno.trim());
+        $("#sexoSocioEditar").val(sexo);
+        $("#telefonoSocioEditar").val(telefono.trim());
+        $("#celularSocioEditar").val(celular.trim());
+        $("#fechaNacimientoSocioEditar").val(fechaNacimiento);
+        $("#edadSocioEditar").val(edad.trim());
+        $("#direccionSocioEditar").val(direccion.trim());
+        $("#numeroFincaSocioEditar").val(numeroFinca != 0 ? numeroFinca : '');
+        $("#cboClubDeMadresActivosEditar").val(asociacion.trim());
+        $("#cboSectorZonaEditarSocio").val(zonaSector);
+        $("#observacionSocioEditar").val(observaciones);
+
+        modalEditar.modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+
+        modalEditar.modal('show');
+
+        modalEditar.one('shown.bs.modal', function() {
+            $("#dniSocioEditar").focus();
+        });
+    });
+
+    // Actualizar socio
+    $(document).off("submit", "#editarSocioForm").on('submit', '#editarSocioForm', function(e) {
+        e.preventDefault();
+        const codSocio = Number($.trim($('#codSocioEditar').val()));
+        const codPersona = Number($.trim($('#codPersonaEditarSocio').val()));
+        const dni = $.trim($('#dniSocioEditar').val());
+        const nombre = $.trim($('#nombresSocioEditar').val());
+        const apellidoPaterno = $.trim($('#apellidoPaternoSocioEditar').val());
+        const apellidoMaterno = $.trim($('#apellidoMaternoSocioEditar').val());
+        const sexo = $.trim($('#sexoSocioEditar').val());
+        const asociacion = Number($.trim($('#cboClubDeMadresActivosEditar').val()));
+        const sectorZona = Number($.trim($('#cboSectorZonaEditarSocio').val()));
+        const telefono = $.trim($('#telefonoSocioEditar').val());
+        const celular = $.trim($('#celularSocioEditar').val());
+        const fechaNacimiento = $.trim($('#fechaNacimientoSocioEditar').val());
+        const edad = $.trim($('#edadSocioEditar').val());
+        const direccion = $.trim($('#direccionSocioEditar').val()).toUpperCase();
+        const numeroFinca = $.trim($('#numeroFincaSocioEditar').val());
+        const observacion = $.trim($('#observacionSocioEditar').val());
+
+        console.log({codSocio, codPersona, dni, nombre, apellidoPaterno, apellidoMaterno, sexo, asociacion,
+            sectorZona, telefono, celular, fechaNacimiento, direccion, numeroFinca, observacion})
+
+        if (losCamposSocioSonValidos(dni, nombre, apellidoPaterno, apellidoMaterno, sexo,
+            telefono, celular, fechaNacimiento, edad, sectorZona, direccion, numeroFinca, asociacion)){
+            $.ajax({
+                url: './controllers/socio/actualizar.php',
+                method: 'POST',
+                dataType: 'json',
+                data: {codSocio, codPersona, dni, nombre, apellidoPaterno, apellidoMaterno, sexo, asociacion,
+                sectorZona, telefono, celular, fechaNacimiento, direccion, numeroFinca, observacion},
+                success: function (response) {
+                    console.log(response)
+                    const {code, message, info, data} = response;
+
+                    if (code === 200) {
+                        showSuccessAlertUpdate(message)
+                    }
+
+                    if (code === 500) {
+                        showErrorInternalServer(message, info)
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error socios_CRUD.js: ', textStatus, errorThrown);
+                }
+            })
+        }
+    })
+
     $(document).off("input", "#dniSocioRegistro").on("input", "#dniSocioRegistro", function(e) {
         if (optionSelected === 1){
             $("#dniBeneficiarioRegistro").val($(this).val());
@@ -257,6 +373,26 @@ $(document).ready(function () {
         if (optionSelected === 1){
             $("#fechaNacimientoBeneficiarioRegistro").val($(this).val());
             $("#edadBeneficiarioRegistro").val($("#edadSocioRegistro").val());
+        }
+    })
+
+    // calcular edad para editar un socio
+    $(document).off("input", "#fechaNacimientoSocioEditar").on("input", "#fechaNacimientoSocioEditar", function(e) {
+        let edad = calcularEdad($(this).val(), fechaActual)
+        console.log(edad)
+        if (edad>=18){
+            $("#edadSocioEditar").val(edad);
+        }else{
+            Swal.fire({
+                title: "¡Advertencia!",
+                text: 'Edad no válida, el socio debe ser mayor de edad',
+                icon: "warning",
+                width: "350px",
+                confirmButtonColor: "#13252E",
+            });
+
+            $("#fechaNacimientoSocioEditar").val(fechaNacimientoActual)
+            $("#edadSocioEditar").val(edadActual)
         }
     })
 
@@ -636,8 +772,7 @@ $(document).ready(function () {
 
 
     function losCamposSocioSonValidos(dni, nombres, apellidoPaterno, apellidoMaterno, sexo, telefono, celular,
-                                      fechaNacimiento, edad, sectorYZona, direccion, numeroFinca, asociacion)
-    {
+                                      fechaNacimiento, edad, sectorYZona, direccion, numeroFinca, asociacion) {
 
         if (dni === '' || nombres === '' || apellidoMaterno === '' || apellidoPaterno === '' || sexo == '' || sexo == 0 || fechaNacimiento === '' ||
             sectorYZona == '' || sectorYZona == 0 || direccion === '' || asociacion === '' || asociacion == 0){
@@ -818,6 +953,17 @@ $(document).ready(function () {
         }).then(() => {
             $('#modalRegistrarSocioYBeneficiarios').modal('hide');
             // listarReconocimientos(documento, codAsociacion)
+        });
+    }
+
+    function showSuccessAlertUpdate(message){
+        Swal.fire({
+            icon: "success",
+            title: "Actualización Exitoso",
+            text: message
+        }).then(() => {
+            $('#modalEditarSocio').modal('hide');
+            listarSocios();
         });
     }
 })

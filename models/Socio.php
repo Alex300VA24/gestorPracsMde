@@ -318,5 +318,67 @@ class Socio extends Persona {
         }
     }
 
+    public function actualizarSocio(){
+        $sql = "EXEC sp_socio_actualizar :persona_codPersona, :persona_nombres, :persona_apellidoPaterno, :persona_apellidoMaterno, 
+        :persona_dni, :persona_sexo, :persona_telefono, :persona_celular, :persona_fechaNacimiento, :persona_codSectorZona,
+        :persona_direccion, :persona_numeroFinca, :socio_codSocio, :socio_codAsociacion, :socio_observacion";
+
+        try {
+            $codPersona = parent::getCodPersona();
+            $nombres = parent::getNombres();
+            $apellidoPaterno = parent::getApellidoPaterno();
+            $apellidoMaterno = parent::getApellidoMaterno();
+            $dni = parent::getDni();
+            $sexo = parent::getSexo();
+            $telefono = parent::getTelefono();
+            $celular = parent::getCelular();
+            $fechaNacimiento = parent::getFechaNacimiento();
+            $codSectorZona = parent::getCodSectorZona();
+            $direccion = parent::getDireccion();
+            $numeroFinca = parent::getNumeroFinca();
+
+            $stmt = DataBase::connect()->prepare($sql);
+            $stmt->bindParam('persona_codPersona', $codPersona, PDO::PARAM_INT);
+            $stmt->bindParam('persona_nombres', $nombres, PDO::PARAM_STR);
+            $stmt->bindParam('persona_apellidoPaterno', $apellidoPaterno, PDO::PARAM_STR);
+            $stmt->bindParam('persona_apellidoMaterno', $apellidoMaterno, PDO::PARAM_STR);
+            $stmt->bindParam('persona_dni', $dni, PDO::PARAM_STR);
+            $stmt->bindParam('persona_sexo', $sexo, PDO::PARAM_STR);
+            $stmt->bindParam('persona_telefono', $telefono, PDO::PARAM_STR);
+            $stmt->bindParam('persona_celular', $celular, PDO::PARAM_STR);
+            $stmt->bindParam('persona_fechaNacimiento', $fechaNacimiento, PDO::PARAM_STR);
+            $stmt->bindParam('persona_codSectorZona', $codSectorZona, PDO::PARAM_INT);
+            $stmt->bindParam('persona_direccion', $direccion, PDO::PARAM_STR);
+            $stmt->bindParam('persona_numeroFinca', $numeroFinca, PDO::PARAM_INT);
+            $stmt->bindParam('socio_codSocio', $this->codSocio, PDO::PARAM_INT);
+            $stmt->bindParam('socio_codAsociacion', $this->codAsociacion, PDO::PARAM_INT);
+            $stmt->bindParam('socio_observacion', $this->observaciones, PDO::PARAM_STR);
+
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if ($result[0]['status']!='error') {
+                return [
+                    'status' => 'success',
+                    'code' => 200,
+                    'message' => 'Socio actualizado exitosamente',
+                    'data' => [],
+                ];
+            } else {
+                throw new Exception($result[0]['ErrorMessage']);
+            }
+
+        }catch (PDOException $e){
+            return [
+                'status' => 'failed',
+                'code' => 500,
+                'message' => 'Ocurrio un error al momento de actualizar los datos del socio',
+                'action' => 'actualizarSocio',
+                'module' => 'socio',
+                'data' => [],
+                'info' => $e->getMessage()
+            ];
+        }
+    }
 
 }

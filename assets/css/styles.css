@@ -840,3 +840,9 @@ input:focus-visible{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
 }
+
+/* modal actualizar datos socio */
+.modalActualizarSocio{
+    width: 700px;
+    min-width: fit-content;
+}

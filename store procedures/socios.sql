@@ -1,5 +1,5 @@
 --- listar socios ---
-ALTER PROCEDURE sp_socio_listar(
+CREATE PROCEDURE sp_socio_listar(
   @dni_o_apellidos_y_nombres VARCHAR(200) = NULL,
   @codAsociacion INT = NULL
 )
@@ -11,11 +11,14 @@ BEGIN
   p.apellidoPaterno,
   p.apellidoMaterno,
   p.sexo,
+  p.telefono,
+  p.celular,
   p.fechaNacimiento,
   p.codSectorZona,
   p.direccion,
   p.aniosNacido, 
   p.dni,
+  p.numeroFinca,
   s.observaciones,
   a.codAsociacion,
   a.nombreAsociacion,
@@ -62,7 +65,7 @@ END
 GO
 
 --- guardar socios ---
-ALTER PROCEDURE sp_socio_guardar(
+CREATE PROCEDURE sp_socio_guardar(
   @persona_nombres VARCHAR(100),
   @persona_apellidoPaterno VARCHAR(50),
   @persona_apellidoMaterno VARCHAR(50),
@@ -146,3 +149,52 @@ BEGIN
     END CATCH;  
 END
 GO
+        
+CREATE PROCEDURE sp_socio_actualizar(
+  @persona_codPersona INT,
+  @persona_nombres VARCHAR(100),
+  @persona_apellidoPaterno VARCHAR(50),
+  @persona_apellidoMaterno VARCHAR(50),
+  @persona_dni VARCHAR(8),
+  @persona_sexo CHAR(1),
+  @persona_telefono VARCHAR(6) = NULL,
+  @persona_celular VARCHAR(9) = NULL,
+  @persona_fechaNacimiento DATE,
+  @persona_codSectorZona INT,
+  @persona_direccion VARCHAR(100),
+  @persona_numeroFinca INT = NULL,
+  @socio_codSocio INT,
+  @socio_codAsociacion INT,
+  @socio_observacion VARCHAR(255) = NULL
+)
+AS
+BEGIN
+  SET NOCOUNT ON 
+  BEGIN TRY		
+		BEGIN TRANSACTION;
+      UPDATE Personas SET dni = @persona_dni, nombres = @persona_nombres, apellidoPaterno = @persona_apellidoPaterno,
+      apellidoMaterno = @persona_apellidoMaterno, sexo = @persona_sexo, telefono = @persona_telefono, celular = @persona_celular,
+      fechaNacimiento = @persona_fechaNacimiento, codSectorZona = @persona_codSectorZona, direccion = @persona_direccion,
+      numeroFinca = @persona_numeroFinca WHERE codPersona = @persona_codPersona;
+      
+      UPDATE Socios SET codAsociacion = @socio_codAsociacion, observaciones = @socio_observacion WHERE codSocio = @socio_codSocio;
+    COMMIT TRAN;	
+		SELECT 'success' as 'status'			
+	END TRY
+  BEGIN CATCH
+		DECLARE 
+		@ErrorMessage VARCHAR(2048),
+		@ErServery INT,
+		@ErState INT
+
+		SELECT
+			@ErrorMessage = ERROR_MESSAGE(),
+			@ErServery = ERROR_SEVERITY(),
+			@ErState = ERROR_STATE()
+
+		ROLLBACK TRAN;					
+		SELECT 'error' AS 'status', @ErrorMessage AS ErrorMessage, @ErServery AS Severity, @ErState AS State;
+	END CATCH;
+END
+GO
+
