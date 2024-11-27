@@ -74,12 +74,22 @@ $(document).ready(function () {
                                     <td>
                                         <div class="actions actions_socios">     
                                             ${abreviatura == 'a' ?
-                                `<img id="btnEditarSocio" class="action" src="./assets/icons/action_edit.svg">
+                                            `<img id="btnEditarSocio" class="action" src="./assets/icons/action_edit.svg">                                                                                                                                   
+                                            ` : ''}                                            
+                                            
                                             <img id="btnDetalleSocio" class="action" src="./assets/icons/action_ver_detalle.svg">
                                             <img id="btnBeneficiariosSocio" class="action" src="./assets/icons/action_ver_beneficiarios.svg">
-                                            <img class="action" src="./assets/icons/action_agregar_beneficiario.svg">
-                                            <img class="action" src="./assets/icons/action_deshabilitar.svg">
-                                            ` : ''}                                            
+                                            
+                                            
+                                            ${abreviatura == 'a' ?
+                                            `<img class="action" src="./assets/icons/action_agregar_beneficiario.svg">
+                                            <img id="btnInhabilitarSocio" class="action" src="./assets/icons/action_deshabilitar.svg">
+                                            ` : ''}    
+                                            
+                                            ${abreviatura == 'i' ?
+                                            `<img id="btnHabilitarSocio" class="action" src="./assets/icons/action_habilitar.svg">
+                                            ` : ''}  
+                                            
                                         </div>
                                     </td>
                                 </tr>
@@ -514,15 +524,70 @@ $(document).ready(function () {
         })
 
 
-        let modalEditar = $("#modalBeneficiariosSocio");
+        let modalVerBeneficiarios = $("#modalBeneficiariosSocio");
 
 
-        modalEditar.modal({
+        modalVerBeneficiarios.modal({
             backdrop: 'static',
             keyboard: false
         });
 
-        modalEditar.modal('show');
+        modalVerBeneficiarios.modal('show');
+    });
+
+    // Inhabilitar socio
+    $(document).off("click", "#btnInhabilitarSocio").on("click", "#btnInhabilitarSocio", function (e) {
+        e.preventDefault();
+        let fila = $(this).closest("tr");
+        let nombres = fila.find('td:eq(2)').text();
+
+        Swal.fire({
+            icon: "warning",
+            title: "¡Advertencia!",
+            text: "¿Seguro que desea inhabilitar al socio " + nombres + "?",
+            width: "350px",
+            showCancelButton: true,
+            confirmButtonColor: "#13252E",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sí",
+            cancelButtonText: "No"
+        }).then((result) => {
+            if (result.isConfirmed){
+                let fila = $(this).closest("tr");
+                let codSocio = Number(fila.find('td:eq(0)').text());
+                console.log(codSocio)
+
+                $.ajax({
+                    url: './controllers/socio/inhabilitar.php',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {codSocio},
+                    success: function (response) {
+                        console.log(response)
+                        const {code, message, info, data} = response;
+
+                        if (code === 200) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "¡Éxito!",
+                                text: message
+                            }).then(() => {
+                                listarSocios()
+                            });
+                        }
+
+                        if (code === 500) {
+                            showErrorInternalServer(message, info)
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('Error socios_CRUD.js: ', textStatus, errorThrown);
+                    }
+                })
+            }
+        });
+
+
     });
 
     $(document).off("input", "#dniSocioRegistro").on("input", "#dniSocioRegistro", function (e) {

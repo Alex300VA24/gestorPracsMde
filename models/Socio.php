@@ -424,4 +424,35 @@ class Socio extends Persona {
         }
     }
 
+    public function inhabilitarSocio(){
+        $sql = "EXEC sp_socio_inhabilitar :codSocio";
+
+        try {
+            $stmt = DataBase::connect()->prepare($sql);
+            $stmt->bindParam('codSocio', $this->codSocio, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return [
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'socio inhabilitado correctamente',
+                'action' => 'inhabilitarSocio',
+                'module' => 'socio',
+                'data' => '',
+                'info' => '',
+            ];
+
+        }catch (PDOException $e){
+            return [
+                'status' => 'failed',
+                'code' => 500,
+                'message' => 'Ocurrio un error al momento de inhabilitar el socio',
+                'action' => 'inhabilitarSocio',
+                'module' => 'socio',
+                'data' => [],
+                'info' => $e->getMessage()
+            ];
+        }
+    }
+
 }

@@ -245,3 +245,16 @@ SELECT
   WHERE s.codSocio = @codSocio AND (e.abreviatura = 'a' OR e.abreviatura = 'i')
 END
 GO
+
+CREATE PROCEDURE sp_socio_inhabilitar(
+  @codSocio INT  
+)
+AS
+BEGIN
+  DECLARE @codEstadoInactivo INT
+  
+  SELECT @codEstadoInactivo = codEstado FROM Estados WHERE abreviatura = 'i'
+  
+  UPDATE Socios SET codEstado = @codEstadoInactivo WHERE codSocio = @codSocio;
+END
+GO
