@@ -258,3 +258,16 @@ BEGIN
   UPDATE Socios SET codEstado = @codEstadoInactivo WHERE codSocio = @codSocio;
 END
 GO
+
+CREATE PROCEDURE sp_socio_habilitar(
+  @codSocio INT  
+)
+AS
+BEGIN
+  DECLARE @codEstadoActivo INT
+  
+  SELECT @codEstadoActivo = codEstado FROM Estados WHERE abreviatura = 'a'
+  
+  UPDATE Socios SET codEstado = @codEstadoActivo WHERE codSocio = @codSocio;
+END
+GO

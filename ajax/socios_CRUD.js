@@ -590,6 +590,61 @@ $(document).ready(function () {
 
     });
 
+    // habilitar socio
+    $(document).off("click", "#btnHabilitarSocio").on("click", "#btnHabilitarSocio", function (e) {
+        e.preventDefault();
+        let fila = $(this).closest("tr");
+        let nombres = fila.find('td:eq(2)').text();
+
+        Swal.fire({
+            icon: "warning",
+            title: "¡Advertencia!",
+            text: "¿Seguro que desea habilitar al socio " + nombres + "?",
+            width: "350px",
+            showCancelButton: true,
+            confirmButtonColor: "#13252E",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sí",
+            cancelButtonText: "No"
+        }).then((result) => {
+            if (result.isConfirmed){
+                let fila = $(this).closest("tr");
+                let codSocio = Number(fila.find('td:eq(0)').text());
+                console.log(codSocio)
+
+                $.ajax({
+                    url: './controllers/socio/habilitar.php',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {codSocio},
+                    success: function (response) {
+                        console.log(response)
+                        const {code, message, info, data} = response;
+
+                        if (code === 200) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "¡Éxito!",
+                                text: message
+                            }).then(() => {
+                                listarSocios()
+                            });
+                        }
+
+                        if (code === 500) {
+                            showErrorInternalServer(message, info)
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('Error socios_CRUD.js: ', textStatus, errorThrown);
+                    }
+                })
+            }
+        });
+
+
+    });
+
     $(document).off("input", "#dniSocioRegistro").on("input", "#dniSocioRegistro", function (e) {
         if (optionSelected === 1) {
             $("#dniBeneficiarioRegistro").val($(this).val());
