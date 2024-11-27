@@ -39,6 +39,7 @@ BEGIN
   (@dni_o_apellidos_y_nombres IS NULL OR CONCAT(p.apellidoPaterno, ' ', p.apellidoMaterno, ' ', p.nombres) LIKE @dni_o_apellidos_y_nombres + '%'))
   AND
   (@codAsociacion IS NULL OR a.codAsociacion = @codAsociacion)
+  ORDER BY s.fechaRegistro DESC
 END
 GO
 
@@ -198,3 +199,49 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE sp_socio_buscar_beneficiarios(
+  @codSocio INT
+)
+AS
+BEGIN
+SELECT 
+  b.codBeneficiario,
+  s.codSocio,
+  pb.codPersona 'codPersonaBeneficiario',
+  ps.codPersona 'codPersonaSocio',
+  ps.nombres 'nombresSocio',
+  ps.apellidoPaterno 'apellidoPaternoSocio',
+  ps.apellidoMaterno 'apellidoMaternoSocio',
+  ps.dni 'dniSocio',
+  pb.nombres 'nombresBeneficiario',
+  pb.apellidoPaterno 'apellidoPaternoBeneficiario',
+  pb.apellidoMaterno 'apellidoMaternoBeneficiario',
+  pb.dni 'dniBeneficiario',
+  pb.sexo 'sexoBeneficiario',
+  pb.telefono 'telefonoBeneficiario',
+  pb.celular 'celularBeneficiario',
+  pb.fechaNacimiento 'fechaNacimientoBeneficiario',
+  pb.codSectorZona 'codSectorZonaBeneficiario',
+  pb.direccion 'direccionBeneficiario',
+  pb.aniosNacido 'aniosNacidoBeneficiario',  
+  pb.numeroFinca 'numeroFincaBeneficiario',
+  hb.codTipoBeneficio 'codTipoBeneficioBeneficiario',
+  tp.descripcion 'tipoBeneficioBeneficiario',
+  tp.prioridad 'prioridadBeneficiario',
+  p.codParentesco 'codParentescoBeneficiario',
+  p.descripcion 'parentescoBeneficiario',
+  hb.peso 'pesoBeneficiario',
+  hb.talla 'tallaBeneficiario',
+  hb.hmg 'hmgBeneficiario',
+  e.abreviatura'estadoAbreviatura'
+  FROM Beneficiarios b 
+  INNER JOIN HistoricoBeneficiarios hb ON b.codBeneficiario = hb.codBeneficiario
+  INNER JOIN TiposBeneficio tp ON hb.codTipoBeneficio = tp.codTipoBeneficio
+  INNER JOIN Parentescos p ON b.codParentesco = p.codParentesco
+  INNER JOIN Socios s ON b.codSocio = s.codSocio
+  INNER JOIN Personas pb ON b.codPersona = pb.codPersona
+  INNER JOIN Personas ps ON s.codPersona = ps.codPersona
+  INNER JOIN Estados e ON hb.codEstado = e.codEstado
+  WHERE s.codSocio = @codSocio AND (e.abreviatura = 'a' OR e.abreviatura = 'i')
+END
+GO

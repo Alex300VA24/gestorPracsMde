@@ -46,6 +46,7 @@ require_once "../../config/parameters.php"
 <?php require_once "registro.php" ?>
 <?php require_once "editar.php" ?>
 <?php require_once "detalle.php" ?>
+<?php require_once "verBeneficiarios.php" ?>
 
 <script src="<?= base_url?>ajax/sectoresZona_llenarCboSectoresZona.js"></script>
 <script src="<?= base_url?>ajax/asociaciones_llenarCboAsocNuevaRecVencidoRecPendiente.js"></script>

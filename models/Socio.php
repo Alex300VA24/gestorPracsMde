@@ -381,4 +381,47 @@ class Socio extends Persona {
         }
     }
 
+    public function buscarBeneficiarios(){
+        $sql = "EXEC sp_socio_buscar_beneficiarios :codSocio";
+
+        try {
+            $stmt = DataBase::connect()->prepare($sql);
+            $stmt->bindParam('codSocio', $this->codSocio, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+            if ($stmt->rowCount() > 0){
+                return [
+                    'status' => 'success',
+                    'code' => 200,
+                    'message' => 'beneficiarios del socio',
+                    'action' => 'buscarBeneficiarios',
+                    'module' => 'socio',
+                    'data' => $result,
+                    'info' => '',
+                ];
+            }else{
+                return [
+                    'status' => 'success',
+                    'code' => 404,
+                    'message' => 'El socio no tiene ningun beneficiario',
+                    'data' => [],
+                ];
+            }
+
+
+        }catch (PDOException $e){
+            return [
+                'status' => 'failed',
+                'code' => 500,
+                'message' => 'Ocurrio un error al momento de buscar el socio por DNI y club de madre',
+                'action' => 'buscarByDNI',
+                'module' => 'socio',
+                'data' => [],
+                'info' => $e->getMessage()
+            ];
+        }
+    }
+
 }
