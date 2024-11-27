@@ -64,8 +64,9 @@ $(document).ready(function () {
                                     <td hidden="hidden">${telefono}</td>                                   
                                     <td hidden="hidden">${celular}</td>                                   
                                     <td hidden="hidden">${numeroFinca}</td>                                   
+                                    <td hidden="hidden">${abreviatura}</td>                                   
                                     <td>
-                                        <span class="estado ${abreviatura === "a" ? 'active' : abreviatura === 'v' ? 'vencido' : 'inactive'}">
+                                        <span class="estado ${abreviatura === "a" ? 'active' : 'inactive'}">
                                             ${estado}
                                         </span>
                                     </td>
@@ -73,7 +74,7 @@ $(document).ready(function () {
                                         <div class="actions actions_socios">     
                                             ${abreviatura == 'a' ?
                                             `<img id="btnEditarSocio" class="action" src="./assets/icons/action_edit.svg">
-                                            <img class="action" src="./assets/icons/action_ver_detalle.svg">
+                                            <img id="btnDetalleSocio" class="action" src="./assets/icons/action_ver_detalle.svg">
                                             <img class="action" src="./assets/icons/action_ver_beneficiarios.svg">
                                             <img class="action" src="./assets/icons/action_agregar_beneficiario.svg">
                                             <img class="action" src="./assets/icons/action_deshabilitar.svg">
@@ -312,6 +313,62 @@ $(document).ready(function () {
             })
         }
     })
+
+    // Actualizar socio
+    $(document).off("click", "#btnDetalleSocio").on("click", "#btnDetalleSocio", function(e) {
+        e.preventDefault();
+        let modalEditar = $("#modalDetalleSocio");
+        let fila = $(this).closest("tr");
+
+        let sexo = fila.find('td:eq(3)').text();
+        let dni = fila.find('td:eq(8)').text();
+        let nombres = fila.find('td:eq(15)').text();
+        let apellidoPaterno = fila.find('td:eq(16)').text();
+        let apellidoMaterno = fila.find('td:eq(17)').text();
+        let telefono = fila.find('td:eq(18)').text();
+        let celular = fila.find('td:eq(19)').text();
+        let fechaNacimiento = fila.find('td:eq(4)').text();
+        fechaNacimientoActual = fila.find('td:eq(4)').text();
+        let edad = fila.find('td:eq(7)').text();
+        edadActual = fila.find('td:eq(7)').text();
+        let direccion = fila.find('td:eq(6)').text();
+        let numeroFinca = fila.find('td:eq(20)').text();
+        let asociacion = fila.find('td:eq(10)').text();
+        let zonaSector = fila.find('td:eq(5)').text();
+        let observaciones = fila.find('td:eq(9)').text();
+        let abreviaturaEstado = fila.find('td:eq(21)').text();
+
+
+        $("#dniSocioDetalle").val(dni.trim());
+        $("#nombresSocioDetalle").val(nombres.trim());
+        $("#apellidoPaternoSocioDetalle").val(apellidoPaterno.trim());
+        $("#apellidoMaternoSocioDetalle").val(apellidoMaterno.trim());
+        $("#sexoSocioDetalle").val(sexo);
+        $("#telefonoSocioDetalle").val(telefono.trim());
+        $("#celularSocioDetalle").val(celular.trim());
+        $("#fechaNacimientoSocioDetalle").val(fechaNacimiento);
+        $("#edadSocioDetalle").val(edad.trim());
+        $("#direccionSocioDetalle").val(direccion.trim());
+        $("#numeroFincaSocioDetalle").val(numeroFinca != 0 ? numeroFinca : '');
+        $("#cboClubDeMadresActivosDetalle").val(asociacion.trim());
+        $("#cboSectorZonaDetalleSocio").val(zonaSector);
+        $("#observacionSocioDetalle").val(observaciones);
+
+        $("#estadoSocioDetalle").text(abreviaturaEstado == 'a' ? 'Activo' : 'Inactivo')
+        $("#estadoSocioDetalle").addClass(abreviaturaEstado == 'a' ? 'active' : 'inactive')
+
+
+        modalEditar.modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+
+        modalEditar.modal('show');
+
+        modalEditar.one('shown.bs.modal', function() {
+            $("#dniSocioEditar").focus();
+        });
+    });
 
     $(document).off("input", "#dniSocioRegistro").on("input", "#dniSocioRegistro", function(e) {
         if (optionSelected === 1){

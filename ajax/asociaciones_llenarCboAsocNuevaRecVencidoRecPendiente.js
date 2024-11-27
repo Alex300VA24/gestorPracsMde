@@ -12,6 +12,7 @@ $(document).ready(function () {
                     })
                 $('#cboClubDeMadresActivos').html(options);
                 $('#cboClubDeMadresActivosEditar').html(options);
+                $('#cboClubDeMadresActivosDetalle').html(options);
             }
 
             if (code === 500) {

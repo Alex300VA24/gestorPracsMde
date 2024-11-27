@@ -491,6 +491,10 @@ input:focus-visible{
     border-radius: 5px;
 }
 
+.estadoDetalle{
+    padding: 5px 30px;
+}
+
 .active{
     background-color: #33cb67;
     border: 1px solid var(--bg-color-principal);
@@ -569,7 +573,8 @@ input:focus-visible{
 }
 
 .modal-body-detalle-asociacion input,
-.modal-body-detalle-reconocimientos input {
+.modal-body-detalle-reconocimientos input,
+.modal-body-detalle-socio input{
     margin-bottom: 0;
     color: #000;
 }
