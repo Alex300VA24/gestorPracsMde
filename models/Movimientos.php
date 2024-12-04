@@ -140,7 +140,7 @@ class Movimientos{
     }
 
     public function actualizarMovimientos(){
-        $sql="sp_movimiento_actualizar :codMovimiento, :codProducto, :precioUnitario, :fechaMovimiento, :cantidad, :codTipoMovimiento";
+        $sql="sp_movimiento_actualizar :codMovimiento, :codProducto, :codTipoMovimiento, :fechaMovimiento, :cantidad, :precioUnitario";
 
         try{
             $stmt = DataBase::connect()->prepare($sql);

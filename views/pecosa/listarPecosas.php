@@ -30,7 +30,7 @@
             <thead>
                 <tr>
                     <th>CodPecosa</th>
-                    <th>Comite</th>
+                    <th>Club de madre</th>
                     <th>Presidenta</th>
                     <th>Observacion</th>
                     <th>Acciones</th>

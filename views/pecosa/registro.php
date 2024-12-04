@@ -13,6 +13,16 @@
                             </div>
                             <form>
                                 <div class="two-column">
+                                    <label for="numero">Numero (*):</label>
+                                    <input 
+                                        type="number" 
+                                        id="numero" 
+                                        autocomplete="off"
+                                        maxlength="100"
+                                    >
+                                </div>
+
+                                <div class="two-column mt-2">
                                     <label for="clubMadres">Club de Madres (*):</label>
                                     <select id="cboClubMadres" class="form-select">
                                     </select>
@@ -35,11 +45,12 @@
                                         id="fechaReparto" 
                                         autocomplete="off"
                                         maxlength="100"
+                                        disabled
                                     >
                                 </div>
 
-                                <div class="two-column mt-2">
-                                    <label for="observación" class="form-label col-sm-4">Observación (*):</label>
+                                <div class="two-column mt-3">
+                                    <label for="observación" class="form-label col-sm-4">Observación:</label>
                                     <textarea id="obervacion" class="form-control"></textarea>
                                 </div>
 
@@ -73,6 +84,7 @@
                                         id="fechaDesde" 
                                         autocomplete="off"
                                         maxlength="100"
+                                        disabled
                                     >
                                 </div>
 
@@ -89,7 +101,7 @@
                                 <div class="two-column mt-2">
                                     <label for="cantidad">Cantidad (*):</label>
                                     <input 
-                                        type="text" 
+                                        type="number" 
                                         id="fechaReparto" 
                                         autocomplete="off"
                                         maxlength="100"
@@ -99,12 +111,16 @@
                                 <div class="two-column mt-2">
                                     <label for="precioUnitario">Precio unitario (*):</label>
                                     <input 
-                                        type="text" 
+                                        type="number" 
                                         id="precioUnitario" 
+                                        step="0.01"
+                                        min="0"
                                         autocomplete="off"
-                                        maxlength="100"
+                                        required
                                     >
                                 </div>
+
+                                <p>Todos los campos (*) son obligatorios</p>
 
                                 <div class="btnAgregarPecosa mt-2" id="btnAgregarProducto">
                                     <p>Agregar</p>
@@ -115,27 +131,31 @@
 
                     </div>
 
-                    <div class="containerTable">
-                        <table class="tableProductos">
-                            <thead>
-                                <tr>
-                                    <th>CodProducto</th>
-                                    <th>Descripcion</th>
-                                    <th>Prioridad</th>
-                                    <th>fecha Desde</th>
-                                    <th>fecha Hasta</th>
-                                    <th>Cantidad</th>
-                                    <th>Precio Unitario</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="listaPecosas">
-                            </tbody>
-                        </table>
+                    <div class="detalleBeneficiarios">
+                        <div class="header_container_data">
+                            <h2>Detalle de Pecosa</h2>
+                        </div>
+                        <div class="containerTable">
+                            <table class="tableProductos">
+                                <thead>
+                                    <tr>
+                                        <th>CodProducto</th>
+                                        <th>Descripcion</th>
+                                        <th>Prioridad</th>
+                                        <th>fecha Desde</th>
+                                        <th>fecha Hasta</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio Unitario</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="listaPecosas">
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
-
-                    <p>Todos los campos (*) son obligatorios</p>
-
+        
                     <div class="containerButtonsModal">
                         <input type="submit" class="btn btn-primary" value="Registrar">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>

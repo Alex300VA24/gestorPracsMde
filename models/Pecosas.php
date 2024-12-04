@@ -3,6 +3,7 @@
 class Pecosas{
     private int $codPecosa;
     private int $codAsociacion;
+    private string $numeroPecosa;
     private int $codPresidenta;
     private string $fechaRegistro;
     private string $observacion;
@@ -22,6 +23,14 @@ class Pecosas{
 
     public function setCodAsociacion(int $codAsociacion): void{
         $this->codAsociacion = $codAsociacion;
+    }
+
+    public function getNumeroPecosa(): string{
+        return $this->numeroPecosa;
+    }
+
+    public function setNumeroPecosa(string $numeroPecosa): void{
+        $this->numeroPecosa = $numeroPecosa;
     }
 
     public function getCodPresidenta(): int{

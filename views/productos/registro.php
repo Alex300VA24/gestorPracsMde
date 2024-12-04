@@ -9,7 +9,7 @@
                     <div class="two-column">
                         <label for="descripcionProducto">Descripción (*):</label>
                         <input 
-                                type="text" 
+                                type="text"
                                 id="descripcionProducto" 
                                 autocomplete="off"
                                 maxlength="100"
