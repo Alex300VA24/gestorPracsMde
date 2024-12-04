@@ -1,10 +1,16 @@
 $(document).ready(function () {
 
+    let dniOApellidosNombres;
+    let codAsociacion;
+
     let optionSelected = 0
 
     let tiposBeneficio = [];
 
     let beneficiarios = [];
+
+    let fechaNacimientoActual;
+    let edadActual;
 
     const inputFechaSocio = document.querySelector('#fechaNacimientoSocioRegistro');
     const inputFechaBeneficiario = document.querySelector('#fechaNacimientoBeneficiarioRegistro');
@@ -14,8 +20,101 @@ $(document).ready(function () {
     inputFechaSocio.setAttribute('max', fechaFormateada);
     inputFechaBeneficiario.setAttribute('max', fechaFormateada);
 
+    listarSocios(dniOApellidosNombres, codAsociacion);
+
+    function listarSocios(dniOApellidosNombres, codAsociacion) {
+        $.ajax({
+            url: './controllers/socio/listar.php',
+            method: 'GET',
+            dataType: 'json',
+            data: {dniOApellidosNombres, codAsociacion},
+            success: function (response) {
+                console.log(response)
+                const {code, message, info, data} = response;
+
+                if (code === 200) {
+                    let row = '';
+                    if (data && Array.isArray(data) && data.length > 0) {
+                        row = data.map(({
+                                            codSocio, codPersona, nombres, apellidoPaterno,
+                                            apellidoMaterno, sexo, fechaNacimiento, codSectorZona,
+                                            telefono, celular, numeroFinca,
+                                            direccion, aniosNacido, dni, observaciones, codAsociacion,
+                                            nombreAsociacion, cargo, fechaInicio, fechaFin, abreviatura, estado
+                                        }) => {
+                            return `
+                                <tr>
+                                    <td>${codSocio}</td>
+                                    <td hidden="hidden">${codPersona}</td>
+                                    <td>${apellidoPaterno + ' ' + apellidoMaterno + ' ' + nombres}</td>                                   
+                                    <td hidden="hidden">${sexo}</td>                                   
+                                    <td hidden="hidden">${fechaNacimiento}</td>                                   
+                                    <td hidden="hidden">${codSectorZona}</td>                                   
+                                    <td hidden="hidden">${direccion}</td>                                                                                                       
+                                    <td>${aniosNacido}</td>                                                                                                       
+                                    <td>${dni}</td>                                                                                                       
+                                    <td hidden="hidden">${observaciones}</td>                                                                                                       
+                                    <td hidden="hidden">${codAsociacion}</td>                                                                                                       
+                                    <td >${nombreAsociacion}</td>                                                                                                       
+                                    <td >${cargo ? cargo : ''}</td>                                                                                                       
+                                    <td >${fechaInicio.split(' ')[0]}</td>                                                                                                                                                                                                                                                 
+                                    <td >${fechaFin ? fechaFin.split(' ')[0] : ''}</td>                                   
+                                    <td hidden="hidden">${nombres}</td>                                   
+                                    <td hidden="hidden">${apellidoPaterno}</td>                                   
+                                    <td hidden="hidden">${apellidoMaterno}</td>                                   
+                                    <td hidden="hidden">${telefono}</td>                                   
+                                    <td hidden="hidden">${celular}</td>                                   
+                                    <td hidden="hidden">${numeroFinca}</td>                                   
+                                    <td hidden="hidden">${abreviatura}</td>                                   
+                                    <td>
+                                        <span class="estado ${abreviatura === "a" ? 'active' : 'inactive'}">
+                                            ${estado}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="actions actions_socios">     
+                                            ${abreviatura == 'a' ?
+                                            `<img id="btnEditarSocio" class="action" src="./assets/icons/action_edit.svg">                                                                                                                                   
+                                            ` : ''}                                            
+                                            
+                                            <img id="btnDetalleSocio" class="action" src="./assets/icons/action_ver_detalle.svg">
+                                            <img id="btnBeneficiariosSocio" class="action" src="./assets/icons/action_ver_beneficiarios.svg">
+                                            
+                                            
+                                            ${abreviatura == 'a' ?
+                                            `<img class="action" src="./assets/icons/action_agregar_beneficiario.svg">
+                                            <img id="btnInhabilitarSocio" class="action" src="./assets/icons/action_deshabilitar.svg">
+                                            ` : ''}    
+                                            
+                                            ${abreviatura == 'i' ?
+                                            `<img id="btnHabilitarSocio" class="action" src="./assets/icons/action_habilitar.svg">
+                                            ` : ''}  
+                                            
+                                        </div>
+                                    </td>
+                                </tr>
+                            `
+                        })
+                        $("#listaSocios").html(row)
+                    } else {
+                        row = `<tr><td colspan="10">Aún no existen socios en el sistema</td></tr>`
+                    }
+                    $("#listaSocios").html(row)
+                }
+
+                if (code === 500) {
+                    showErrorInternalServer(message, info)
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error('Error reconocimientos_CRUD.js: ', textStatus, errorThrown);
+            }
+        })
+    }
+
+
     //     nuevo socio y beneficiarios - abrir modal
-    $(document).off("click", "#btnNuevoSocio").on("click", "#btnNuevoSocio", function(e) {
+    $(document).off("click", "#btnNuevoSocio").on("click", "#btnNuevoSocio", function (e) {
         e.preventDefault();
         beneficiarios = []
         let modalRegistrar = $("#modalRegistrarSocioYBeneficiarios");
@@ -29,13 +128,13 @@ $(document).ready(function () {
 
         modalRegistrar.modal('show');
 
-        modalRegistrar.one('shown.bs.modal', function() {
+        modalRegistrar.one('shown.bs.modal', function () {
             $("#dniSocioRegistro").focus();
         });
     });
 
     //     registrar socios y beneficiarios
-    $(document).off("submit", "#registrarSocioYBeneficiarioForm").on('submit', '#registrarSocioYBeneficiarioForm', function(e) {
+    $(document).off("submit", "#registrarSocioYBeneficiarioForm").on('submit', '#registrarSocioYBeneficiarioForm', function (e) {
         e.preventDefault();
         const dniSocio = $.trim($('#dniSocioRegistro').val());
         const nombresSocio = $.trim($('#nombresSocioRegistro').val());
@@ -66,9 +165,9 @@ $(document).ready(function () {
 
         if (losCamposSocioSonValidos(dniSocio, nombresSocio, apellidoPaternoSocio, apellidoMaternoSocio, sexoSocio, telefonoSocio,
             celularSocio, fechaNacimientoSocio, edadSocio, sectorZonaSocio, direccionSocio, numeroFincaSocio, asociacionSocio,
-            observacionesSocio)){
+            observacionesSocio)) {
 
-            if (beneficiarios.length == 0){
+            if (beneficiarios.length == 0) {
                 Swal.fire({
                     title: "¡Advertencia!",
                     text: 'El socio debe contar con beneficiarios o él mismo debe ser un beneficiario.',
@@ -79,9 +178,9 @@ $(document).ready(function () {
                 return;
             }
 
-            if (esSocioBeneficiario === 1){
+            if (esSocioBeneficiario === 1) {
                 beneficiarios = beneficiarios.filter(beneficiario => {
-                    if(beneficiario.dni === dniSocio){
+                    if (beneficiario.dni === dniSocio) {
                         parentesco = beneficiario.parentesco
                         tipoBeneficio = beneficiario.tipoBeneficio
                         talla = beneficiario.talla
@@ -101,10 +200,32 @@ $(document).ready(function () {
                 url: './controllers/socio/registrarSocioYBeneficiarios.php',
                 method: 'POST',
                 dataType: 'json',
-                data: {dniSocio, nombresSocio, apellidoPaternoSocio, apellidoMaternoSocio, sexoSocio, telefonoSocio,
-                celularSocio, fechaNacimientoSocio, sectorZonaSocio, direccionSocio, numeroFincaSocio, asociacionSocio,
-                observacionesSocio, esSocioBeneficiario, parentesco, tipoBeneficio, talla, peso, hmg,
-                fechaUltimaMestruacion, fechaProbableParto, fechaParto, fechaFinLactancia, beneficiarios},
+                data: {
+                    dniSocio,
+                    nombresSocio,
+                    apellidoPaternoSocio,
+                    apellidoMaternoSocio,
+                    sexoSocio,
+                    telefonoSocio,
+                    celularSocio,
+                    fechaNacimientoSocio,
+                    sectorZonaSocio,
+                    direccionSocio,
+                    numeroFincaSocio,
+                    asociacionSocio,
+                    observacionesSocio,
+                    esSocioBeneficiario,
+                    parentesco,
+                    tipoBeneficio,
+                    talla,
+                    peso,
+                    hmg,
+                    fechaUltimaMestruacion,
+                    fechaProbableParto,
+                    fechaParto,
+                    fechaFinLactancia,
+                    beneficiarios
+                },
                 success: function (response) {
                     console.log(response)
                     const {code, message, info, data} = response;
@@ -124,79 +245,499 @@ $(document).ready(function () {
         }
     })
 
-    $(document).off("input", "#dniSocioRegistro").on("input", "#dniSocioRegistro", function(e) {
-        if (optionSelected === 1){
+    // editar socio
+    $(document).off("click", "#btnEditarSocio").on("click", "#btnEditarSocio", function (e) {
+        e.preventDefault();
+        let modalEditar = $("#modalEditarSocio");
+        let fila = $(this).closest("tr");
+
+        let codSocio = fila.find('td:eq(0)').text();
+        let codPersona = fila.find('td:eq(1)').text();
+        let sexo = fila.find('td:eq(3)').text();
+        let dni = fila.find('td:eq(8)').text();
+        let nombres = fila.find('td:eq(15)').text();
+        let apellidoPaterno = fila.find('td:eq(16)').text();
+        let apellidoMaterno = fila.find('td:eq(17)').text();
+        let telefono = fila.find('td:eq(18)').text();
+        let celular = fila.find('td:eq(19)').text();
+        let fechaNacimiento = fila.find('td:eq(4)').text();
+        fechaNacimientoActual = fila.find('td:eq(4)').text();
+        let edad = fila.find('td:eq(7)').text();
+        edadActual = fila.find('td:eq(7)').text();
+        let direccion = fila.find('td:eq(6)').text();
+        let numeroFinca = fila.find('td:eq(20)').text();
+        let asociacion = fila.find('td:eq(10)').text();
+        let zonaSector = fila.find('td:eq(5)').text();
+        let observaciones = fila.find('td:eq(9)').text();
+
+
+        $("#codSocioEditar").val(codSocio);
+        $("#codPersonaEditarSocio").val(codPersona);
+
+        $("#dniSocioEditar").val(dni.trim());
+        $("#nombresSocioEditar").val(nombres.trim());
+        $("#apellidoPaternoSocioEditar").val(apellidoPaterno.trim());
+        $("#apellidoMaternoSocioEditar").val(apellidoMaterno.trim());
+        $("#sexoSocioEditar").val(sexo);
+        $("#telefonoSocioEditar").val(telefono.trim());
+        $("#celularSocioEditar").val(celular.trim());
+        $("#fechaNacimientoSocioEditar").val(fechaNacimiento);
+        $("#edadSocioEditar").val(edad.trim());
+        $("#direccionSocioEditar").val(direccion.trim());
+        $("#numeroFincaSocioEditar").val(numeroFinca != 0 ? numeroFinca : '');
+        $("#cboClubDeMadresActivosEditar").val(asociacion.trim());
+        $("#cboSectorZonaEditarSocio").val(zonaSector);
+        $("#observacionSocioEditar").val(observaciones);
+
+        modalEditar.modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+
+        modalEditar.modal('show');
+
+        modalEditar.one('shown.bs.modal', function () {
+            $("#dniSocioEditar").focus();
+        });
+    });
+
+    // Actualizar socio
+    $(document).off("submit", "#editarSocioForm").on('submit', '#editarSocioForm', function (e) {
+        e.preventDefault();
+        const codSocio = Number($.trim($('#codSocioEditar').val()));
+        const codPersona = Number($.trim($('#codPersonaEditarSocio').val()));
+        const dni = $.trim($('#dniSocioEditar').val());
+        const nombre = $.trim($('#nombresSocioEditar').val());
+        const apellidoPaterno = $.trim($('#apellidoPaternoSocioEditar').val());
+        const apellidoMaterno = $.trim($('#apellidoMaternoSocioEditar').val());
+        const sexo = $.trim($('#sexoSocioEditar').val());
+        const asociacion = Number($.trim($('#cboClubDeMadresActivosEditar').val()));
+        const sectorZona = Number($.trim($('#cboSectorZonaEditarSocio').val()));
+        const telefono = $.trim($('#telefonoSocioEditar').val());
+        const celular = $.trim($('#celularSocioEditar').val());
+        const fechaNacimiento = $.trim($('#fechaNacimientoSocioEditar').val());
+        const edad = $.trim($('#edadSocioEditar').val());
+        const direccion = $.trim($('#direccionSocioEditar').val()).toUpperCase();
+        const numeroFinca = $.trim($('#numeroFincaSocioEditar').val());
+        const observacion = $.trim($('#observacionSocioEditar').val());
+
+        if (losCamposSocioSonValidos(dni, nombre, apellidoPaterno, apellidoMaterno, sexo,
+            telefono, celular, fechaNacimiento, edad, sectorZona, direccion, numeroFinca, asociacion)) {
+            $.ajax({
+                url: './controllers/socio/actualizar.php',
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    codSocio, codPersona, dni, nombre, apellidoPaterno, apellidoMaterno, sexo, asociacion,
+                    sectorZona, telefono, celular, fechaNacimiento, direccion, numeroFinca, observacion
+                },
+                success: function (response) {
+                    const {code, message, info, data} = response;
+
+                    if (code === 200) {
+                        showSuccessAlertUpdate(message)
+                    }
+
+                    if (code === 500) {
+                        showErrorInternalServer(message, info)
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error socios_CRUD.js: ', textStatus, errorThrown);
+                }
+            })
+        }
+    })
+
+    // Ver detalle socio
+    $(document).off("click", "#btnDetalleSocio").on("click", "#btnDetalleSocio", function (e) {
+        e.preventDefault();
+        let modalEditar = $("#modalDetalleSocio");
+        let fila = $(this).closest("tr");
+
+        let sexo = fila.find('td:eq(3)').text();
+        let dni = fila.find('td:eq(8)').text();
+        let nombres = fila.find('td:eq(15)').text();
+        let apellidoPaterno = fila.find('td:eq(16)').text();
+        let apellidoMaterno = fila.find('td:eq(17)').text();
+        let telefono = fila.find('td:eq(18)').text();
+        let celular = fila.find('td:eq(19)').text();
+        let fechaNacimiento = fila.find('td:eq(4)').text();
+        fechaNacimientoActual = fila.find('td:eq(4)').text();
+        let edad = fila.find('td:eq(7)').text();
+        edadActual = fila.find('td:eq(7)').text();
+        let direccion = fila.find('td:eq(6)').text();
+        let numeroFinca = fila.find('td:eq(20)').text();
+        let asociacion = fila.find('td:eq(10)').text();
+        let zonaSector = fila.find('td:eq(5)').text();
+        let observaciones = fila.find('td:eq(9)').text();
+        let abreviaturaEstado = fila.find('td:eq(21)').text();
+
+
+        $("#dniSocioDetalle").val(dni.trim());
+        $("#nombresSocioDetalle").val(nombres.trim());
+        $("#apellidoPaternoSocioDetalle").val(apellidoPaterno.trim());
+        $("#apellidoMaternoSocioDetalle").val(apellidoMaterno.trim());
+        $("#sexoSocioDetalle").val(sexo);
+        $("#telefonoSocioDetalle").val(telefono.trim());
+        $("#celularSocioDetalle").val(celular.trim());
+        $("#fechaNacimientoSocioDetalle").val(fechaNacimiento);
+        $("#edadSocioDetalle").val(edad.trim());
+        $("#direccionSocioDetalle").val(direccion.trim());
+        $("#numeroFincaSocioDetalle").val(numeroFinca != 0 ? numeroFinca : '');
+        $("#cboClubDeMadresActivosDetalle").val(asociacion.trim());
+        $("#cboSectorZonaDetalleSocio").val(zonaSector);
+        $("#observacionSocioDetalle").val(observaciones);
+
+        $("#estadoSocioDetalle").text(abreviaturaEstado == 'a' ? 'Activo' : 'Inactivo')
+        $("#estadoSocioDetalle").addClass(abreviaturaEstado == 'a' ? 'active' : 'inactive')
+
+
+        modalEditar.modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+
+        modalEditar.modal('show');
+
+        modalEditar.one('shown.bs.modal', function () {
+            $("#dniSocioEditar").focus();
+        });
+    });
+
+    // Ver Beneficiarios del socio
+    $(document).off("click", "#btnBeneficiariosSocio").on("click", "#btnBeneficiariosSocio", function (e) {
+        e.preventDefault();
+
+        let fila = $(this).closest("tr");
+
+        let codSocio = fila.find('td:eq(0)').text();
+
+        $.ajax({
+            url: './controllers/socio/buscarBeneficiarios.php',
+            method: 'GET',
+            dataType: 'json',
+            data: {codSocio},
+            success: function (response) {
+                const {code, message, info, data} = response;
+
+                $("#nombreSocioVerBeneficiarios").text(data[0]['apellidoPaternoSocio'] + ' ' + data[0]['apellidoMaternoSocio'] + ' ' + data[0]['nombresSocio'])
+                $("#dniSocioVerBeneficiarios").text(data[0]['dniSocio'])
+
+                if (code === 200) {
+
+                    console.log(data)
+                    let cardBeneficiario = data.map(beneficiario => {
+
+                        const { dniBeneficiario, nombresBeneficiario, apellidoPaternoBeneficiario,
+                            apellidoMaternoBeneficiario, aniosNacidoBeneficiario, prioridadBeneficiario,
+                            parentescoBeneficiario, tallaBeneficiario, pesoBeneficiario, hmgBeneficiario,
+                            estadoAbreviatura, tipoBeneficioBeneficiario, sexoBeneficiario } = beneficiario;
+
+                        return `
+                        <div class="card-beneficiario ${
+                            tipoBeneficioBeneficiario.includes("niño") && sexoBeneficiario == 'm' ? 'card-boy' :
+                                tipoBeneficioBeneficiario.includes("niño") && sexoBeneficiario == 'f' ? 'card-girl'
+                                    : parentescoBeneficiario.includes("Socio") ? 'card-socio' : ''
+                        } card-girl">
+                        
+                            ${tipoBeneficioBeneficiario.includes('niño') && sexoBeneficiario == 'f' ?
+                            `<img src="./assets/icons/icon_girl.svg">`
+                            : ``}
+                        
+                            ${tipoBeneficioBeneficiario.includes('niño') && sexoBeneficiario == 'm' ?
+                             `<img src="./assets/icons/icon_boy.svg">`
+                                : ``}
+                            
+                            ${tipoBeneficioBeneficiario.includes('mayor') && sexoBeneficiario == 'm' ?
+                            `<img src="./assets/icons/icon_old-man.svg">`
+                            : ``}
+                            
+                            ${tipoBeneficioBeneficiario.includes('mayor') && sexoBeneficiario == 'f' ?
+                            `<img src="./assets/icons/icon-old-woman.svg">`
+                            : ``}
+                            
+                            ${tipoBeneficioBeneficiario.includes('madre') ?
+                            `<img src="./assets/icons/icon-woman.svg">`
+                            : ``}
+                            
+                            <div class="data">
+                                <div>
+                                    <span>DNI:</span>
+                                    <span>${dniBeneficiario}</span>
+                                </div>
+                                <div>
+                                    <span>Nombres:</span>
+                                    <span>${apellidoPaternoBeneficiario + ' ' + apellidoMaternoBeneficiario + ' ' + nombresBeneficiario }</span>
+                                </div>
+                                <div>
+                                    <span>Edad:</span>
+                                    <span>${aniosNacidoBeneficiario}</span>
+                                </div>                                
+                                <div>
+                                    <span>Tipo de Beneficio:</span>
+                                    <span>${tipoBeneficioBeneficiario}</span>
+                                </div>
+                                <div>
+                                    <span>Prioridad:</span>
+                                    <span>${prioridadBeneficiario == 1 ? 'primera' : 'segunda'}</span>
+                                </div>
+                                <div>
+                                    <span>Parentesco:</span>
+                                    <span>${parentescoBeneficiario}</span>
+                                </div>
+                                <div class="datos-salud">
+                                    <div>
+                                        <span>Talla:</span>
+                                        <span>${tallaBeneficiario ? tallaBeneficiario + 'cm'  : ''}</span>
+                                    </div>
+                                    <div>
+                                        <span>Peso:</span>
+                                        <span>${pesoBeneficiario ? pesoBeneficiario + 'kg' : ''}</span>
+                                    </div>
+                                    <div>
+                                        <span>Hmg:</span>
+                                        <span>${hmgBeneficiario ? hmgBeneficiario : ''}</span>
+                                    </div>
+                                </div>
+                                <div class="card-estado">
+                                    <span>Estado:</span>
+                                    <span class="estado estadoDetalle ${estadoAbreviatura === 'a' ? 'active' : 'inactive'}" >
+                                     ${estadoAbreviatura === "a" ? 'activo' : 'inactivo'}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        `
+                    })
+
+                    $("#beneficiarios").html(cardBeneficiario)
+                }
+
+                if (code === 500) {
+                    showErrorInternalServer(message, info)
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error('Error socios_CRUD.js: ', textStatus, errorThrown);
+            }
+        })
+
+
+        let modalVerBeneficiarios = $("#modalBeneficiariosSocio");
+
+
+        modalVerBeneficiarios.modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+
+        modalVerBeneficiarios.modal('show');
+    });
+
+    // Inhabilitar socio
+    $(document).off("click", "#btnInhabilitarSocio").on("click", "#btnInhabilitarSocio", function (e) {
+        e.preventDefault();
+        let fila = $(this).closest("tr");
+        let nombres = fila.find('td:eq(2)').text();
+
+        Swal.fire({
+            icon: "warning",
+            title: "¡Advertencia!",
+            text: "¿Seguro que desea inhabilitar al socio " + nombres + "?",
+            width: "350px",
+            showCancelButton: true,
+            confirmButtonColor: "#13252E",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sí",
+            cancelButtonText: "No"
+        }).then((result) => {
+            if (result.isConfirmed){
+                let fila = $(this).closest("tr");
+                let codSocio = Number(fila.find('td:eq(0)').text());
+                console.log(codSocio)
+
+                $.ajax({
+                    url: './controllers/socio/inhabilitar.php',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {codSocio},
+                    success: function (response) {
+                        console.log(response)
+                        const {code, message, info, data} = response;
+
+                        if (code === 200) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "¡Éxito!",
+                                text: message
+                            }).then(() => {
+                                listarSocios()
+                            });
+                        }
+
+                        if (code === 500) {
+                            showErrorInternalServer(message, info)
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('Error socios_CRUD.js: ', textStatus, errorThrown);
+                    }
+                })
+            }
+        });
+
+
+    });
+
+    // habilitar socio
+    $(document).off("click", "#btnHabilitarSocio").on("click", "#btnHabilitarSocio", function (e) {
+        e.preventDefault();
+        let fila = $(this).closest("tr");
+        let nombres = fila.find('td:eq(2)').text();
+
+        Swal.fire({
+            icon: "warning",
+            title: "¡Advertencia!",
+            text: "¿Seguro que desea habilitar al socio " + nombres + "?",
+            width: "350px",
+            showCancelButton: true,
+            confirmButtonColor: "#13252E",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sí",
+            cancelButtonText: "No"
+        }).then((result) => {
+            if (result.isConfirmed){
+                let fila = $(this).closest("tr");
+                let codSocio = Number(fila.find('td:eq(0)').text());
+                console.log(codSocio)
+
+                $.ajax({
+                    url: './controllers/socio/habilitar.php',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {codSocio},
+                    success: function (response) {
+                        console.log(response)
+                        const {code, message, info, data} = response;
+
+                        if (code === 200) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "¡Éxito!",
+                                text: message
+                            }).then(() => {
+                                listarSocios()
+                            });
+                        }
+
+                        if (code === 500) {
+                            showErrorInternalServer(message, info)
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('Error socios_CRUD.js: ', textStatus, errorThrown);
+                    }
+                })
+            }
+        });
+
+
+    });
+
+    $(document).off("input", "#dniSocioRegistro").on("input", "#dniSocioRegistro", function (e) {
+        if (optionSelected === 1) {
             $("#dniBeneficiarioRegistro").val($(this).val());
         }
     })
 
-    $(document).off("input", "#dniSocioRegistro").on("input", "#dniSocioRegistro", function(e) {
-        if (optionSelected === 1){
+    $(document).off("input", "#dniSocioRegistro").on("input", "#dniSocioRegistro", function (e) {
+        if (optionSelected === 1) {
             $("#dniBeneficiarioRegistro").val($(this).val());
         }
     })
 
-    $(document).off("input", "#nombresSocioRegistro").on("input", "#nombresSocioRegistro", function(e) {
-        if (optionSelected === 1){
+    $(document).off("input", "#nombresSocioRegistro").on("input", "#nombresSocioRegistro", function (e) {
+        if (optionSelected === 1) {
             $("#nombresBeneficiarioRegistro").val($(this).val());
         }
     })
 
-    $(document).off("input", "#apellidoPaternoSocioRegistro").on("input", "#apellidoPaternoSocioRegistro", function(e) {
-        if (optionSelected === 1){
+    $(document).off("input", "#apellidoPaternoSocioRegistro").on("input", "#apellidoPaternoSocioRegistro", function (e) {
+        if (optionSelected === 1) {
             $("#apellidoPaternoBeneficiarioRegistro").val($(this).val());
         }
     })
 
-    $(document).off("input", "#apellidoMaternoSocioRegistro").on("input", "#apellidoMaternoSocioRegistro", function(e) {
-        if (optionSelected === 1){
+    $(document).off("input", "#apellidoMaternoSocioRegistro").on("input", "#apellidoMaternoSocioRegistro", function (e) {
+        if (optionSelected === 1) {
             $("#apellidoMaternoBeneficiarioRegistro").val($(this).val());
         }
     })
 
-    $(document).off("input", "#sexoSocioRegistro").on("input", "#sexoSocioRegistro", function(e) {
-        if (optionSelected === 1){
+    $(document).off("input", "#sexoSocioRegistro").on("input", "#sexoSocioRegistro", function (e) {
+        if (optionSelected === 1) {
             $("#sexoBeneficiarioRegistro").val($(this).val());
         }
     })
 
-    $(document).off("input", "#telefonoSocioRegistro").on("input", "#telefonoSocioRegistro", function(e) {
-        if (optionSelected === 1){
+    $(document).off("input", "#telefonoSocioRegistro").on("input", "#telefonoSocioRegistro", function (e) {
+        if (optionSelected === 1) {
             $("#telefonoBeneficiarioRegistro").val($(this).val());
         }
     })
 
-    $(document).off("input", "#celularSocioRegistro").on("input", "#celularSocioRegistro", function(e) {
-        if (optionSelected === 1){
+    $(document).off("input", "#celularSocioRegistro").on("input", "#celularSocioRegistro", function (e) {
+        if (optionSelected === 1) {
             $("#celularBeneficiarioRegistro").val($(this).val());
         }
     })
 
-    $(document).off("input", "#fechaNacimientoSocioRegistro").on("input", "#fechaNacimientoSocioRegistro", function(e) {
+    $(document).off("input", "#fechaNacimientoSocioRegistro").on("input", "#fechaNacimientoSocioRegistro", function (e) {
 
         let edad = calcularEdad($(this).val(), fechaActual)
         $("#edadSocioRegistro").val(edad);
 
-        if (optionSelected === 1){
+        if (optionSelected === 1) {
             $("#fechaNacimientoBeneficiarioRegistro").val($(this).val());
             $("#edadBeneficiarioRegistro").val($("#edadSocioRegistro").val());
         }
     })
 
-    $(document).off("input", "#cboSectorZonaRegistroSocio").on("input", "#cboSectorZonaRegistroSocio", function(e) {
-        if (optionSelected === 1){
+    // calcular edad para editar un socio
+    $(document).off("input", "#fechaNacimientoSocioEditar").on("input", "#fechaNacimientoSocioEditar", function (e) {
+        let edad = calcularEdad($(this).val(), fechaActual)
+        console.log(edad)
+        if (edad >= 18) {
+            $("#edadSocioEditar").val(edad);
+        } else {
+            Swal.fire({
+                title: "¡Advertencia!",
+                text: 'Edad no válida, el socio debe ser mayor de edad',
+                icon: "warning",
+                width: "350px",
+                confirmButtonColor: "#13252E",
+            });
+
+            $("#fechaNacimientoSocioEditar").val(fechaNacimientoActual)
+            $("#edadSocioEditar").val(edadActual)
+        }
+    })
+
+    $(document).off("input", "#cboSectorZonaRegistroSocio").on("input", "#cboSectorZonaRegistroSocio", function (e) {
+        if (optionSelected === 1) {
             $("#cboSectorZonaRegistroBeneficiario").val($(this).val());
         }
     })
 
-    $(document).off("input", "#direccionSocioRegistro").on("input", "#direccionSocioRegistro", function(e) {
-        if (optionSelected === 1){
+    $(document).off("input", "#direccionSocioRegistro").on("input", "#direccionSocioRegistro", function (e) {
+        if (optionSelected === 1) {
             $("#direccionBeneficiarioRegistro").val($(this).val());
         }
     })
 
-    $(document).off("input", "#numeroFincaSocioRegistro").on("input", "#numeroFincaSocioRegistro", function(e) {
-        if (optionSelected === 1){
+    $(document).off("input", "#numeroFincaSocioRegistro").on("input", "#numeroFincaSocioRegistro", function (e) {
+        if (optionSelected === 1) {
             $("#numeroFincaBeneficiarioRegistro").val($(this).val());
         }
     })
@@ -206,7 +747,7 @@ $(document).ready(function () {
         optionSelected = $(this).val();
         optionSelected = Number(optionSelected)
 
-        if(optionSelected === 0){ // no es socio y beneficiario
+        if (optionSelected === 0) { // no es socio y beneficiario
             llenarCboTiposBeneficioBeneficiario()
 
             //     Ocultar inputs de madres
@@ -246,7 +787,7 @@ $(document).ready(function () {
             $("#cboParentescoRegistroBeneficiario").prop("disabled", false).removeClass("colorDisable")
 
 
-        }else{ // es socio y beneficiario
+        } else { // es socio y beneficiario
             llenarCboTiposBeneficioSocio()
 
             // duplicar campos de socio a beneficiario
@@ -262,7 +803,7 @@ $(document).ready(function () {
             $("#cboSectorZonaRegistroBeneficiario").val($("#cboSectorZonaRegistroSocio").val());
             $("#direccionBeneficiarioRegistro").val($("#direccionSocioRegistro").val());
             $("#numeroFincaBeneficiarioRegistro").val($("#numeroFincaSocioRegistro").val());
-            $("#cboParentescoRegistroBeneficiario option").each(function() {
+            $("#cboParentescoRegistroBeneficiario option").each(function () {
                 if ($(this).text() === "socio" || $(this).text() === "Socio") {
                     $(this).prop("selected", true);
                 }
@@ -283,7 +824,7 @@ $(document).ready(function () {
             $("#numeroFincaBeneficiarioRegistro").prop("disabled", true).addClass("colorDisable")
             $("#cboParentescoRegistroBeneficiario").prop("disabled", true).addClass("colorDisable")
 
-        //     Ocultar inputs de madres
+            //     Ocultar inputs de madres
             $(".boxFum").prop("hidden", true)
             $(".boxFechaProbableParto").prop("hidden", true)
 
@@ -291,12 +832,12 @@ $(document).ready(function () {
             $(".boxFechaFin").prop("hidden", true)
         }
 
-    // });
+        // });
     });
 
-    function llenarCboTiposBeneficioSocio(){
-        if (tiposBeneficio.length == 0){
-            $("#cboTipoBeneficioRegistroBeneficiario option").each( function () {
+    function llenarCboTiposBeneficioSocio() {
+        if (tiposBeneficio.length == 0) {
+            $("#cboTipoBeneficioRegistroBeneficiario option").each(function () {
                 tiposBeneficio.push({value: $(this).val(), text: $(this).text()});
             })
         }
@@ -313,57 +854,57 @@ $(document).ready(function () {
     }
 
 
-    function llenarCboTiposBeneficioBeneficiario(){
-        if (tiposBeneficio.length == 0){
-            $("#cboTipoBeneficioRegistroBeneficiario option").each( function () {
+    function llenarCboTiposBeneficioBeneficiario() {
+        if (tiposBeneficio.length == 0) {
+            $("#cboTipoBeneficioRegistroBeneficiario option").each(function () {
                 tiposBeneficio.push({value: $(this).val(), text: $(this).text()});
             })
         }
-    //
-    //     const optionsBeneficiario = tiposBeneficio.filter(tipo => {
-    //         console.log(!tipo.text.includes('madre'))
-    //         return !tipo.text.includes('madre') && !tipo.text.includes('adulto')
-    //     })
-    //
-    //     let optionsSelect = optionsBeneficiario.map(option => {
+        //
+        //     const optionsBeneficiario = tiposBeneficio.filter(tipo => {
+        //         console.log(!tipo.text.includes('madre'))
+        //         return !tipo.text.includes('madre') && !tipo.text.includes('adulto')
+        //     })
+        //
+        //     let optionsSelect = optionsBeneficiario.map(option => {
         let optionsSelect = tiposBeneficio.map(option => {
             return `<option value="${option.value}">${option.text}</option>`
         })
-    //
+        //
         $("#cboTipoBeneficioRegistroBeneficiario").html(optionsSelect)
     }
 
-    $(document).off("input", "#fechaNacimientoBeneficiarioRegistro").on("input", "#fechaNacimientoBeneficiarioRegistro", function(e) {
+    $(document).off("input", "#fechaNacimientoBeneficiarioRegistro").on("input", "#fechaNacimientoBeneficiarioRegistro", function (e) {
         let edad = calcularEdad($(this).val(), fechaActual)
         $("#edadBeneficiarioRegistro").val(edad);
     })
 
-    $(document).on('selectTiposBeneficioLlenado', function() {
+    $(document).on('selectTiposBeneficioLlenado', function () {
         llenarCboTiposBeneficioBeneficiario();
     });
 
     // Mostrar inputs en base al Tipo de beneficio (madre gestante y madre lactante)
-    $(document).off("input", "#cboTipoBeneficioRegistroBeneficiario").on("input", "#cboTipoBeneficioRegistroBeneficiario", function(e) {
+    $(document).off("input", "#cboTipoBeneficioRegistroBeneficiario").on("input", "#cboTipoBeneficioRegistroBeneficiario", function (e) {
         let optionBeneficio = $(this).find("option:selected").text();
 
-        if (optionBeneficio.includes("gestante")){
+        if (optionBeneficio.includes("gestante")) {
             $("#fumBeneficiarioRegistro").val('')
             $("#fechaProbableDePartoBeneficiarioRegistro").val('')
 
             $(".boxFum").prop("hidden", false)
             $(".boxFechaProbableParto").prop("hidden", false)
-        }else{
+        } else {
             $(".boxFum").prop("hidden", true)
             $(".boxFechaProbableParto").prop("hidden", true)
         }
 
-        if (optionBeneficio.includes("lactante")){
+        if (optionBeneficio.includes("lactante")) {
             $("#fechaPartoBeneficiarioRegistro").val('')
             $("#fechaFinBeneficiarioRegistro").val('')
 
             $(".boxFechaParto").prop("hidden", false)
             $(".boxFechaFin").prop("hidden", false)
-        }else{
+        } else {
             $(".boxFechaParto").prop("hidden", true)
             $(".boxFechaFin").prop("hidden", true)
         }
@@ -371,12 +912,12 @@ $(document).ready(function () {
 
 
     // cambiar fecha de parto probable
-    $(document).off("change", "#fumBeneficiarioRegistro").on("change", "#fumBeneficiarioRegistro", function(e) {
+    $(document).off("change", "#fumBeneficiarioRegistro").on("change", "#fumBeneficiarioRegistro", function (e) {
         calculateFechaProbableParto()
     })
 
     // cambiar fecha de fin de madre lactante
-    $(document).off("change", "#fechaPartoBeneficiarioRegistro").on("change", "#fechaPartoBeneficiarioRegistro", function(e) {
+    $(document).off("change", "#fechaPartoBeneficiarioRegistro").on("change", "#fechaPartoBeneficiarioRegistro", function (e) {
         calculateFechaFinMadreLactante()
     })
 
@@ -412,7 +953,7 @@ $(document).ready(function () {
     }
 
 //     agregar beneficiarios al detalle
-    $(document).off("click", "#btnAgregarBeneficiario").on("click", "#btnAgregarBeneficiario", function(e) {
+    $(document).off("click", "#btnAgregarBeneficiario").on("click", "#btnAgregarBeneficiario", function (e) {
         let dni = $("#dniBeneficiarioRegistro").val();
         let nombres = $("#nombresBeneficiarioRegistro").val();
         let apellidoPaterno = $("#apellidoPaternoBeneficiarioRegistro").val();
@@ -443,14 +984,16 @@ $(document).ready(function () {
         let talla = $("#tallaBeneficiarioRegistro").val();
         let hmg = $("#hmgBeneficiarioRegistro").val();
 
-        if(losCamposBeneficiarioSonValidos(dni, nombres, apellidoMaterno, apellidoPaterno, sexo, telefono, celular,
-                fechaNacimiento, edad, sectorYZona, direccion, numeroFinca, parentesco, tipoBeneficio, tipoBeneficioTexto,
-                fechaUltimaMestruacion, fechaProbableParto, fechaParto, fechaFinLactancia, peso, talla, hmg, asociacion)){
+        if (losCamposBeneficiarioSonValidos(dni, nombres, apellidoMaterno, apellidoPaterno, sexo, telefono, celular,
+            fechaNacimiento, edad, sectorYZona, direccion, numeroFinca, parentesco, tipoBeneficio, tipoBeneficioTexto,
+            fechaUltimaMestruacion, fechaProbableParto, fechaParto, fechaFinLactancia, peso, talla, hmg, asociacion)) {
 
-            beneficiarios = [...beneficiarios, {dni, nombres, apellidoPaterno, apellidoMaterno, sexo, telefono, celular,
-            fechaNacimiento, edad, sectorYZona, direccion, numeroFinca, parentesco, parentescoTexto,
-            tipoBeneficio, tipoBeneficioTexto, fechaUltimaMestruacion, fechaProbableParto, fechaParto,
-            fechaFinLactancia, peso, talla, hmg}]
+            beneficiarios = [...beneficiarios, {
+                dni, nombres, apellidoPaterno, apellidoMaterno, sexo, telefono, celular,
+                fechaNacimiento, edad, sectorYZona, direccion, numeroFinca, parentesco, parentescoTexto,
+                tipoBeneficio, tipoBeneficioTexto, fechaUltimaMestruacion, fechaProbableParto, fechaParto,
+                fechaFinLactancia, peso, talla, hmg
+            }]
 
             limpiarFormularioBeneficiario()
 
@@ -488,10 +1031,12 @@ $(document).ready(function () {
 
     function mostrarDatosDetalleBeneficiarios() {
         let detalleBeneficiarios = beneficiarios.map(beneficiario => {
-            const {nombres, apellidoPaterno, apellidoMaterno, dni, edad,
-                tipoBeneficioTexto, parentescoTexto, peso, talla, hmg } = beneficiario
+            const {
+                nombres, apellidoPaterno, apellidoMaterno, dni, edad,
+                tipoBeneficioTexto, parentescoTexto, peso, talla, hmg
+            } = beneficiario
 
-            if (parentescoTexto === 'socio' || parentescoTexto === 'Socio'){
+            if (parentescoTexto === 'socio' || parentescoTexto === 'Socio') {
                 // Deshabilitar campos del formulario de SOCIO
                 $("#dniSocioRegistro").prop("disabled", true).addClass("colorDisable")
                 $("#nombresSocioRegistro").prop("disabled", true).addClass("colorDisable")
@@ -531,7 +1076,7 @@ $(document).ready(function () {
                 $(".boxFechaParto").prop("hidden", true)
                 $(".boxFechaFin").prop("hidden", true)
 
-            //     mostrar tipos de beneficio para beneficiario
+                //     mostrar tipos de beneficio para beneficiario
                 llenarCboTiposBeneficioBeneficiario()
 
             }
@@ -542,8 +1087,8 @@ $(document).ready(function () {
                 <td>${edad}</td>
                 <td>${tipoBeneficioTexto}</td>
                 <td>${parentescoTexto}</td>
-                <td>${peso!=''? peso + 'kg' : ''}</td>
-                <td>${talla!=''? talla + 'cm' : ''}</td>                                                        
+                <td>${peso != '' ? peso + 'kg' : ''}</td>
+                <td>${talla != '' ? talla + 'cm' : ''}</td>                                                        
                 <td>${hmg}</td>
                 <td>
                     <div class="actions actionsDetalleBeneficiario">                            
@@ -559,11 +1104,10 @@ $(document).ready(function () {
 
 
     function losCamposSocioSonValidos(dni, nombres, apellidoPaterno, apellidoMaterno, sexo, telefono, celular,
-                                      fechaNacimiento, edad, sectorYZona, direccion, numeroFinca, asociacion)
-    {
+                                      fechaNacimiento, edad, sectorYZona, direccion, numeroFinca, asociacion) {
 
         if (dni === '' || nombres === '' || apellidoMaterno === '' || apellidoPaterno === '' || sexo == '' || sexo == 0 || fechaNacimiento === '' ||
-            sectorYZona == '' || sectorYZona == 0 || direccion === '' || asociacion === '' || asociacion == 0){
+            sectorYZona == '' || sectorYZona == 0 || direccion === '' || asociacion === '' || asociacion == 0) {
 
             Swal.fire({
                 title: "¡Advertencia!",
@@ -575,7 +1119,7 @@ $(document).ready(function () {
             return false;
         }
 
-        if (edad < 18 || edad > 150){
+        if (edad < 18 || edad > 150) {
             Swal.fire({
                 title: "¡Advertencia!",
                 text: 'El socio debe ser mayor de edad.',
@@ -595,9 +1139,8 @@ $(document).ready(function () {
                                              fechaParto, fechaFinMadreLactante, peso, talla, hmg, asociacion) {
 
 
-
-        if (tipoBeneficioTexto.includes("0") && tipoBeneficioTexto.includes("6")){
-            if (edad > 6 || edad < 0){
+        if (tipoBeneficioTexto.includes("0") && tipoBeneficioTexto.includes("6")) {
+            if (edad > 6 || edad < 0) {
                 Swal.fire({
                     title: "¡Advertencia!",
                     text: 'Edad incorrecta para el tipo de beneficio: ' + tipoBeneficioTexto,
@@ -609,8 +1152,8 @@ $(document).ready(function () {
             }
         }
 
-        if (tipoBeneficioTexto.includes("7") && tipoBeneficioTexto.includes("13")){
-            if (edad > 13 || edad < 7){
+        if (tipoBeneficioTexto.includes("7") && tipoBeneficioTexto.includes("13")) {
+            if (edad > 13 || edad < 7) {
                 Swal.fire({
                     title: "¡Advertencia!",
                     text: 'Edad incorrecta para el tipo de beneficio: ' + tipoBeneficioTexto,
@@ -622,8 +1165,8 @@ $(document).ready(function () {
             }
         }
 
-        if (tipoBeneficioTexto.includes("mayor")){
-            if (edad < 65){
+        if (tipoBeneficioTexto.includes("mayor")) {
+            if (edad < 65) {
                 Swal.fire({
                     title: "¡Advertencia!",
                     text: 'Edad incorrecta para el tipo de beneficio: ' + tipoBeneficioTexto,
@@ -635,7 +1178,7 @@ $(document).ready(function () {
             }
         }
 
-        if (optionSelected === 1 && edad < 18){
+        if (optionSelected === 1 && edad < 18) {
             Swal.fire({
                 title: "¡Advertencia!",
                 text: 'El socio debe ser mayor de edad',
@@ -646,7 +1189,7 @@ $(document).ready(function () {
             return false;
         }
 
-        if (optionSelected === 1 && (asociacion === '' || asociacion == 0)){
+        if (optionSelected === 1 && (asociacion === '' || asociacion == 0)) {
             Swal.fire({
                 title: "¡Advertencia!",
                 text: 'Campos incompletos, debe seleccionar el club de madre',
@@ -660,47 +1203,66 @@ $(document).ready(function () {
 
         if (dni === '' || nombres === '' || apellidoMaterno === '' || apellidoPaterno === '' || sexo == '' || sexo == 0 || fechaNacimiento === '' ||
             sectorYZona == '' || sectorYZona == 0 || direccion === '' || parentesco == '' || parentesco == 0 || tipoBeneficio == '' ||
-            tipoBeneficio == 0){
+            tipoBeneficio == 0) {
 
 
-                if (tipoBeneficioTexto.includes('gestante')){
-                    if (fechaUltimaMestruacion === '' || fechaProbableParto === ''){
-                        Swal.fire({
-                            title: "¡Advertencia!",
-                            text: 'Campos incompletos, debe ingresar la fecha de FUM',
-                            icon: "warning",
-                            width: "350px",
-                            confirmButtonColor: "#13252E",
-                        });
-                        return false;
-                    }
-                }
-
-                if (tipoBeneficioTexto.includes('lactante')){
-                    if (fechaParto === '' || fechaFinMadreLactante === ''){
-                        Swal.fire({
-                            title: "¡Advertencia!",
-                            text: 'Campos incompletos, debe ingresar la fecha de parto',
-                            icon: "warning",
-                            width: "350px",
-                            confirmButtonColor: "#13252E",
-                        });
-                        return false;
-                    }
-                }
-
+            if (tipoBeneficioTexto.includes('gestante')) {
+                if (fechaUltimaMestruacion === '' || fechaProbableParto === '') {
                     Swal.fire({
                         title: "¡Advertencia!",
-                        text: 'Campos incompletos, debe ingresar los datos obligatorios del beneficiario',
+                        text: 'Campos incompletos, debe ingresar la fecha de FUM',
                         icon: "warning",
                         width: "350px",
                         confirmButtonColor: "#13252E",
                     });
                     return false;
+                }
+            }
+
+            if (tipoBeneficioTexto.includes('lactante')) {
+                if (fechaParto === '' || fechaFinMadreLactante === '') {
+                    Swal.fire({
+                        title: "¡Advertencia!",
+                        text: 'Campos incompletos, debe ingresar la fecha de parto',
+                        icon: "warning",
+                        width: "350px",
+                        confirmButtonColor: "#13252E",
+                    });
+                    return false;
+                }
+            }
+
+            Swal.fire({
+                title: "¡Advertencia!",
+                text: 'Campos incompletos, debe ingresar los datos obligatorios del beneficiario',
+                icon: "warning",
+                width: "350px",
+                confirmButtonColor: "#13252E",
+            });
+            return false;
         }
 
         return true;
     }
+
+    // Filtrar por dni o nombre
+    $(document).off("input", "#btnDNIApellidosFiltroSocio").on("input", "#btnDNIApellidosFiltroSocio", function (e) {
+        dniOApellidosNombres = $(this).val();
+        listarSocios(dniOApellidosNombres, codAsociacion)
+    });
+
+    // Filtrar por sector
+    $(document).off("input", "#cboClubDeMadresFiltroSocio").on("input", "#cboClubDeMadresFiltroSocio", function (e) {
+        codAsociacion = $(this).val();
+        if (codAsociacion === 0 || codAsociacion === '0') {
+            codAsociacion = undefined
+        } else {
+            codAsociacion = parseInt(codAsociacion)
+        }
+
+        listarSocios(dniOApellidosNombres, codAsociacion)
+    });
+
 
     function showErrorInternalServer(message, info) {
         Swal.fire({
@@ -712,14 +1274,25 @@ $(document).ready(function () {
         });
     }
 
-    function showSuccessAlert(message){
+    function showSuccessAlert(message) {
         Swal.fire({
             icon: "success",
             title: "Registro Exitoso",
             text: message
         }).then(() => {
             $('#modalRegistrarSocioYBeneficiarios').modal('hide');
-            // listarReconocimientos(documento, codAsociacion)
+            listarSocios()
+        });
+    }
+
+    function showSuccessAlertUpdate(message) {
+        Swal.fire({
+            icon: "success",
+            title: "Actualización Exitoso",
+            text: message
+        }).then(() => {
+            $('#modalEditarSocio').modal('hide');
+            listarSocios();
         });
     }
 })

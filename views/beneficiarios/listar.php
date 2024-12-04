@@ -2,55 +2,45 @@
 require_once "../../config/parameters.php"
 ?>
 <div class="header_modules">
-    <h1>Lista de Socios</h1>
+    <h1>Lista de Beneficiarios</h1>
     <div class="filters_btn_new">
         <div class="filters">
-            <input id="btnDNIApellidosFiltroSocio" type="text" placeholder="Buscar por DNI ó apellidos y nombres">
+            <input type="text" placeholder="Buscar por DNI ó apellidos y nombres">
 
-            <select id="cboClubDeMadresFiltroSocio" class="form-select">
+            <select id="cboClubDeMadres" class="form-select">
             </select>
 
             <div class="container_clear_filters">
                 <img src="<?= base_url ?>/assets/icons/clearFilters.svg">
             </div>
         </div>
-
-        <a href="#" id="btnNuevoSocio" class="btn-nuevo-registro">
-            <img src="<?= base_url ?>/assets/icons/addRegister.svg">
-            Nuevo Socio
-        </a>
     </div>
 </div>
 
 <div class="containerTable">
-    <table class="tableSocios">
+    <table class="tableBeneficios">
         <thead>
         <tr>
-            <th>Cod Socio</th>
+            <th>Cod Beneficiario</th>
             <th>Nombres</th>
             <th>Edad</th>
             <th>DNI</th>
-            <th>Club de madre</th>
-            <th>Cargo</th>
-            <th>Fecha Inicio</th>
-            <th>Fecha Fin</th>
+            <th>Beneficio</th>
+            <th>Peso</th>
+            <th>Talla</th>
+            <th>Hmg</th>
             <th>Estado</th>
+            <th>Motivo Inhabilitacion</th>
             <th>Acciones</th>
         </tr>
         </thead>
-        <tbody id="listaSocios">
+        <tbody id="listaBeneficiarios">
         </tbody>
     </table>
 </div>
 
-<?php require_once "registro.php" ?>
-<?php require_once "editar.php" ?>
-<?php require_once "detalle.php" ?>
-<?php require_once "verBeneficiarios.php" ?>
-
 <script src="<?= base_url?>ajax/sectoresZona_llenarCboSectoresZona.js"></script>
 <script src="<?= base_url?>ajax/asociaciones_llenarCboAsocNuevaRecVencidoRecPendiente.js"></script>
-<script src="<?= base_url?>ajax/asociaciones_llenarCboAsocTodas.js"></script>
 <script src="<?= base_url?>ajax/parentescos_llenarCboParentescos.js"></script>
 <script src="<?= base_url?>ajax/tiposBeneficio_llenarCboTiposBeneficio.js"></script>
-<script src="<?= base_url?>ajax/socios_CRUD.js"></script>
+<script src="<?= base_url?>ajax/beneficiarios_CRUD.js"></script>

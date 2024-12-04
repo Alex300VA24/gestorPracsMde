@@ -5,13 +5,14 @@ $(document).ready(function () {
         dataType: 'json',
         success: function (response) {
             const {code, data} = response;
-            console.log(response)
             if (code === 200) {
                 let options = `<option value=0>Seleccionar</option>` +
                     data.map(({codAsociacion, nombreAsociacion}) => {
                         return `<option value="${codAsociacion}">${nombreAsociacion}</option>`
                     })
                 $('#cboClubDeMadresActivos').html(options);
+                $('#cboClubDeMadresActivosEditar').html(options);
+                $('#cboClubDeMadresActivosDetalle').html(options);
             }
 
             if (code === 500) {
@@ -20,7 +21,7 @@ $(document).ready(function () {
 
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            console.error('Error asociaciones_llenarCboAsocNuevaRecVencido.js: ', textStatus, errorThrown);
+            console.error('Error asociaciones_llenarCboAsocNuevaRecVencidoRecPendiente.js: ', textStatus, errorThrown);
         }
     })
 

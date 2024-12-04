@@ -14,6 +14,8 @@ $(document).ready(function () {
                 $('#cboSectoresZonas').html(options);
                 $('#cboSectoresZonasEdit').html(options)
                 $('#cboSectorZonaRegistroSocio').html(options)
+                $('#cboSectorZonaEditarSocio').html(options)
+                $('#cboSectorZonaDetalleSocio').html(options)
                 $('#cboSectorZonaRegistroBeneficiario').html(options)
             }
 

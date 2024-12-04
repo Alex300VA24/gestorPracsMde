@@ -21,7 +21,7 @@
         </div>
 
         <div>
-            <a href="#" class="option" id="optionTipoDocumentos">
+            <a href="views/beneficiarios/listar.php" class="option" id="optionTipoDocumentos">
                 <div class="containerIconOption">
                     <img src="<?=base_url?>/assets/icons/beneficiarios.svg" alt="">
                 </div>
