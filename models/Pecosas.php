@@ -9,6 +9,8 @@ class Pecosas{
     private string $observacion;
     private int $codEstado;
 
+    private array $detallesPecosa = [];
+
     public function getCodPecosa(): int{
         return $this->codPecosa;
     }
@@ -65,33 +67,46 @@ class Pecosas{
         $this->codEstado = $codEstado;
     }
 
-    public function guardarMovimientos(){
-        $sql = "EXEC sp_movimiento_registrar :codProducto, :codTipoMovimiento, :fechaMovimiento, :documento, :cantidad, :precioUnitario";
+    public function agregarDetallePecosa(DetallePecosa $detalle):void {
+        $this->detallePecosa[] = $detalle;
+    }
+
+    public function getDetallesPecosa(): array {
+        return $this->detallesPecosas;
+    }
+
+    public function guardarPecosa(){
+        $sql = "EXEC sp_movimiento_registrar :codAsociacion, :numeroPecosa, :codSocioPresidenta, :fechaReparto, :observacion, :codEstado, :detallesPecosa";
 
         try {
             $stmt = DataBase::connect()->prepare($sql);
-            $stmt->bindParam('codProducto',$this->codProducto, PDO::PARAM_INT);
-            $stmt->bindParam('codTipoMovimiento',$this->codTipoMovimiento, PDO::PARAM_INT);
-            $stmt->bindParam('fechaMovimiento',$this->fechaMovimiento, PDO::PARAM_STR);
-            $stmt->bindParam('documento',$this->documento, PDO::PARAM_STR);
-            $stmt->bindParam('cantidad',$this->cantidad, PDO::PARAM_INT);
-            $stmt->bindParam('precioUnitario',$this->precioUnitario, PDO::PARAM_STR); 
+
+            // Serializar los detalles como JSON o pasarlos como string formateado
+            $detallesJson = json_encode($this->detallesPecosa);
+
+            $stmt->bindParam('codAsociacion', $this->codAsociacion, PDO::PARAM_INT);
+            $stmt->bindParam('numeroPecosa', $this->numeroPecosa, PDO::PARAM_STR);
+            $stmt->bindParam('codSocioPresidenta', $this->codSocioPresidenta, PDO::PARAM_INT);
+            $stmt->bindParam('fechaReparto', $this->fechaReparto, PDO::PARAM_STR);
+            $stmt->bindParam('observacion', $this->observacion, PDO::PARAM_STR);
+            $stmt->bindParam('codEstado', $this->codEstado, PDO::PARAM_INT);
+            $stmt->bindParam('detallesPecosa', $detallesJson, PDO::PARAM_STR);
             $stmt->execute();
 
             if ($stmt->rowCount() > 0) {
                 return [
                     'status' => 'success',
                     'code' => 200,
-                    'message' => 'Movimiento registrado exitosamente',
+                    'message' => 'Pecosa registrado exitosamente',
                     'data' => [],
                 ];
             }else {
                 return [
                     'status' => 'failed',
                     'code' => 400,
-                    'message' => 'No se pudo registrar el movimiento, verifica los datos',
-                    'action' => 'guardarMovimiento',
-                    'module' => 'movimiento',
+                    'message' => 'No se pudo registrar la pecosa, verifica los datos',
+                    'action' => 'guardarPecosa',
+                    'module' => 'pecosas',
                     'data' => [],
                 ];
             }
@@ -100,9 +115,9 @@ class Pecosas{
             return [
                 'status' => 'failed',
                 'code' => 500,
-                'message' => 'Ocurrio un error al momento de guardar los movimientos',
-                'action' => 'guardarMovimiento',
-                'module' => 'movimiento',
+                'message' => 'Ocurrio un error al momento de guardar la pecosa',
+                'action' => 'guardarPecosa',
+                'module' => 'pecosas',
                 'data' => [],
                 'info' => $e->getMessage()
             ]; 

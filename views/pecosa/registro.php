@@ -102,7 +102,7 @@
                                     <label for="cantidad">Cantidad (*):</label>
                                     <input 
                                         type="number" 
-                                        id="fechaReparto" 
+                                        id="cantidad" 
                                         autocomplete="off"
                                         maxlength="100"
                                     >
@@ -136,7 +136,7 @@
                             <h2>Detalle de Pecosa</h2>
                         </div>
                         <div class="containerTable">
-                            <table class="tableProductos">
+                            <table class="tableProductos" id="tableProductosDetalles">
                                 <thead>
                                     <tr>
                                         <th>CodProducto</th>
