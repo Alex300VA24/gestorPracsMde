@@ -211,6 +211,8 @@ $(document).ready(function () {
                     dataType: 'json',
                     data: { codMovimiento },
                     success: function(response) {
+                        //console.log(response);
+                        //return
                         const { code, message, info } = response;
 
                         if (code === 200) {

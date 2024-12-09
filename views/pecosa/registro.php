@@ -36,6 +36,12 @@
                                         autocomplete="off"
                                         maxlength="100"
                                     >
+                                    <input 
+                                        type="text" 
+                                        id="codSocioPresidenta" 
+                                        autocomplete="off"
+                                        maxlength="100"
+                                    >
                                 </div>
 
                                 <div class="two-column mt-2">

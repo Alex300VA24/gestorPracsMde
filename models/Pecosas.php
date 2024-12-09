@@ -4,8 +4,8 @@ class Pecosas{
     private int $codPecosa;
     private int $codAsociacion;
     private string $numeroPecosa;
-    private int $codPresidenta;
-    private string $fechaRegistro;
+    private int $codSocioPresidenta;
+    private string $fechaReparto;
     private string $observacion;
     private int $codEstado;
 
@@ -35,20 +35,20 @@ class Pecosas{
         $this->numeroPecosa = $numeroPecosa;
     }
 
-    public function getCodPresidenta(): int{
-        return $this->codPresidenta;
+    public function getCodSocioPresidenta(): int{
+        return $this->codSocioPresidenta;
     }
 
-    public function setCodPresidenta(int $codPresidenta): void{
-        $this->codPresidenta = $codPresidenta;
+    public function setCodSocioPresidenta(int $codSocioPresidenta): void{
+        $this->codSocioPresidenta = $codSocioPresidenta;
     }
 
-    public function getFechaRegistro(): string{
-        return $this->fechaRegistro;
+    public function getFechaReparto(): string{
+        return $this->fechaReparto;
     }
 
-    public function setFechaRegistro(string $fechaRegistro): void{
-        $this->fechaRegistro = $fechaRegistro;
+    public function setFechaReparto(string $fechaReparto): void{
+        $this->fechaReparto = $fechaReparto;
     }
 
     public function getObservacion(): string{
@@ -76,13 +76,13 @@ class Pecosas{
     }
 
     public function guardarPecosa(){
-        $sql = "EXEC sp_movimiento_registrar :codAsociacion, :numeroPecosa, :codSocioPresidenta, :fechaReparto, :observacion, :codEstado, :detallesPecosa";
+        $sql = "EXEC sp_pecosa_registrar :codAsociacion, :numeroPecosa, :codSocioPresidenta, :fechaReparto, :observacion, :codEstado";
 
         try {
             $stmt = DataBase::connect()->prepare($sql);
 
             // Serializar los detalles como JSON o pasarlos como string formateado
-            $detallesJson = json_encode($this->detallesPecosa);
+            //$detallesJson = json_encode($this->detallesPecosa);
 
             $stmt->bindParam('codAsociacion', $this->codAsociacion, PDO::PARAM_INT);
             $stmt->bindParam('numeroPecosa', $this->numeroPecosa, PDO::PARAM_STR);
@@ -90,7 +90,7 @@ class Pecosas{
             $stmt->bindParam('fechaReparto', $this->fechaReparto, PDO::PARAM_STR);
             $stmt->bindParam('observacion', $this->observacion, PDO::PARAM_STR);
             $stmt->bindParam('codEstado', $this->codEstado, PDO::PARAM_INT);
-            $stmt->bindParam('detallesPecosa', $detallesJson, PDO::PARAM_STR);
+            //$stmt->bindParam('detallesPecosa', $detallesJson, PDO::PARAM_STR);
             $stmt->execute();
 
             if ($stmt->rowCount() > 0) {

@@ -49,7 +49,6 @@
                             <label for="tipoMovimiento">Tipo Movimiento (*):</label>
                             <select id="cboTipoMovimiento" class="form-select">
                                 <option value=1>Ingreso</option>
-                                <option value=2>Salida</option>
                             </select>
                     </div>
 

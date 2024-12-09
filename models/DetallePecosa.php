@@ -73,4 +73,52 @@ class DetallePecosa {
     public function setPrecioUnitario(float $precioUnitario): void {
         $this->precioUnitario = $precioUnitario;
     }
+
+    public function guardarDetallePecosa(){
+        $sql = "EXEC sp_detallePecosa_guardar :codProducto, :prioridad, :fechaDesde, :fechaHasta, :cantidad, :precioUnitario";
+
+        try {
+            $stmt = DataBase::connect()->prepare($sql);
+
+            $stmt->bindParam('codProducto', $this->codProducto, PDO::PARAM_INT);
+            $stmt->bindParam('prioridad', $this->prioridad, PDO::PARAM_INT);
+            $stmt->bindParam('fechaDesde', $this->fechaDesde, PDO::PARAM_STR);
+            $stmt->bindParam('fechaHasta', $this->fechaHasta, PDO::PARAM_STR);
+            $stmt->bindParam('cantidad', $this->cantidad, PDO::PARAM_INT);
+            $stmt->bindParam('precioUnitario', $this->precioUnitario, PDO::PARAM_STR);
+            $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+                return [
+                    'status' => 'success',
+                    'code' => 200,
+                    'message' => 'Detalle Pecosa registrado exitosamente',
+                    'data' => [],
+                ];
+            }else {
+                return [
+                    'status' => 'failed',
+                    'code' => 400,
+                    'message' => 'No se pudo registrar el detalle pecosa, verifica los datos',
+                    'action' => 'guardarDetallePecosa',
+                    'module' => 'detallepecosas',
+                    'data' => [],
+                ];
+            }
+
+        }catch (PDOException $e) {
+            return [
+                'status' => 'failed',
+                'code' => 500,
+                'message' => 'Ocurrio un error al momento de guardar el detalle pecosa',
+                'action' => 'guardarDetallePecosa',
+                'module' => 'detallepecosas',
+                'data' => [],
+                'info' => $e->getMessage()
+            ]; 
+        }
+
+
+    }
+    
 }
