@@ -12,6 +12,7 @@ $(document).ready(function () {
                         return `<option value="${parentesco.codParentesco}">${parentesco.descripcion}</option>`
                     })
                 $('#cboParentescoRegistroBeneficiario').html(options);
+                $('#cboParentescoNuevoRegistroBeneficiario').html(options);
             }
 
             if (code === 500) {

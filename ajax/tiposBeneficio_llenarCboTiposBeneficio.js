@@ -13,6 +13,7 @@ $(document).ready(function () {
                         return `<option value="${tipoBeneficio.codTipoBeneficio}">${tipoBeneficio.descripcion}</option>`
                     })
                 $('#cboTipoBeneficioRegistroBeneficiario').html(options);
+                $('#cboTipoBeneficioNuevoRegistroBeneficiario').html(options);
 
                 $(document).trigger('selectTiposBeneficioLlenado');
             }

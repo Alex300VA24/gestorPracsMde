@@ -48,8 +48,8 @@ BEGIN
   AND (@codAsociacion IS NULL OR s.codAsociacion = @codAsociacion)
   AND (
   (@edad_minima IS NULL OR p.aniosNacido >= @edad_minima)
-  AND (@edad_maxima IS NULL OR p.aniosNacido <= @edad_maxima)
-)
+  AND (@edad_maxima IS NULL OR p.aniosNacido <= @edad_maxima))
+  ORDER BY b.fechaRegistro DESC
 END
 GO
 

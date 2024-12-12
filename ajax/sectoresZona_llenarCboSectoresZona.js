@@ -17,6 +17,7 @@ $(document).ready(function () {
                 $('#cboSectorZonaEditarSocio').html(options)
                 $('#cboSectorZonaDetalleSocio').html(options)
                 $('#cboSectorZonaRegistroBeneficiario').html(options)
+                $('#cboSectorZonaNuevoRegistroBeneficiario').html(options)
             }
 
             if (code === 500) {
