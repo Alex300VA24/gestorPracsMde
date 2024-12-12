@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     $.ajax({
         url: './controllers/asociacion/listarAsociacionesActivas.php', 
         method: 'GET',
@@ -9,8 +8,8 @@ $(document).ready(function () {
 
             if (code === 200) {
                 let options = `<option value="0">Seleccionar</option>` +
-                    data.map(({codAsociacion, nombreAsociacion, presidenta}) => {
-                        return `<option value="${codAsociacion}" data-presidenta="${presidenta}">${nombreAsociacion}</option>`;
+                    data.map(({codAsociacion, nombreAsociacion, presidenta, codSocioPresidenta}) => {
+                        return `<option value="${codAsociacion}" data-presidenta="${presidenta}" data-codsociopresidenta="${codSocioPresidenta}">${nombreAsociacion}</option>`;
                     }).join('');
                 $('#cboClubMadres').html(options);
             }
@@ -28,7 +27,10 @@ $(document).ready(function () {
     $('#cboClubMadres').on('change', function () {
         const selectedOption = $(this).find(':selected'); // Obtén la opción seleccionada
         const presidenta = selectedOption.data('presidenta'); // Extrae el valor del atributo data-presidenta
+        const codSocioPresidenta = selectedOption.data('codsociopresidenta'); // Extrae el valor del atributo data-codsociopresidenta
+        
         $('#presidenta').val(presidenta || ''); // Coloca el nombre de la presidenta en el input, o vacío si no existe
+        $('#codSocioPresidenta').val(codSocioPresidenta || ''); // Coloca el codSocioPresidenta en el input correspondiente, o vacío si no existe
     });
 
     function showErrorInternalServer(message, info) {
@@ -41,3 +43,4 @@ $(document).ready(function () {
         });
     }
 });
+

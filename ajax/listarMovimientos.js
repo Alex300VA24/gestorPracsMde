@@ -33,10 +33,11 @@ $(document).ready(function () {
                                     <td hidden="hidden">${codTipoMovimiento}</td>
                                     <td hidden="hidden">${descripcionTipoMov}</td>
 
-                                    <td>
+                                    <td> 
                                         <div class="actions actions_productos">
                              
                                 <img id="btnEditarMovimiento" class="action" src="./assets/icons/action_edit.svg">
+                                <img id="btnEliminarMovimiento" class="action" src="./assets/icons/action_delete.svg">
                                         </div>
                                     </td>
                                 </tr>
@@ -186,6 +187,58 @@ $(document).ready(function () {
             })
         }
     })
+
+    // Evento para eliminar un movimiento
+    $(document).off("click", "#btnEliminarMovimiento").on("click", "#btnEliminarMovimiento", function(e) {
+        e.preventDefault();
+        let fila = $(this).closest("tr");
+        let codMovimiento = fila.find('td:eq(0)').text();
+
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Esta acción no se puede deshacer.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#13252E',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: './controllers/movimientos/eliminarMovimiento.php', // Archivo PHP para procesar la eliminación
+                    method: 'POST',
+                    dataType: 'json',
+                    data: { codMovimiento },
+                    success: function(response) {
+                        //console.log(response);
+                        //return
+                        const { code, message, info } = response;
+
+                        if (code === 200) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Eliminado",
+                                text: message,
+                                confirmButtonColor: "#13252E",
+                            }).then(() => {
+                                listarMovimientos(); // Actualiza la lista
+                            });
+                        }
+
+                        if (code === 500) {
+                            showErrorInternalServer(message, info);
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('Error al eliminar movimiento: ', textStatus, errorThrown);
+                    }
+                });
+            }
+        });
+    });
+
+
 
     $(document).off("input", "#productoFiltro").on("input", "#productoFiltro", function(e){
         producto = $(this).val();

@@ -234,6 +234,7 @@ CREATE TABLE Pecosas (
     codAsociacion INT NOT NULL,
     numeroPecosa VARCHAR(8),
     codSocioPresidenta INT NOT NULL,
+	fechaReparto DATETIME,
     fechaRegistro DATETIME DEFAULT GETDATE(),
     observacion VARCHAR(255),
     codEstado INT NOT NULL,

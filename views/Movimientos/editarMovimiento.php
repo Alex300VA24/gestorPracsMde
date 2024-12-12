@@ -34,6 +34,7 @@
                                 id="fechaMovimientoEdit" 
                                 autocomplete="off"
                                 maxlength="100"
+                                disabled
                                 >
                     </div>
 

@@ -140,7 +140,7 @@ class Movimientos{
     }
 
     public function actualizarMovimientos(){
-        $sql="sp_movimiento_actualizar :codMovimiento, :codProducto, :precioUnitario, :fechaMovimiento, :cantidad, :codTipoMovimiento";
+        $sql="sp_movimiento_actualizar :codMovimiento, :codProducto, :codTipoMovimiento, :fechaMovimiento, :cantidad, :precioUnitario";
 
         try{
             $stmt = DataBase::connect()->prepare($sql);
@@ -181,6 +181,46 @@ class Movimientos{
                 'info' => $e->getMessage()
             ];
         }
+    }
+
+    public function eliminarrMovimientos(){
+        $sql = "DELETE FROM movimientos WHERE codMovimiento = :codMovimiento";
+
+        try{
+            $stmt = DataBase::connect()->prepare($sql);
+            $stmt->bindParam('codMovimiento',$this->codMovimiento, PDO::PARAM_INT);
+            $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+                return [
+                    'status' => 'success',
+                    'code' => 200,
+                    'message' => 'Movimiento eliminado exitosamente',
+                    'data' => [],
+                ];
+            } else {
+                return [
+                    'status' => 'failed',
+                    'code' => 400,
+                    'message' => 'No se pudo eliminar el movimiento, verifica los datos',
+                    'action' => 'eliminarMovimiento',
+                    'module' => 'movimientos',
+                    'data' => [],
+                ];
+            }
+
+        }catch (PDOException $e){
+            return [
+                'status' => 'failed',
+                'code' => 500,
+                'message' => 'Ocurrio un error al momento de eliminar los movimientos',
+                'action' => 'eliminarMovimiento',
+                'module' => 'movimientos',
+                'data' => [],
+                'info' => $e->getMessage()
+            ];
+        }
+
     }
 
 

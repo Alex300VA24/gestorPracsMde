@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     let descripcionProducto
 
     function listarProductos(descripcion) {
@@ -189,8 +188,8 @@ $(document).ready(function () {
         listarProductos(descripcionProducto)
     });
 
-
     function isFiledsValid(descripcion, abreviatura, unidadMedida) {
+        const regexTexto = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
         
         if (descripcion === '' || abreviatura == '' || unidadMedida == '' || unidadMedida === 0) {
             Swal.fire({

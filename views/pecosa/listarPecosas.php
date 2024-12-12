@@ -30,7 +30,7 @@
             <thead>
                 <tr>
                     <th>CodPecosa</th>
-                    <th>Comite</th>
+                    <th>Club de madre</th>
                     <th>Presidenta</th>
                     <th>Observacion</th>
                     <th>Acciones</th>
@@ -55,5 +55,6 @@
 <?php  require_once "registro.php"?>
 
 <script src="<?= base_url?>ajax/listarPecosas.js"></script>
+<script src="<?= base_url?>ajax/detallePecosa.js"></script>
 <script src="<?= base_url?>ajax/asociaciones_llenarCboAsocActivas.js"></script>
 <script src="<?= base_url?>ajax/productos_llenarCboProducto.js"></script>

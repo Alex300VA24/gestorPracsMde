@@ -16,8 +16,8 @@ $movimientosObj->setFechaMovimiento($fechaMovimiento);
 $movimientosObj->setCantidad($cantidad);
 $movimientosObj->setPrecioUnitario($precioUnitario);
 
-
 $response = $movimientosObj->guardarMovimientos();
 
 print json_encode($response);
+
 //print json_encode([$codProducto, $codTipoMovimiento, $fechaMovimiento, $cantidad, $precioUnitario]);

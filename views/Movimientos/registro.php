@@ -15,10 +15,12 @@
                     <div class="two-column">
                         <label for="precioUnitario">Precio Unitario (*):</label>
                         <input 
-                                type="text" 
+                                type="number" 
                                 id="precioUnitario" 
+                                step="0.01"
+                                min="0"
                                 autocomplete="off"
-                                maxlength="100"
+                                required
                                 >
                     </div>
                 
@@ -36,7 +38,7 @@
                     <div class="two-column">
                         <label for="cantidad">Cantidad (*):</label>
                         <input 
-                                type="text" 
+                                type="number" 
                                 id="cantidad" 
                                 autocomplete="off"
                                 maxlength="100"
@@ -47,7 +49,6 @@
                             <label for="tipoMovimiento">Tipo Movimiento (*):</label>
                             <select id="cboTipoMovimiento" class="form-select">
                                 <option value=1>Ingreso</option>
-                                <option value=2>Salida</option>
                             </select>
                     </div>
 
