@@ -40,14 +40,14 @@ $(document).ready(function () {
                                         <div class="actions actions_asociaciones">
                                         
                                             ${abreviatura == 'i' ?
-                                `<img class="action action_habilitar" src="./assets/icons/action_habilitar.svg">` : ''}
+                                `<img id="btnHabilitarAsociacion" class="action action_habilitar" src="./assets/icons/action_habilitar.svg">` : ''}
                                             
                                             ${(abreviatura == 'a' || abreviatura == 'pr') ?
                                 `<img id="btnEditarAsociacion" class="action" src="./assets/icons/action_edit.svg">` : ''}    
                                             
                                             ${abreviatura == 'a' ?
                                 `<img id="btnDetalleAsociacion" class="action" src="./assets/icons/action_ver_detalle.svg">
-                                            <img class="action" src="./assets/icons/action_deshabilitar.svg">` : ''}                                            
+                                            <img id="btnDeshabilitarAsociacion" class="action" src="./assets/icons/action_deshabilitar.svg">` : ''}                                            
                                         </div>
                                     </td>
                                     <td hidden="hidden">${numeroFinca}</td>
@@ -201,6 +201,116 @@ $(document).ready(function () {
             })
         }
     })
+
+    // Deshabilitar una asociación
+    $(document).off("click", "#btnDeshabilitarAsociacion").on("click", "#btnDeshabilitarAsociacion", function (e) {
+        e.preventDefault();
+        let fila = $(this).closest("tr");
+        let nombres = fila.find('td:eq(2)').text();
+
+        Swal.fire({
+            icon: "warning",
+            title: "¡Advertencia!",
+            text: "¿Seguro que desea inhabilitar a la asociación " + nombres + "?",
+            width: "350px",
+            showCancelButton: true,
+            confirmButtonColor: "#13252E",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sí",
+            cancelButtonText: "No"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let fila = $(this).closest("tr");
+                let codAsociacion = Number(fila.find('td:eq(1)').text());
+                console.log(codAsociacion);
+
+                $.ajax({
+                    url: './controllers/asociacion/inhabilitar.php',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {codAsociacion},
+                    success: function (response) {
+                        console.log(response)
+                        const {code, message, info, data} = response;
+
+                        if (code === 200) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "¡Éxito!",
+                                text: message
+                            }).then(() => {
+                                listarAsociaciones()
+                            });
+                        }
+
+                        if (code === 500) {
+                            showErrorInternalServer(message, info)
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('Error asociaciones_CRUD.js: ', textStatus, errorThrown);
+                    }
+                })
+            }
+
+        })
+
+    });
+
+    // Habilitar una asociación
+    $(document).off("click", "#btnHabilitarAsociacion").on("click", "#btnHabilitarAsociacion", function (e) {
+        e.preventDefault();
+        let fila = $(this).closest("tr");
+        let nombres = fila.find('td:eq(2)').text();
+
+        Swal.fire({
+            icon: "warning",
+            title: "¡Advertencia!",
+            text: "¿Seguro que desea habilitar a la asociación " + nombres + "?",
+            width: "350px",
+            showCancelButton: true,
+            confirmButtonColor: "#13252E",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sí",
+            cancelButtonText: "No"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let fila = $(this).closest("tr");
+                let codAsociacion = Number(fila.find('td:eq(1)').text());
+                console.log(codAsociacion);
+
+                $.ajax({
+                    url: './controllers/asociacion/habilitar.php',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {codAsociacion},
+                    success: function (response) {
+                        console.log(response)
+                        const {code, message, info, data} = response;
+
+                        if (code === 200) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "¡Éxito!",
+                                text: message
+                            }).then(() => {
+                                listarAsociaciones()
+                            });
+                        }
+
+                        if (code === 500) {
+                            showErrorInternalServer(message, info)
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('Error asociaciones_CRUD.js: ', textStatus, errorThrown);
+                    }
+                })
+            }
+
+        })
+
+    });
 
     // Filtrar por nombre de la asociacion
     $(document).off("input", "#nombreAsociacionFiltro").on("input", "#nombreAsociacionFiltro", function(e) {

@@ -16,7 +16,7 @@ require_once "../../config/parameters.php"
         </div>
     </div>
 </div>
-
+ 
 <div class="containerTable">
     <table class="tableBeneficios">
         <thead>

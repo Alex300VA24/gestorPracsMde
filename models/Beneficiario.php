@@ -182,4 +182,66 @@ class Beneficiario extends Persona{
             ];
         }
     }
+
+    public function inhabilitarBeneficiario(){
+        $sql = "EXEC sp_beneficiario_inhabilitar :codBeneficiario";
+
+        try {
+            $stmt = DataBase::connect()->prepare($sql);
+            $stmt->bindParam('codBeneficiario', $this->codBeneficiario, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return [
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'beneficiario inhabilitado correctamente',
+                'action' => 'inhabilitarBeneficiario',
+                'module' => 'Beneficiario',
+                'data' => '',
+                'info' => '',
+            ];
+
+        }catch (PDOException $e){
+            return [
+                'status' => 'failed',
+                'code' => 500,
+                'message' => 'Ocurrio un error al momento de inhabilitar el beneficiario',
+                'action' => 'inhabilitarBeneficiario',
+                'module' => 'Beneficiario',
+                'data' => [],
+                'info' => $e->getMessage()
+            ];
+        }
+    }
+
+    public function habilitarBeneficiario(){
+        $sql = "EXEC sp_beneficiario_habilitar :codBeneficiario";
+
+        try {
+            $stmt = DataBase::connect()->prepare($sql);
+            $stmt->bindParam('codBeneficiario', $this->codBeneficiario, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return [
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'beneficiario habilitado correctamente',
+                'action' => 'habilitarBeneficiario',
+                'module' => 'Beneficiario',
+                'data' => '',
+                'info' => '',
+            ];
+
+        }catch (PDOException $e){
+            return [
+                'status' => 'failed',
+                'code' => 500,
+                'message' => 'Ocurrio un error al momento de habilitar el beneficiario',
+                'action' => 'habilitarBeneficiario',
+                'module' => 'Beneficiario',
+                'data' => [],
+                'info' => $e->getMessage()
+            ];
+        }
+    }
 }

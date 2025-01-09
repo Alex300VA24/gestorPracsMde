@@ -77,6 +77,34 @@ BEGIN
 END
 GO
 
+--- deshabilitar una asociacion ---
+CREATE PROCEDURE sp_asociacion_inhabilitar(
+  @codAsociacion INT  
+)
+AS
+BEGIN
+  DECLARE @codEstadoInactivo INT
+  
+  SELECT @codEstadoInactivo = codEstado FROM Estados WHERE abreviatura = 'i'
+  
+  UPDATE Asociaciones SET codEstado = @codEstadoInactivo WHERE codAsociacion = @codAsociacion;
+END
+GO
+
+--- habilitar una asociacion ---
+CREATE PROCEDURE sp_asociacion_habilitar(
+  @codAsociacion INT  
+)
+AS
+BEGIN
+  DECLARE @codEstadoActivo INT
+  
+  SELECT @codEstadoActivo = codEstado FROM Estados WHERE abreviatura = 'a'
+  
+  UPDATE Asociaciones SET codEstado = @codEstadoActivo WHERE codAsociacion = @codAsociacion;
+END
+GO
+
 -- listar asociaciones nuevas o con reconocimiento vencido
 CREATE PROCEDURE sp_asociaciones_listar_nuevas_y_reconocimiento_vencido
 AS

@@ -333,4 +333,66 @@ class Asociacion{
             ];
         }
     }
+
+    public function inhabilitarAsociacion(){
+        $sql = "EXEC sp_asociacion_inhabilitar :codAsociacion";
+
+        try {
+            $stmt = DataBase::connect()->prepare($sql);
+            $stmt->bindParam('codAsociacion', $this->codAsociacion, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return [
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'asociación inhabilitada correctamente',
+                'action' => 'inhabilitarAsociacion',
+                'module' => 'Asociacion',
+                'data' => '',
+                'info' => '',
+            ];
+
+        }catch (PDOException $e){
+            return [
+                'status' => 'failed',
+                'code' => 500,
+                'message' => 'Ocurrio un error al momento de inhabilitar la asociacion',
+                'action' => 'inhabilitarAsociacion',
+                'module' => 'Asociacion',
+                'data' => [],
+                'info' => $e->getMessage()
+            ];
+        }
+    }
+
+    public function habilitarAsociacion(){
+        $sql = "EXEC sp_asociacion_habilitar :codAsociacion";
+
+        try {
+            $stmt = DataBase::connect()->prepare($sql);
+            $stmt->bindParam('codAsociacion', $this->codAsociacion, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return [
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'asociación habilitada correctamente',
+                'action' => 'habilitarAsociacion',
+                'module' => 'Asociacion',
+                'data' => '',
+                'info' => '',
+            ];
+
+        }catch (PDOException $e){
+            return [
+                'status' => 'failed',
+                'code' => 500,
+                'message' => 'Ocurrio un error al momento de habilitar la asociacion',
+                'action' => 'habilitarAsociacion',
+                'module' => 'Asociacion',
+                'data' => [],
+                'info' => $e->getMessage()
+            ];
+        }
+    }
 }

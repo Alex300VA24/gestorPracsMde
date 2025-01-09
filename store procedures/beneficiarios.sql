@@ -40,7 +40,7 @@ BEGIN
   LEFT JOIN MotivosInhabilitacion mi ON hb.codMotivoInhabilitacion = mi.codMotivoInhabilitacion
   INNER JOIN Estados e ON hb.codEstado = e.codEstado
   WHERE 
-  e.abreviatura = 'a'
+  e.abreviatura != 'h'
   AND (
     (@dni_o_apellidos_y_nombres IS NULL OR p.dni LIKE @dni_o_apellidos_y_nombres + '%')
     OR (@dni_o_apellidos_y_nombres IS NULL OR CONCAT(p.apellidoPaterno, ' ', p.apellidoMaterno, ' ', p.nombres) LIKE @dni_o_apellidos_y_nombres + '%')
@@ -127,3 +127,32 @@ BEGIN
       SELECT 'error' AS 'status', @ErrorMessage AS ErrorMessage, @ErServery AS Severity, @ErState AS State;
     END CATCH;  
 END
+GO
+
+--- deshabilitar un beneficiario ---
+CREATE PROCEDURE sp_beneficiario_inhabilitar(
+  @codBeneficiario INT  
+)
+AS
+BEGIN
+  DECLARE @codEstadoInactivo INT
+  
+  SELECT @codEstadoInactivo = codEstado FROM Estados WHERE abreviatura = 'i'
+  
+  UPDATE HistoricoBeneficiarios SET codEstado = @codEstadoInactivo WHERE codBeneficiario = @codBeneficiario;
+END
+GO
+
+--- deshabilitar un beneficiario ---
+CREATE PROCEDURE sp_beneficiario_habilitar(
+  @codBeneficiario INT  
+)
+AS
+BEGIN
+  DECLARE @codEstadoActivo INT
+  
+  SELECT @codEstadoActivo = codEstado FROM Estados WHERE abreviatura = 'a'
+  
+  UPDATE HistoricoBeneficiarios SET codEstado = @codEstadoActivo WHERE codBeneficiario = @codBeneficiario;
+END
+GO

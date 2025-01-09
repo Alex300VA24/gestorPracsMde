@@ -1,6 +1,6 @@
 <div class="login-container">
         <div class="login-left">
-            <img class="logo-login" src="<?=base_url?>assets/logosigeprol.png" alt="logo">
+            <img class="logo-login" src="<?=base_url?>assets/logo.png" alt="logo">
         </div>
         <div class="login-right">
             <h2 class="login-title">sistema de sigeprol</h2>
