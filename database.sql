@@ -1,8 +1,8 @@
 CREATE DATABASE BDPROVALE
---COLLATE Latin1_General_100_CI_AS_SC_UTF8;--
+--COLLATE Latin1_General_100_CI_AS_SC_UTF8;-- 
 GO
 
-use BDPROVALE
+USE BDPROVALE
 GO
 
 CREATE TABLE Estados(
@@ -26,19 +26,18 @@ CREATE TABLE MotivosInhabilitacion(
 	PRIMARY KEY(codMotivoInhabilitacion)
 );
 
-
 CREATE TABLE Usuarios(
 	codUsuario INT NOT NULL IDENTITY(1,1),
 	nombresApellidos VARCHAR(200) NOT NULL,
 	nombreUsuario VARCHAR(20) NOT NULL UNIQUE,
 	password VARCHAR(50) NOT NULL,	
 	dni VARCHAR(8) NOT NULL,
-	cui CHAR NOT NULL,
+	cui CHAR(13) NOT NULL,  -- Cambiado de CHAR a CHAR(13) para un CUI
 	codRol INT NOT NULL,
 	codEstado INT NOT NULL,
 	fechaRegistro DATETIME DEFAULT GETDATE(),
 	PRIMARY KEY(codUsuario),
-	FOREIGN KEY(codRol) REFERENCES Roles(codRol),
+	FOREIGN KEY(codRol) REFERENCES Roles(codRol)  -- Coma eliminada
 );
 
 CREATE TABLE Parentescos(
@@ -56,7 +55,7 @@ CREATE TABLE TiposBeneficio(
 	prioridad INT NOT NULL,
 	fechaRegistro DATETIME DEFAULT GETDATE(),
 	observaciones VARCHAR(255),
-	PRIMARY KEY (codTipoBeneficio)
+	PRIMARY KEY(codTipoBeneficio)
 );
 
 CREATE TABLE Zonas(
@@ -168,7 +167,6 @@ CREATE TABLE Personas (
     FOREIGN KEY(codSectorZona) REFERENCES SectoresZona(codSectorZona)
 );
 
-
 CREATE TABLE Socios(
 	codSocio INT NOT NULL IDENTITY(1,1),	
 	codPersona INT NOT NULL,
@@ -178,7 +176,7 @@ CREATE TABLE Socios(
 	fechaFin DATETIME,
 	observaciones VARCHAR(255),	
 	codEstado INT NOT NULL,
-	PRIMARY KEY(codSocio),
+	PRIMARY KEY(codSocio),  -- Corregido
 	FOREIGN KEY(codPersona) REFERENCES Personas(codPersona),
 	FOREIGN KEY(codAsociacion) REFERENCES Asociaciones(codAsociacion)	
 );
@@ -205,27 +203,27 @@ CREATE TABLE Beneficiarios(
 	PRIMARY KEY(codBeneficiario),
 	FOREIGN KEY(codPersona) REFERENCES Personas(codPersona),
 	FOREIGN KEY(codSocio) REFERENCES Socios(codSocio),
-	FOREIGN KEY(codParentesco) REFERENCES Parentescos(codParentesco),	
+	FOREIGN KEY(codParentesco) REFERENCES Parentescos(codParentesco)	
 );
 
 CREATE TABLE HistoricoBeneficiarios(
 	codHistoricoBeneficiario INT NOT NULL IDENTITY(1,1),
 	codTipoBeneficio INT NOT NULL,
-  codBeneficiario INT NOT NULL,
+  	codBeneficiario INT NOT NULL,
 	peso DECIMAL(9,3),
 	talla DECIMAL(9,2),
 	hmg DECIMAL(9,2),
 	fechaInicio DATETIME DEFAULT GETDATE(),
 	fechaTermino DATETIME,
-  fechaUltimaMestruacion DATE NULL,
-  fechaProbableParto DATE NULL,
-  fechaDeParto DATE NULL,
-  fechaFinLactancia DATE NULL,
+  	fechaUltimaMestruacion DATE NULL,
+  	fechaProbableParto DATE NULL,
+  	fechaDeParto DATE NULL,
+  	fechaFinLactancia DATE NULL,
 	codEstado INT NOT NULL,
-	codMotivoInhabilitacion INT,
+	codMotivoInhabilitacion INT NULL,  -- Especificar que es nulo
 	PRIMARY KEY(codHistoricoBeneficiario),
 	FOREIGN KEY(codTipoBeneficio) REFERENCES TiposBeneficio(codTipoBeneficio),
-  FOREIGN KEY(codBeneficiario) REFERENCES Beneficiarios(codBeneficiario),
+  	FOREIGN KEY(codBeneficiario) REFERENCES Beneficiarios(codBeneficiario),
 	FOREIGN KEY(codMotivoInhabilitacion) REFERENCES MotivosInhabilitacion(codMotivoInhabilitacion)
 );
 

@@ -20,7 +20,9 @@ $(document).ready(function () {
     inputFechaSocio.setAttribute('max', fechaFormateada);
     inputFechaBeneficiario.setAttribute('max', fechaFormateada);
 
+
     listarSocios(dniOApellidosNombres, codAsociacion);
+
 
     function listarSocios(dniOApellidosNombres, codAsociacion) {
         $.ajax({
@@ -31,7 +33,7 @@ $(document).ready(function () {
             success: function (response) {
                 console.log(response)
                 const {code, message, info, data} = response;
-
+    
                 if (code === 200) {
                     let row = '';
                     if (data && Array.isArray(data) && data.length > 0) {
@@ -55,10 +57,10 @@ $(document).ready(function () {
                                     <td>${dni}</td>                                                                                                       
                                     <td hidden="hidden">${observaciones}</td>                                                                                                       
                                     <td hidden="hidden">${codAsociacion}</td>                                                                                                       
-                                    <td >${nombreAsociacion}</td>                                                                                                       
-                                    <td >${cargo ? cargo : ''}</td>                                                                                                       
-                                    <td >${fechaInicio.split(' ')[0]}</td>                                                                                                                                                                                                                                                 
-                                    <td >${fechaFin ? fechaFin.split(' ')[0] : ''}</td>                                   
+                                    <td>${nombreAsociacion}</td>                                                                                                       
+                                    <td>${cargo ? cargo : ''}</td>                                                                                                       
+                                    <td>${fechaInicio.split(' ')[0]}</td>                                                                                                                                                                                                                                                 
+                                    <td>${fechaFin ? fechaFin.split(' ')[0] : ''}</td>                                   
                                     <td hidden="hidden">${nombres}</td>                                   
                                     <td hidden="hidden">${apellidoPaterno}</td>                                   
                                     <td hidden="hidden">${apellidoMaterno}</td>                                   
@@ -74,22 +76,37 @@ $(document).ready(function () {
                                     <td>
                                         <div class="actions actions_socios">     
                                             ${abreviatura == 'a' ?
-                                            `<img id="btnEditarSocio" class="action" src="./assets/icons/action_edit.svg">                                                                                                                                   
-                                            ` : ''}                                            
+
+                                            `
+                                            <div class="tooltip-container">
+                                                <img id="btnEditarSocio" class="action" src="./assets/icons/action_edit.svg">
+                                                <span class="custom-tooltip">Editar beneficiario</span>
+                                            </div>
                                             
-                                            <img id="btnDetalleSocio" class="action" src="./assets/icons/action_ver_detalle.svg">
+                                            <div class="tooltip-container">
+                                                <img id="btnDetalleSocio" class="action" src="./assets/icons/action_ver_detalle.svg">
+                                                <span class="custom-tooltip">Detalle beneficiario</span>
+                                            </div> 
+                                            
+                                            <div class="tooltip-container">
                                             <img id="btnBeneficiariosSocio" class="action" src="./assets/icons/action_ver_beneficiarios.svg">
+                                                <span class="custom-tooltip">Socios beneficiario</span>
+                                            </div> 
                                             
-                                            
-                                            ${abreviatura == 'a' ?
-                                            `<img id="btnRegistrarNuevoBeneficiario" class="action" src="./assets/icons/action_agregar_beneficiario.svg">
-                                            <img id="btnInhabilitarSocio" class="action" src="./assets/icons/action_deshabilitar.svg">
-                                            ` : ''}    
+                                            <div class="tooltip-container">
+                                                <img id="btnRegistrarNuevoBeneficiario" class="action" src="./assets/icons/action_agregar_beneficiario.svg">
+                                                <span class="custom-tooltip">Registrar nuevo beneficiario</span>
+                                            </div>
+                                            <div class="tooltip-container">
+                                                <img id="btnInhabilitarSocio" class="action" src="./assets/icons/action_deshabilitar.svg">
+                                                <span class="custom-tooltip">Inhabilitar socio</span>
+                                            </div>` : ''}
                                             
                                             ${abreviatura == 'i' ?
-                                            `<img id="btnHabilitarSocio" class="action" src="./assets/icons/action_habilitar.svg">
-                                            ` : ''}  
-                                            
+                                            `<div class="tooltip-container">
+                                                <img id="btnHabilitarSocio" class="action" src="./assets/icons/action_habilitar.svg">
+                                                <span class="custom-tooltip">Habilitar socio</span>
+                                             </div>` : ''}
                                         </div>
                                     </td>
                                 </tr>
@@ -101,7 +118,7 @@ $(document).ready(function () {
                     }
                     $("#listaSocios").html(row)
                 }
-
+    
                 if (code === 500) {
                     showErrorInternalServer(message, info)
                 }
@@ -279,7 +296,6 @@ $(document).ready(function () {
 
         $("#codSocioEditar").val(codSocio);
         $("#codPersonaEditarSocio").val(codPersona);
-
         $("#dniSocioEditar").val(dni.trim());
         $("#nombresSocioEditar").val(nombres.trim());
         $("#apellidoPaternoSocioEditar").val(apellidoPaterno.trim());
@@ -355,6 +371,8 @@ $(document).ready(function () {
         }
     })
 
+
+
     // Ver detalle socio
     $(document).off("click", "#btnDetalleSocio").on("click", "#btnDetalleSocio", function (e) {
         e.preventDefault();
@@ -410,6 +428,7 @@ $(document).ready(function () {
             $("#dniSocioEditar").focus();
         });
     });
+
 
     // Ver Beneficiarios del socio
     $(document).off("click", "#btnBeneficiariosSocio").on("click", "#btnBeneficiariosSocio", function (e) {
@@ -541,6 +560,8 @@ $(document).ready(function () {
         modalVerBeneficiarios.modal('show');
     });
 
+
+
     // Inhabilitar socio
     $(document).off("click", "#btnInhabilitarSocio").on("click", "#btnInhabilitarSocio", function (e) {
         e.preventDefault();
@@ -596,6 +617,8 @@ $(document).ready(function () {
 
     });
 
+
+
     // habilitar socio
     $(document).off("click", "#btnHabilitarSocio").on("click", "#btnHabilitarSocio", function (e) {
         e.preventDefault();
@@ -650,6 +673,7 @@ $(document).ready(function () {
 
 
     });
+
 
 
     // registrar nuevo beneficiario
@@ -726,6 +750,8 @@ $(document).ready(function () {
 
     })
 
+
+
     // Mostrar inputs en base al Tipo de beneficio (madre gestante y madre lactante)
     $(document).off("input", "#cboTipoBeneficioNuevoRegistroBeneficiario").on("input", "#cboTipoBeneficioNuevoRegistroBeneficiario", function (e) {
         let optionBeneficio = $(this).find("option:selected").text();
@@ -764,6 +790,7 @@ $(document).ready(function () {
         calculateFechaFinMadreLactanteNuevoBeneficiario()
     })
 
+
     // Calcular fecha probable de parto - registrar nuevo beneficiario al socio
     function calculateFechaProbablePartoNuevoBeneficiario() {
         let fechaDeUltimaMestruacion = new Date($("#fumNuevoBeneficiarioRegistro").val());
@@ -772,6 +799,7 @@ $(document).ready(function () {
         fechaProbableDeParto = fechaProbableDeParto.toISOString().split('T')[0];
         $("#fechaProbableDePartoNuevoBeneficiarioRegistro").val(fechaProbableDeParto);
     }
+
 
     // calcular fecha fin de madre lactante (cuando el niño cumple 2 años) - registrar nuevo beneficiario al socio
     function calculateFechaFinMadreLactanteNuevoBeneficiario() {
@@ -801,6 +829,7 @@ $(document).ready(function () {
         //
         $("#cboTipoBeneficioRegistroBeneficiario").html(optionsSelect)
     }
+
 
     // agregar nuevo beneficiario al socio
     $(document).off("click", "#btnRegistrarNuevoBeneficiario").on("click", "#btnRegistrarNuevoBeneficiario", function (e) {
@@ -907,6 +936,7 @@ $(document).ready(function () {
         $("#fechaNacimientoNuevoBeneficiarioRegistro").val($(this).val())
     })
 
+
     // calcular edad para editar un socio
     $(document).off("input", "#fechaNacimientoSocioEditar").on("input", "#fechaNacimientoSocioEditar", function (e) {
         let edad = calcularEdad($(this).val(), fechaActual)
@@ -944,6 +974,7 @@ $(document).ready(function () {
             $("#numeroFincaBeneficiarioRegistro").val($(this).val());
         }
     })
+
 
     // Socio es beneficiario
     $("input[name=optionSocioBeneficiario]").change(function () {
@@ -1092,6 +1123,7 @@ $(document).ready(function () {
         llenarCboTiposBeneficioBeneficiario();
     });
 
+
     // Mostrar inputs en base al Tipo de beneficio (madre gestante y madre lactante)
     $(document).off("input", "#cboTipoBeneficioRegistroBeneficiario").on("input", "#cboTipoBeneficioRegistroBeneficiario", function (e) {
         let optionBeneficio = $(this).find("option:selected").text();
@@ -1125,10 +1157,13 @@ $(document).ready(function () {
         calculateFechaProbableParto()
     })
 
-    // cambiar fecha de fin de madre lactante
+
+
+    //cambiar fecha de fin de madre lactante
     $(document).off("change", "#fechaPartoBeneficiarioRegistro").on("change", "#fechaPartoBeneficiarioRegistro", function (e) {
         calculateFechaFinMadreLactante()
     })
+
 
     // Calcular fecha probable de parto
     function calculateFechaProbableParto() {
@@ -1138,6 +1173,7 @@ $(document).ready(function () {
         fechaProbableDeParto = fechaProbableDeParto.toISOString().split('T')[0];
         $("#fechaProbableDePartoBeneficiarioRegistro").val(fechaProbableDeParto);
     }
+
 
     // calcular fecha fin de madre lactante (cuando el niño cumple 2 años)
     function calculateFechaFinMadreLactante() {
@@ -1160,6 +1196,7 @@ $(document).ready(function () {
 
         return edad;
     }
+
 
 //     agregar beneficiarios al detalle
     $(document).off("click", "#btnAgregarBeneficiario").on("click", "#btnAgregarBeneficiario", function (e) {
@@ -1284,6 +1321,7 @@ $(document).ready(function () {
 
                 $(".boxFechaParto").prop("hidden", true)
                 $(".boxFechaFin").prop("hidden", true)
+
 
                 //     mostrar tipos de beneficio para beneficiario
                 llenarCboTiposBeneficioBeneficiario()
@@ -1454,6 +1492,7 @@ $(document).ready(function () {
         return true;
     }
 
+    
     // Filtrar por dni o nombre
     $(document).off("input", "#btnDNIApellidosFiltroSocio").on("input", "#btnDNIApellidosFiltroSocio", function (e) {
         dniOApellidosNombres = $(this).val();
@@ -1515,4 +1554,12 @@ $(document).ready(function () {
             listarSocios();
         });
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        tooltipTriggerList.map(function(tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+      });
+
 })

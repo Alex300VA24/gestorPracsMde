@@ -12,6 +12,7 @@
                             <select id="cboAsociacionesNuevasYReconocimientoVencido" class="form-select">
                             </select>
                         </div>
+
                         <div class="two-column flex-grow-1">
                             <label for="documentoReconocimiento">Documento (*):</label>
                             <input

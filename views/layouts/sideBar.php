@@ -86,15 +86,4 @@
             </a>
         </div>
 
-        <div>
-            <a href="#" class="option" id="option">
-                <div class="containerIconOption">
-                    <img src="<?=base_url?>/assets/icons/reportes.svg" alt="">
-                </div>
-                <div>
-                    <p>Reportes</p>
-                </div>
-            </a>
-        </div>
-
 </div>

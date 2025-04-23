@@ -10,10 +10,18 @@ require_once "../../config/parameters.php"
             <select id="cboClubDeMadres" class="form-select">
             </select>
 
+            
+
             <div class="container_clear_filters">
                 <img src="<?= base_url ?>/assets/icons/clearFilters.svg">
             </div>
+
         </div>
+
+        <a href="generar_reporte.php" id="btnReporte" class="btn-nuevo-registro" target="_blank">
+            <img src="<?= base_url ?>/assets/icons/reportes.svg" alt="Reportes">
+            REPORTE
+        </a>
     </div>
 </div>
  
@@ -44,3 +52,8 @@ require_once "../../config/parameters.php"
 <script src="<?= base_url?>ajax/parentescos_llenarCboParentescos.js"></script>
 <script src="<?= base_url?>ajax/tiposBeneficio_llenarCboTiposBeneficio.js"></script>
 <script src="<?= base_url?>ajax/beneficiarios_CRUD.js"></script>
+
+
+
+
+

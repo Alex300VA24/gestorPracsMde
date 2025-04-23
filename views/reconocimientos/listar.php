@@ -1,5 +1,5 @@
 <?php
-require_once "../../config/parameters.php"
+require_once "../../config/parameters.php";
 ?>
 <div class="header_modules">
     <h1>Reconocimientos</h1>
@@ -18,6 +18,11 @@ require_once "../../config/parameters.php"
         <a href="#" id="nuevaAsociacion" class="btn-nuevo-registro">
             <img src="<?= base_url ?>/assets/icons/addRegister.svg">
             Nuevo Reconocimiento
+        </a>
+
+        <a href="generar_reporte.php" id="btnReporte" class="btn-nuevo-registro" target="_blank">
+            <img src="<?= base_url ?>/assets/icons/reportes.svg" alt="Reportes">
+            REPORTE
         </a>
     </div>
 </div>
@@ -38,11 +43,14 @@ require_once "../../config/parameters.php"
         </tr>
         </thead>
         <tbody id="listaReconocimientos">
+            <!-- Se agregarán las filas dinámicamente -->
         </tbody>
     </table>
 </div>
 
-<?php require_once "registro.php" ?>
+<?php require_once "registro.php"; ?>
 
-<script src="<?= base_url?>ajax/reconocimientos_CRUD.js"></script>
-<script src="<?= base_url?>ajax/asociaciones_llenarCboAsocNuevaRecVencido.js"></script>
+<script src="<?= base_url?>/ajax/reconocimientos_CRUD.js"></script>
+<script src="<?= base_url?>/ajax/asociaciones_llenarCboAsocNuevaRecVencido.js"></script>
+
+

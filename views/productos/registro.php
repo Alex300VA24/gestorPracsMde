@@ -8,29 +8,23 @@
                 <div class="modal-body">
                     <div class="two-column">
                         <label for="descripcionProducto">Descripción (*):</label>
-                        <input 
-                                type="text"
-                                id="descripcionProducto" 
-                                autocomplete="off"
-                                maxlength="100"
-                        >
+                        <input type="text" id="descripcionProducto" autocomplete="off" maxlength="100">
                     </div>
 
                     <div class="two-column">
                         <label for="abreviatura">Abreviatura (*):</label>
-                        <input 
-                                type="text" 
-                                id="abreviatura" 
-                                autocomplete="off"
-                                maxlength="100"
-                                >
+                        <input type="text" id="abreviatura" autocomplete="off" maxlength="100">
                     </div>
 
                     <div class="two-column">
-                        <label for="unidadMedida">Unidad de Medida (*):</label>
-                            <select id="cboUnidadMedida" class="form-select">
-                            </select>
+                        <label>Unidad de Medida (*):</label>
+                        <div id="unidadMedidaContainer">
+                            <label><input type="radio" name="unidadMedida" value="kg"> Bolsa</label>
+                            <label><input type="radio" name="unidadMedida" value="g"> Tarro</label>
+
+                        </div>
                     </div>
+
                     <p>Todos los campos (*) son obligatorios</p>
 
                     <div class="containerButtonsModal">

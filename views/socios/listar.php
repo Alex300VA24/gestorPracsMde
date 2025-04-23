@@ -9,7 +9,6 @@ require_once "../../config/parameters.php"
 
             <select id="cboClubDeMadresFiltroSocio" class="form-select">
             </select>
-
             <div class="container_clear_filters">
                 <img src="<?= base_url ?>/assets/icons/clearFilters.svg">
             </div>
@@ -18,6 +17,11 @@ require_once "../../config/parameters.php"
         <a href="#" id="btnNuevoSocio" class="btn-nuevo-registro">
             <img src="<?= base_url ?>/assets/icons/addRegister.svg">
             Nuevo Socio
+        </a>
+
+        <a href="generar_reporte.php" id="btnReporte" class="btn-nuevo-registro" target="_blank">
+            <img src="<?= base_url ?>/assets/icons/reportes.svg" alt="Reportes">
+            REPORTE
         </a>
     </div>
 </div>

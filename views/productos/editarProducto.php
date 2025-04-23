@@ -6,36 +6,26 @@
             </div>
             <form class="formProducto" id="editarProductoForm" action="" method="post">
                 <div class="modal-body">
-                    <input 
-                                type="number"
-                                id="codProducto"
-                                hidden="hidden"
-                    >
+                    <input type="hidden" id="codProducto">
                     <div class="two-column">
-                        <label for="descripcionProducto">Descripción (*):</label>
-                        <input 
-                                type="text" 
-                                id="descripcionProductoEdit" 
-                                autocomplete="off"
-                                maxlength="100"
-                                >
+                        <label for="descripcionProductoEdit">Descripción (*):</label>
+                        <input type="text" id="descripcionProductoEdit" autocomplete="off" maxlength="100">
                     </div>
 
                     <div class="two-column">
-                        <label for="abreviatura">Abreviatura (*):</label>
-                        <input 
-                                type="text" 
-                                id="abreviaturaEdit" 
-                                autocomplete="off"
-                                maxlength="100"
-                                >
+                        <label for="abreviaturaEdit">Abreviatura (*):</label>
+                        <input type="text" id="abreviaturaEdit" autocomplete="off" maxlength="100">
                     </div>
 
                     <div class="two-column">
-                        <label for="unidadMedida">Unidad de Medida (*):</label>
-                            <select id="cboUnidadMedidaEdit" class="form-select">
-                            </select>
+                        <label>Unidad de Medida (*):</label>
+                        <div id="unidadMedidaContainerEdit">
+                            <label><input type="radio" name="unidadMedidaEdit" value="kg">Bolsa</label>
+                            <label><input type="radio" name="unidadMedidaEdit" value="g">Tarro</label>
+  
+                        </div>
                     </div>
+
                     <p>Todos los campos (*) son obligatorios</p>
 
                     <div class="containerButtonsModal">

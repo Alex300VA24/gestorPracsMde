@@ -74,41 +74,50 @@ $(document).ready(function () {
     });
 
     // registrar pecosa
-
     $(document).off("submit", "#registrarPecosaForm").on('submit', '#registrarPecosaForm', function(e) {
         e.preventDefault();
+    
+        // Obtener los valores del formulario
         const numero = $.trim($('#numero').val());
         const clubMadres = $.trim($('#cboClubMadres').val());
         const presidenta = $.trim($('#codSocioPresidenta').val());
         const fechaReparto = $.trim($('#fechaReparto').val());
         const observacion = $.trim($('#observacion').val());
-        console.log({numero, clubMadres, presidenta, fechaReparto, observacion})
-        console.log({productosSeleccionados})
-
+    
+        console.log({numero, clubMadres, presidenta, fechaReparto, observacion});
+        console.log({productosSeleccionados}); // Verifica que los productos estén en el arreglo
+    
         $.ajax({
             url: './controllers/pecosa/registrarPecosas.php',
             method: 'POST',
-            detaType: 'json',
-            data: {numero, clubMadres, presidenta, fechaReparto, observacion, productosSeleccionados},
-            success: function (response) {
-                console.log(response);
-                const {code, message, info, data} = response;
+            dataType: 'json', // Asegúrate de que sea 'json'
+            data: {
+                numero,
+                clubMadres,
+                presidenta,
+                fechaReparto,
+                observacion,
+                productosSeleccionados: JSON.stringify(productosSeleccionados)// Convertir productosSeleccionados a JSON
 
-                if(code == 200) {
-                    showSuccessAlert(message)
+            },
+            success: function(response) {
+                console.log(response); // Ver la respuesta del servidor
+                const { code, message, info, data } = response;
+    
+                if (code == 200) {
+                    showSuccessAlert(message); // Mostrar éxito
                 }
-
+    
                 if (code === 500) {
-                    showErrorInternalServer(message, info)
+                    showErrorInternalServer(message, info); // Mostrar error
                 }
             },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.error('Error listarPecosas.js: ', textStatus, errorThrown);
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('Error registrarPecosa.js: ', textStatus, errorThrown);
             }
-        })
-         
-
-    })
+        });
+    });
+    
 
     // Evento para agregar productos a la tabla
     $(document).off("click", "#btnAgregarProducto").on("click", "#btnAgregarProducto", function (e) {
@@ -155,6 +164,8 @@ $(document).ready(function () {
             fechaHasta: fechaHasta,
             cantidad: cantidad,
             precioUnitario: precioUnitario,
+            
+
         });
 
         console.log("Productos seleccionados:", productosSeleccionados);

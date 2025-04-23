@@ -8,6 +8,7 @@ class Reconocimiento{
     private string $fechaFin;
     private int $codEstado;
     private string $estadoDescripcion;
+    private ?string $pdfPath = null;
 
     public function getCodReconocimiento(): int{
         return $this->codReconocimiento;
@@ -72,6 +73,15 @@ class Reconocimiento{
     public function setEstadoDescripcion(string $estadoDescripcion): void{
         $this->estadoDescripcion = $estadoDescripcion;
     }
+    public function getPdfPath(): ?string {
+        return $this->pdfPath;
+    }
+
+    public function setPdfPath(?string $pdfPath) : void {
+        $sql->pdfPath = $pdfPath;
+    }
+
+
 
     public function registrarReconocimiento(int $presidente, int $vicePresidente, int $secretaria, int $tesorera, int $vocal, int $coordinadora, int $almacenera, int $fiscalizador){
         $sql = "EXEC sp_reconocimiento_directivas_registrar 
@@ -158,4 +168,28 @@ class Reconocimiento{
             ];
         }
     }
+
+    public function subirPdf(int $codReconocimiento, string $pdfPath): array {
+        $sql = "UPDATE reconocimientos SET pdf_path = :pdfPath WHERE cod_reconocimiento = :codReconocimiento";
+        try {
+            $stmt = DataBase::connect()->prepare($sql);
+            $stmt->bindParam('pdfPath', $pdfPath, PDO::PARAM_STR);
+            $stmt->bindParam('codReconocimiento', $codReconocimiento, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return [
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'PDF subido correctamente',
+            ];
+        } catch (Exception $e) {
+            return [
+                'status' => 'failed',
+                'code' => 500,
+                'message' => 'Error al subir el PDF',
+                'info' => $e->getMessage(),
+            ];
+        }
+    }
+
 }

@@ -17,6 +17,11 @@
             <img src="<?=base_url?>/assets/icons/addRegister.svg">
             Nuevo Producto
         </a>
+
+        <a href="generar_reporte.php" id="btnReporte" class="btn-nuevo-registro" target="_blank">
+            <img src="<?= base_url ?>/assets/icons/reportes.svg" alt="Reportes">
+            REPORTE
+        </a>
     </div>
 
     <div class="containerTable">
@@ -37,9 +42,7 @@
         </table>
     </div>
     <div class="d-flex justify-content-between m-2">
-        <div>
-            <p class="fs-6">Total de productos:  <span class="fw-bold" id="totalProductosRegistrados"></span></p>
-        </div>
+       
         <div>
             <ul class="listadoOpcionesPaginacion" id="opcionesPaginacionProductos">
 

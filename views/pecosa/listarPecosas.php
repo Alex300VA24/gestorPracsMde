@@ -23,6 +23,11 @@
             <img src="<?=base_url?>/assets/icons/addRegister.svg">
             Nuevo Pecosa
         </a>
+
+        <a href="generar_reporte.php" id="btnReporte" class="btn-nuevo-registro" target="_blank">
+            <img src="<?= base_url ?>/assets/icons/reportes.svg" alt="Reportes">
+            REPORTE
+        </a>
     </div>
 
     <div class="containerTable">

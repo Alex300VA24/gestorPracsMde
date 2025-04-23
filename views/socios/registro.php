@@ -14,7 +14,7 @@
                             <label for="dni">DNI (*):</label>
                             <input
                                     type="text"
-                                    id="dniSocioRegistro"
+                                    id="dniSocioRegistro" 
                                     autocomplete="off"
                                     maxlength="8"
                             >
@@ -385,4 +385,3 @@
         </div>
     </div>
 </div>
-

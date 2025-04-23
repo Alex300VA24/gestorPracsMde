@@ -841,14 +841,17 @@ input:focus-visible{
     display: grid;
     /*grid-template-columns: repeat(5, 1fr);*/
     grid-template-columns: repeat(5, 37px);
+    overflow: visible !important;
 }
 
 .actions_socios #btnDetalleSocio{
     grid-column: 2/3;
+    overflow: visible !important;
 }
 
 .actions_socios #btnBeneficiariosSocio{
     grid-column: 3/4;
+    overflow: visible !important;
 }
 
 .actions_socios #btnHabilitarSocio{
@@ -882,16 +885,18 @@ input:focus-visible{
     font-weight: 800;
 }
 
+
+/*Colores card*/
 .card-girl{
-    background-color: #FCBCFF;
+    background-color: #6160603d;
 }
 
 .card-boy{
-    background-color: #7BD2F8;
+    background-color: #6160603d;
 }
 
 .card-socio{
-    background-color: #DAFC8D;
+    background-color: #6160603d;
 }
 
 .modalBeneficiariosSocio .beneficiarios{
@@ -930,4 +935,41 @@ input:focus-visible{
     padding: 0 10px;
 }
 
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+}
 
+.custom-tooltip {
+    visibility: hidden;
+    width: auto;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+}
+
+.tooltip-container:hover .custom-tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.custom-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}

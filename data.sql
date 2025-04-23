@@ -90,7 +90,7 @@ VALUES
 insert into Reconocimientos(codAsociacion, documento,fechaInicio, fechaFin, codEstado)
 values(2, 'RS-203-2024', '2024-10-26', '2026-10-26', 1)
 
-insert into Directivas(codReconocimiento, codSocio, codCargo, codEstado)
+insert into Directivas(codReconocimiento, , codCargo, codEstado)
 values(1, 3, 1, 1)
 
 select * from Socios

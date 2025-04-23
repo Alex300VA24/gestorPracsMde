@@ -1,4 +1,4 @@
-$(document).ready(function () {
+    $(document).ready(function () {
     $.ajax({
         url: './controllers/productos/listarProductos.php',
         method: 'GET',

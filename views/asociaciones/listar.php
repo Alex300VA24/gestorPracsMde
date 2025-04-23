@@ -19,6 +19,11 @@ require_once "../../config/parameters.php"
             <img src="<?= base_url ?>/assets/icons/addRegister.svg">
             Nuevo club de madre
         </a>
+
+        <a href="generar_reporte.php" id="btnReporte" class="btn-nuevo-registro" target="_blank">
+            <img src="<?= base_url ?>/assets/icons/reportes.svg" alt="Reportes">
+            REPORTE
+        </a>
     </div>
 </div>
 
