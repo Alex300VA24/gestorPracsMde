@@ -1,126 +1,126 @@
 $(document).ready(function () {
 
-    let dniOApellidosNombres;
-    let codAsociacion;
-    let edadMinima;
-    let edadMaxima;
-    let pesoTallaHmgFiltro;
+  let dniOApellidosNombres;
+  let codAsociacion;
+  let edadMinima;
+  let edadMaxima;
+  let pesoTallaHmgFiltro;
 
-    listarBeneficiarios(dniOApellidosNombres, codAsociacion, edadMinima, edadMaxima);
+  listarBeneficiarios(dniOApellidosNombres, codAsociacion, edadMinima, edadMaxima);
 
-    function listarBeneficiarios(dniOApellidosNombres, codAsociacion,  edadMinima, edadMaxima) {
-        $.ajax({
-            url: './controllers/beneficiario/listar.php',
-            method: 'GET',
-            dataType: 'json',
-            data: {dni_apellidos_nombres: dniOApellidosNombres, codAsociacion, edadMinima, edadMaxima},
-            success: function (response) {
-                console.log(response)
-                const {code, message, info, data} = response;
+  function listarBeneficiarios(dniOApellidosNombres, codAsociacion, edadMinima, edadMaxima) {
+    $.ajax({
+      url: './controllers/beneficiario/listar.php',
+      method: 'GET',
+      dataType: 'json',
+      data: { dni_apellidos_nombres: dniOApellidosNombres, codAsociacion, edadMinima, edadMaxima },
+      success: function (response) {
+        console.log(response)
+        const { code, message, info, data } = response;
 
-                if (code === 200) {
-                    let row = '';
-                    if (data && Array.isArray(data) && data.length > 0) {
-                        row = data.map(({codBeneficiario, codPersona, nombres, apellidoPaterno,
-                                            apellidoMaterno, sexo, fechaNacimiento, codSectorZona,
-                                            codTipoBeneficio, tipoBeneficio, peso, talla, hmg,
-                                            direccion, aniosNacido, dni, observaciones, codAsociacion,
-                                            nombreAsociacion, cargo, fechaInicio, fechaFin, abreviatura, estado,
-                                            codMotivoInhabilitacion, motivoInhabilitacion
-                                        }) => {
-                            return `
-                                <tr>
-                                    <td>${codBeneficiario}</td>
-                                    <td hidden="hidden">${codPersona}</td>
-                                    <td>${apellidoPaterno + ' ' + apellidoMaterno + ' ' + nombres}</td>                                   
-                                    <td hidden="hidden">${sexo}</td>
-                                    <td hidden="hidden">${fechaNacimiento}</td>
-                                    <td hidden="hidden">${codSectorZona}</td>
-                                    <td hidden="hidden">${direccion}</td>
-                                    <td>${aniosNacido}</td>                                                                                                       
-                                    <td>${dni}</td>                                                                                                       
-                                    <td hidden="hidden">${codTipoBeneficio}</td>                                                                                                       
-                                    <td>${tipoBeneficio}</td>                                                                                                       
-                                    <td>${peso ? peso : ''}</td>                                                                                                       
-                                    <td>${talla ? talla : ''}</td>                                                                                                       
-                                    <td>${hmg ? hmg : ''}</td>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-                                    <td>
-                                        <span class="estado ${abreviatura === "a" ? 'active' : abreviatura === 'v' ? 'vencido' : 'inactive'}">
-                                            ${estado}
-                                        </span>
-                                    </td>
-                                    <td hidden="hidden">${codMotivoInhabilitacion}</td>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-                                    <td>${motivoInhabilitacion ? motivoInhabilitacion : ''}</td>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-                                    <td>
-                                        <div class="actions actions_beneficiarios">     
-                                            ${abreviatura == 'a' ?
-                                            ` <div class="tooltip-container">
-                                                <img id="btnEditarAsociacion" class="action" src="./assets/icons/action_edit.svg">
-                                                <span class="custom-tooltip">Editar beneficiario</span>
-                                            </div>
+        if (code === 200) {
+          let row = '';
+          if (data && Array.isArray(data) && data.length > 0) {
+            row = data.map(({ codBeneficiario, codPersona, nombres, apellidoPaterno,
+              apellidoMaterno, sexo, fechaNacimiento, codSectorZona,
+              codTipoBeneficio, tipoBeneficio, peso, talla, hmg,
+              direccion, aniosNacido, dni, observaciones, codAsociacion,
+              nombreAsociacion, cargo, fechaInicio, fechaFin, abreviatura, estado,
+              codMotivoInhabilitacion, motivoInhabilitacion
+            }) => {
+              return `
+              <tr>
+                  <td>${codBeneficiario}</td>
+                  <td hidden="hidden">${codPersona}</td>
+                  <td>${apellidoPaterno + ' ' + apellidoMaterno + ' ' + nombres}</td>                                   
+                  <td hidden="hidden">${sexo}</td>
+                  <td hidden="hidden">${fechaNacimiento}</td>
+                  <td hidden="hidden">${codSectorZona}</td>
+                  <td hidden="hidden">${direccion}</td>
+                  <td>${aniosNacido}</td>                                                                                                       
+                  <td>${dni}</td>                                                                                                       
+                  <td hidden="hidden">${codTipoBeneficio}</td>                                                                                                       
+                  <td>${tipoBeneficio}</td>                                                                                                       
+                  <td>${peso ? peso : ''}</td>                                                                                                       
+                  <td>${talla ? talla : ''}</td>                                                                                                       
+                  <td>${hmg ? hmg : ''}</td>                                                              
+                  <td>
+                      <span class="estado ${abreviatura === "a" ? 'active' : abreviatura === 'v' ? 'vencido' : 'inactive'}">
+                          ${estado}
+                      </span>
+                  </td>
+                  <td hidden="hidden">${codMotivoInhabilitacion}</td>                                                              
+                  <td>${motivoInhabilitacion ? motivoInhabilitacion : ''}</td>                                                                
+                  <td>
+                      <div class="actions actions_beneficiarios">     
+                          ${abreviatura == 'a' ?
+` <div class="tooltip-container">
+                              <img id="btnEditarAsociacion" class="action" src="./assets/icons/action_edit.svg">
+                              <span class="custom-tooltip">Editar beneficiario</span>
+                          </div>
 
-                                            <div class="tooltip-container">
-                                                <img id="" class="action" src="./assets/icons/action_ver_detalle.svg">
-                                                <span class="custom-tooltip">Detalle de beneficiario</span>
-                                            </div>
-                                            
-                                            <div class="tooltip-container">
-                                                <img id="" class="action" src="./assets/icons/action_ver_beneficiarios.svg">
-                                                <span class="custom-tooltip">Ver beneficiario</span>
-                                            </div>
+                          <div class="tooltip-container">
+                              <img id="" class="action" src="./assets/icons/action_ver_detalle.svg">
+                              <span class="custom-tooltip">Detalle de beneficiario</span>
+                          </div>
+                          
+                          <div class="tooltip-container">
+                              <img id="" class="action" src="./assets/icons/action_ver_beneficiarios.svg">
+                              <span class="custom-tooltip">Ver beneficiario</span>
+                          </div>
 
-                                            <div class="tooltip-container">
-                                                <img id="" class="action" src="./assets/icons/action_cambiar_beneficio.svg">
-                                                <span class="custom-tooltip">Cambiar beneficiario</span>
-                                            </div>
+                          <div class="tooltip-container">
+                              <img id="" class="action" src="./assets/icons/action_cambiar_beneficio.svg">
+                              <span class="custom-tooltip">Actualizar beneficiario</span>
+                          </div>
 
-                                            <div class="tooltip-container">
-                                                <img id="btnDeshabilitarBeneficiario" class="action" src="./assets/icons/action_deshabilitar.svg">
-                                                <span class="custom-tooltip">Deshabilitar beneficiario</span>
-                                            </div>
-                                            ` : ''}       
-                                            
-                                            ${abreviatura == 'i' ?
-                                            `
-                                            <div class="tooltip-container">
-                                                        <img id="btnHabilitarBeneficiario" class="action" src="./assets/icons/action_habilitar.svg">
-                                                <span class="custom-tooltip">Habilitar beneficiario</span>
-                                            </div>
+                          <div class="tooltip-container">
+                              <img id="btnDeshabilitarBeneficiario" class="action" src="./assets/icons/action_deshabilitar.svg">
+                              <span class="custom-tooltip">Deshabilitar beneficiario</span>
+                          </div>
+                          ` : ''}       
+                          
+                          ${abreviatura == 'i' ?
+`
+                          <div class="tooltip-container">
+                                      <img id="btnHabilitarBeneficiario" class="action" src="./assets/icons/action_habilitar.svg">
+                              <span class="custom-tooltip">Habilitar beneficiario</span>
+                          </div>
 
-                                            ` : ''}   
-                                        </div>
-                                    </td>
-                                </tr>
+                          ` : ''}   
+                      </div>
+                  </td>
+              </tr>
                             `
-                        })
-                        $("#listaBeneficiarios").html(row)
-                    } else {
-                        row = `<tr><td colspan="10">Aún no existen beneficiarios en el sistema</td></tr>`
-                    }
-                    $("#listaBeneficiarios").html(row)
-                }
+            })
+            $("#listaBeneficiarios").html(row)
+          } else {
+            row = `<tr><td colspan="10">Aún no existen beneficiarios en el sistema</td></tr>`
+          }
+          $("#listaBeneficiarios").html(row)
+        }
 
-                if (code === 500) {
-                    showErrorInternalServer(message, info)
-                }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.error('Error reconocimientos_CRUD.js: ', textStatus, errorThrown);
-            }
-        })
-    }
+        if (code === 500) {
+          showErrorInternalServer(message, info)
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.error('Error reconocimientos_CRUD.js: ', textStatus, errorThrown);
+      }
+    })
+  }
 
-    //Editar un beneficiario
-
-
+  //Editar un beneficiario
 
 
 
 
-    //
-    
-   // Desvincula cualquier evento click previo y vincula un nuevo evento click al botón #btnEditarBeneficiario
-$(document).off("click", "#btnEditarBeneficiario").on("click", "#btnEditarBeneficiario", function (e) {
+
+
+  //
+
+  // Desvincula cualquier evento click previo y vincula un nuevo evento click al botón #btnEditarBeneficiario
+  $(document).off("click", "#btnEditarBeneficiario").on("click", "#btnEditarBeneficiario", function (e) {
     // Previene el comportamiento por defecto del botón (por ejemplo, enviar un formulario)
     e.preventDefault();
 
@@ -168,8 +168,8 @@ $(document).off("click", "#btnEditarBeneficiario").on("click", "#btnEditarBenefi
 
     // Configura el modal para que no se cierre al hacer clic fuera o presionar Esc
     modalEditar.modal({
-        backdrop: 'static', // No se cierra al hacer clic fuera del modal
-        keyboard: false // No se cierra al presionar la tecla Esc
+      backdrop: 'static', // No se cierra al hacer clic fuera del modal
+      keyboard: false // No se cierra al presionar la tecla Esc
     });
 
     // Muestra el modal
@@ -177,13 +177,13 @@ $(document).off("click", "#btnEditarBeneficiario").on("click", "#btnEditarBenefi
 
     // Enfoca el campo DNI cuando el modal se muestra completamente
     modalEditar.one('shown.bs.modal', function () {
-        $("#dniBeneficiarioEditar").focus();
+      $("#dniBeneficiarioEditar").focus();
     });
-});
+  });
 
 
-//actualizar beneficiario
-$(document).off("submit", "#editarBeneficiarioForm").on('submit', '#editarBeneficiarioForm', function (e) {
+  //actualizar beneficiario
+  $(document).off("submit", "#editarBeneficiarioForm").on('submit', '#editarBeneficiarioForm', function (e) {
     e.preventDefault();
     const codBeneficiario = Number($.trim($('#codBeneEditar').val()));
     const codPersona = Number($.trim($('#codPersonaEditarBeneficiario').val()));
@@ -203,41 +203,41 @@ $(document).off("submit", "#editarBeneficiarioForm").on('submit', '#editarBenefi
     const observacion = $.trim($('#observacionBeneficiarioEditar').val());
 
     if (losCamposBeneficiarioSonValidos(dni, nombre, apellidoPaterno, apellidoMaterno, sexo,
-        telefono, celular, fechaNacimiento, edad, sectorZona, direccion, numeroFinca, asociacion)) {
-        $.ajax({
-            url: './controllers/beneficiario/actualizar.php',
-            method: 'POST',
-            dataType: 'json',
-            data: {
-                codBeneficiario, codPersona, dni, nombre, apellidoPaterno, apellidoMaterno, sexo, asociacion,
-                sectorZona, telefono, celular, fechaNacimiento, direccion, numeroFinca, observacion
-            },
-            success: function (response) {
-                const {code, message, info, data} = response;
+      telefono, celular, fechaNacimiento, edad, sectorZona, direccion, numeroFinca, asociacion)) {
+      $.ajax({
+        url: './controllers/beneficiario/actualizar.php',
+        method: 'POST',
+        dataType: 'json',
+        data: {
+          codBeneficiario, codPersona, dni, nombre, apellidoPaterno, apellidoMaterno, sexo, asociacion,
+          sectorZona, telefono, celular, fechaNacimiento, direccion, numeroFinca, observacion
+        },
+        success: function (response) {
+          const { code, message, info, data } = response;
 
-                if (code === 200) {
-                    showSuccessAlertUpdate(message)
-                }
+          if (code === 200) {
+            showSuccessAlertUpdate(message)
+          }
 
-                if (code === 500) {
-                    showErrorInternalServer(message, info)
-                }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.error('Error beneficiarios_CRUD.js: ', textStatus, errorThrown);
-            }
-        })
+          if (code === 500) {
+            showErrorInternalServer(message, info)
+          }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.error('Error beneficiarios_CRUD.js: ', textStatus, errorThrown);
+        }
+      })
     }
-})
+  })
 
-//Detalle del beneficiario
-
-
+  //Detalle del beneficiario
 
 
 
-// Ver detalle socio
-$(document).off("click", "#btnDetalleBeneficiario").on("click", "#btnDetalleBeneficiario", function (e) {
+
+
+  // Ver detalle socio
+  $(document).off("click", "#btnDetalleBeneficiario").on("click", "#btnDetalleBeneficiario", function (e) {
     e.preventDefault();
     let modalEditar = $("#modalDetalleBeneficiario");
     let fila = $(this).closest("tr");
@@ -259,7 +259,7 @@ $(document).off("click", "#btnDetalleBeneficiario").on("click", "#btnDetalleBene
     let zonaSector = fila.find('td:eq(5)').text();
     let observaciones = fila.find('td:eq(9)').text();
     let abreviaturaEstado = fila.find('td:eq(21)').text();
-    
+
 
 
     $("#dniBeneficiarioDetalle").val(dni.trim());
@@ -282,130 +282,130 @@ $(document).off("click", "#btnDetalleBeneficiario").on("click", "#btnDetalleBene
 
 
     modalEditar.modal({
-        backdrop: 'static',
-        keyboard: false
+      backdrop: 'static',
+      keyboard: false
     });
 
     modalEditar.modal('show');
 
     modalEditar.one('shown.bs.modal', function () {
-        $("#dniBeneficiarioEditar").focus();
+      $("#dniBeneficiarioEditar").focus();
     });
-});
+  });
 
 
 
 
 
-    // Deshabilitar un beneficiario
-    $(document).off("click", "#btnDeshabilitarBeneficiario").on("click", "#btnDeshabilitarBeneficiario", function (e) {
-        e.preventDefault();
+  // Deshabilitar un beneficiario
+  $(document).off("click", "#btnDeshabilitarBeneficiario").on("click", "#btnDeshabilitarBeneficiario", function (e) {
+    e.preventDefault();
+    let fila = $(this).closest("tr");
+    let nombres = fila.find('td:eq(2)').text();
+
+    Swal.fire({
+      icon: "warning",
+      title: "¡Advertencia!",
+      text: "¿Seguro que desea inhabilitar al beneficiario " + nombres + "?",
+      width: "350px",
+      showCancelButton: true,
+      confirmButtonColor: "#13252E",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí",
+      cancelButtonText: "No"
+    }).then((result) => {
+      if (result.isConfirmed) {
         let fila = $(this).closest("tr");
-        let nombres = fila.find('td:eq(2)').text();
+        let codBeneficiario = Number(fila.find('td:eq(0)').text());
+        console.log(codBeneficiario);
 
-        Swal.fire({
-            icon: "warning",
-            title: "¡Advertencia!",
-            text: "¿Seguro que desea inhabilitar al beneficiario " + nombres + "?",
-            width: "350px",
-            showCancelButton: true,
-            confirmButtonColor: "#13252E",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Sí",
-            cancelButtonText: "No"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                let fila = $(this).closest("tr");
-                let codBeneficiario = Number(fila.find('td:eq(0)').text());
-                console.log(codBeneficiario);
+        $.ajax({
+          url: './controllers/beneficiario/inhabilitar.php',
+          method: 'POST',
+          dataType: 'json',
+          data: { codBeneficiario },
+          success: function (response) {
+            console.log(response)
+            const { code, message, info, data } = response;
 
-                $.ajax({
-                    url: './controllers/beneficiario/inhabilitar.php',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: {codBeneficiario},
-                    success: function (response) {
-                        console.log(response)
-                        const {code, message, info, data} = response;
-
-                        if (code === 200) {
-                            Swal.fire({
-                                icon: "success",
-                                title: "¡Éxito!",
-                                text: message
-                            }).then(() => {
-                                listarBeneficiarios()
-                            });
-                        }
-
-                        if (code === 500) {
-                            showErrorInternalServer(message, info)
-                        }
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.error('Error beneficiarios_CRUD.js: ', textStatus, errorThrown);
-                    }
-                })
+            if (code === 200) {
+              Swal.fire({
+                icon: "success",
+                title: "¡Éxito!",
+                text: message
+              }).then(() => {
+                listarBeneficiarios()
+              });
             }
 
+            if (code === 500) {
+              showErrorInternalServer(message, info)
+            }
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.error('Error beneficiarios_CRUD.js: ', textStatus, errorThrown);
+          }
         })
+      }
 
-    });
+    })
 
-    
+  });
 
-    // Habilitar un beneficiario
-    $(document).off("click", "#btnHabilitarBeneficiario").on("click", "#btnHabilitarBeneficiario", function (e) {
-        e.preventDefault();
+
+
+  // Habilitar un beneficiario
+  $(document).off("click", "#btnHabilitarBeneficiario").on("click", "#btnHabilitarBeneficiario", function (e) {
+    e.preventDefault();
+    let fila = $(this).closest("tr");
+    let nombres = fila.find('td:eq(2)').text();
+
+    Swal.fire({
+      icon: "warning",
+      title: "¡Advertencia!",
+      text: "¿Seguro que desea habilitar al beneficiario " + nombres + "?",
+      width: "350px",
+      showCancelButton: true,
+      confirmButtonColor: "#13252E",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí",
+      cancelButtonText: "No"
+    }).then((result) => {
+      if (result.isConfirmed) {
         let fila = $(this).closest("tr");
-        let nombres = fila.find('td:eq(2)').text();
+        let codBeneficiario = Number(fila.find('td:eq(0)').text());
+        console.log(codBeneficiario);
 
-        Swal.fire({
-            icon: "warning",
-            title: "¡Advertencia!",
-            text: "¿Seguro que desea habilitar al beneficiario " + nombres + "?",
-            width: "350px",
-            showCancelButton: true,
-            confirmButtonColor: "#13252E",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Sí",
-            cancelButtonText: "No"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                let fila = $(this).closest("tr");
-                let codBeneficiario = Number(fila.find('td:eq(0)').text());
-                console.log(codBeneficiario);
+        $.ajax({
+          url: './controllers/beneficiario/habilitar.php',
+          method: 'POST',
+          dataType: 'json',
+          data: { codBeneficiario },
+          success: function (response) {
+            console.log(response)
+            const { code, message, info, data } = response;
 
-                $.ajax({
-                    url: './controllers/beneficiario/habilitar.php',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: {codBeneficiario},
-                    success: function (response) {
-                        console.log(response)
-                        const {code, message, info, data} = response;
-
-                        if (code === 200) {
-                            Swal.fire({
-                                icon: "success",
-                                title: "¡Éxito!",
-                                text: message
-                            }).then(() => {
-                                listarBeneficiarios()
-                            });
-                        }
-
-                        if (code === 500) {
-                            showErrorInternalServer(message, info)
-                        }
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.error('Error beneficiarios_CRUD.js: ', textStatus, errorThrown);
-                    }
-                })
+            if (code === 200) {
+              Swal.fire({
+                icon: "success",
+                title: "¡Éxito!",
+                text: message
+              }).then(() => {
+                listarBeneficiarios()
+              });
             }
 
+            if (code === 500) {
+              showErrorInternalServer(message, info)
+            }
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.error('Error beneficiarios_CRUD.js: ', textStatus, errorThrown);
+          }
         })
+      }
 
-    });
+    })
+
+  });
 })

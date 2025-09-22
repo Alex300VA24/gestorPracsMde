@@ -1,15 +1,10 @@
 <?php
 
 class DataBase{
-    /*private static $serverName = "DESKTOP-5ID39Q8\SQLSERVER2022";
-    private static $database = "BDPROVALE";
-    private static $username = "sa";
-    private static $password = "sql";*/
-
-    private static $serverName = "SGIS05\JHONATANMM";
-    private static $database = "BDPROVALE";
-    private static $username = "sa";
-    private static $password = "sql";
+    private static $serverName = "localhost";
+    private static $database = "BDProvale";
+    private static $username = "alex";
+    private static $password = "admin123";
     
     public static function connect(){
         try {

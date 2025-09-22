@@ -1,2 +1,2 @@
 <?php
-define("base_url", "http://localhost:8080/provaleMde/");
+define("base_url", "http://localhost/provaleMde/");

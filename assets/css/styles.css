@@ -473,7 +473,9 @@ input:focus-visible{
 }
 
 .actions{
-    display: grid;
+    display: flex;
+    /* justify-content: center; */
+    justify-content: space-around;
     place-items: center;
 }
 

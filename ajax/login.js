@@ -8,7 +8,7 @@ $(document).ready(function () {
       $.ajax({
         url: './controllers/autenticacion/login.php',
         method: 'GET',
-        dataType: 'text',
+        dataType: 'json',
         data: { user, password },
         success: function (response) {
           console.log(response)

@@ -106,10 +106,10 @@ $(document).ready(function () {
                   `<div class="tooltip-container">
                                                 <img id="btnHabilitarSocio" class="action" src="./assets/icons/action_habilitar.svg">
                                                 <span class="custom-tooltip">Habilitar socio</span>
-                                             </div>` : ''}
+                                              </div>` : ''}
                                         </div>
                                     </td>
-                                </tr>
+                                </tr> 
                             `
             })
             $("#listaSocios").html(row)

@@ -365,6 +365,7 @@ class Asociacion{
         }
     }
 
+    
     public function habilitarAsociacion(){
         $sql = "EXEC sp_asociacion_habilitar :codAsociacion";
 

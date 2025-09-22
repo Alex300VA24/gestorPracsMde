@@ -6,12 +6,15 @@ $(document).ready(function () {
     let tableBody = document.getElementById("tableProductosDetalles"); // Cuerpo de la tabla
     let productosSeleccionados = [];
 
-    function listarPecosas(){
+
+    listarPecosas(codPecosa);
+
+    function listarPecosas(fechaReparto){
         $.ajax({
-            url: './controllers/movimientos/listarMovimientos.php',
+            url: './controllers/pecosa/listarPecosa.php',
             method: 'GET',
             dataType: 'json',
-            data: {descripcion},
+            data: {fechaReparto},
             success: function (response)  {
                 const {code, message, info, data} = response;
 
@@ -19,21 +22,16 @@ $(document).ready(function () {
                     let row = '';
                     if (data && Array.isArray(data) && data.length > 0) {
                         row = data.map(({
-                                            codPecosa, codAsoacion, nombreAsociacion, 
+                                            codPecosa, nombreAsociado, presidenta, observacion, fechaReparto, 
                                         }) => {
                             return `
                                 <tr>
-                                    <td>${codMovimiento}</td>
-                                    <td hidden="hidden">${codProducto}</td>
-                                    <td>${descripcion}</td>
-                                    <td>${fechaMovimiento.split(' ')[0]}</td>                                                                     
-                                    <td hidden="hidden">${codUnidadMedida}</td>                                   
-                                    <td>${descripcionUnidadMedida}</td>
-                                    <td>${cantidad}</td>
-                                    <td>${precioUnitario}</td>
-                                    <td>${precioTotal}</td>
-                                    <td hidden="hidden">${codTipoMovimiento}</td>
-                                    <td hidden="hidden">${descripcionTipoMov}</td>
+                                    <td>${codPecosa}</td>
+                                    <td>${nombreAsociado}</td>                            
+                                    <td>${presidenta}</td>
+                                    <td>${observacion}</td>
+                                    <td>${fechaReparto.split(' ')[0]}</td>
+                                    
 
                                     <td> 
                                         <div class="actions actions_productos">

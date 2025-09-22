@@ -427,6 +427,7 @@ class Socio extends Persona {
     public function inhabilitarSocio(){
         $sql = "EXEC sp_socio_inhabilitar :codSocio";
 
+        
         try {
             $stmt = DataBase::connect()->prepare($sql);
             $stmt->bindParam('codSocio', $this->codSocio, PDO::PARAM_INT);

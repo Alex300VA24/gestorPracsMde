@@ -11,4 +11,4 @@ $codAsociacion = $_GET['codAsociacion'] ?? null;
 
 $response = $socioOjb->listarSocios($dniOApellidosNombres, $codAsociacion);
 
-print json_encode($response);
+print json_encode($response); 

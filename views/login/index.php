@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Sistema de PROVALE</title>
+    <title>Login - Sistema de Gestion de Practicantes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
 </head>
@@ -14,7 +14,7 @@
         <img class="logo-login" src="<?=base_url?>assets/logo.png" alt="logo">
     </div>
     <div class="login-right">
-        <h2 class="login-title">sistema de PROVALE</h2>
+        <h2 class="login-title">Sistema de Gestion de Practicantes</h2>
         <p>Ingresa tus datos para iniciar sesi&oacute;n</p>
         <form id="formLogin" action="" method="post">
             <label for="username">Usuario:</label>

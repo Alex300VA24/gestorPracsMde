@@ -18,12 +18,9 @@
                     </div>
 
                     <div class="two-column">
-                        <label>Unidad de Medida (*):</label>
-                        <div id="unidadMedidaContainerEdit">
-                            <label><input type="radio" name="unidadMedidaEdit" value="kg">Bolsa</label>
-                            <label><input type="radio" name="unidadMedidaEdit" value="g">Tarro</label>
-  
-                        </div>
+                        <label for="unidadMedida">Unidad de Medida (*):</label>
+                            <select id="cboUnidadMedidaEdit" class="form-select">
+                            </select>
                     </div>
 
                     <p>Todos los campos (*) son obligatorios</p>

@@ -1,28 +1,27 @@
 <?php
-require_once '../../../../config/DataBase.php';
+require_once "config/DataBase.php";
 
-class ReporteTotalSocios extends DataBase
+class ReporteSocios extends DataBase
 {
   public function __construct()
   {
     parent::__construct();
   }
-  public function getReporTotalSocios()
-  $conector = parent::getConexion();
-
-  $sql = "SELECT * FROM codSocio
-          ORDER BY codSocio DESC"; 
-  
-  $stmt = $conector->prepare($sql);
-  $stmt->execute();
-  $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  
-  return $resultado;
-  
+  public function getReporteSociosTotales()
+  {
+    $conn = parent::connect();
+    $sql = "SELECT * FROM vw_socios
+            ORDER BY NombresSocio ASC";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $resultado;
+  }
 }
 
-$reporteSociosTotales = new ReporteSociosTotales();
-$reporte = $reporteSociosTotales->getRporteTotalSocios();
+$reporteSocios = new ReporteSocios();
+$reporte = $reporteSocios->getReporteSociosTotales();
 
 header('Content-Type: application/json');
 echo json_encode($reporte);
+
