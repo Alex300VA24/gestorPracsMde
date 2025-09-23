@@ -48,9 +48,9 @@
     });
 
     // Mostrar contraseña al pasar el mouse
-    togglePassword.addEventListener('mouseover', function () {
+    /*togglePassword.addEventListener('mouseover', function () {
         passwordInput.setAttribute('type', 'text');
-    });
+    });*/
 
     // Ocultar contraseña al sacar el mouse
     togglePassword.addEventListener('mouseout', function () {

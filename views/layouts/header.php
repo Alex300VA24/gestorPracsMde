@@ -1,7 +1,7 @@
 <header class="header">
     <div class="logo_nombre_sistema">
         <img src="<?=base_url?>/assets/mde-logo.svg" alt="" srcset="">
-        <h1>Sistema de gestión de provale</h1>
+        <h1>Sistema de gestión de Practicantes</h1>
     </div>
     <div class="container_userDetails_logout">
         <div class="userDetails">

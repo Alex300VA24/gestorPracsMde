@@ -11,7 +11,7 @@ $(document).ready(function () {
         dataType: 'json',
         data: { user, password },
         success: function (response) {
-          console.log(response)
+          console.log("Respuesta del servidor:", response);
           const { code, message, info, data } = response;
           if (code === 404) {
             showAlertCredentialsIncorrect();
@@ -44,8 +44,10 @@ $(document).ready(function () {
       let valueCUI = $("#cui").val();
 
       if (!isValidFieldCUI(valueCUI)) return
-
+        
       if (cui !== valueCUI) {
+        console.log("este es el cui: ", cui);
+        console.log("este es el cui: ", valueCUI);
         showAlertIncorrectCUI();
       } else {
         $.ajax({
@@ -68,7 +70,7 @@ $(document).ready(function () {
   function showAlertIncorrectCUI() {
     Swal.fire({
       title: "¡Error!",
-      text: 'El c&ocute;digo único de idenficicación (CUI) no coincide con el del usuario registrado',
+      text: 'El c&ocute;digo único de identificación (CUI) no coincide con el del usuario registrado',
       icon: "error",
       width: "350px",
       confirmButtonColor: "#13252E",

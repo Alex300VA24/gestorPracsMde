@@ -2,7 +2,7 @@
 require_once "../../config/parameters.php"
 ?>
 <div class="header_modules">
-    <h1>Lista de Socios</h1>
+    <h1>Lista de Practicantes</h1>
     <div class="filters_btn_new">
         <div class="filters">
             <input id="btnDNIApellidosFiltroSocio" type="text" placeholder="Buscar por DNI ó apellidos y nombres">
@@ -16,7 +16,7 @@ require_once "../../config/parameters.php"
 
         <a href="#" id="btnNuevoSocio" class="btn-nuevo-registro">
             <img src="<?= base_url ?>/assets/icons/addRegister.svg">
-            Nuevo Socio
+            Nuevo Practicante
         </a>
 
         <a id="btnReporteSocio" class="btn-nuevo-registro" target="_blank">
@@ -33,7 +33,7 @@ require_once "../../config/parameters.php"
     <table class="tableSocios">
         <thead>
             <tr>
-                <th>Cod Socio</th>
+                <th>Cod</th>
                 <th>Nombres</th>
                 <th>Edad</th>
                 <th>DNI</th>

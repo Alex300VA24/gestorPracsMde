@@ -11,4 +11,5 @@ $usuario->setPassword($password);
 
 $response = $usuario->autenticarUsuario();
 
+error_log(print_r($response, true));
 print json_encode($response);

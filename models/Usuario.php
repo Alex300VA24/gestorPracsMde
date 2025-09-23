@@ -95,7 +95,7 @@ class Usuario {
                 FROM Usuarios u INNER JOIN Roles r ON u.codRol = r.codRol
                 JOIN Estados e ON u.codEstado = e.codEstado
                 WHERE nombreUsuario = :usuario AND password = :password AND e.descripcion = 'activo'";
-
+           
         try{
             $stmt = DataBase::connect()->prepare($sql);
             $stmt->bindParam('usuario', $this->nombreUsuario, PDO::PARAM_STR);

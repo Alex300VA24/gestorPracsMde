@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="<?=base_url?>assets/css/styles.css">
     <link rel="stylesheet" href="<?=base_url?>assets/css/estilosExt.css">
     <link rel="shortcut icon" href="<?=base_url?>assets/vacaHome.svg" type="image/x-icon">
-    <title>Provale</title>
+    <link rel="shortcut icon" href="<?=base_url?>assets/asistenciaIcon.svg" type="image/x-icon">
+    
+    <title>Gestor de Practicantes</title>
 </head>
 <body>

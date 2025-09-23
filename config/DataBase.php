@@ -2,7 +2,7 @@
 
 class DataBase{
     private static $serverName = "localhost";
-    private static $database = "BDProvale";
+    private static $database = "gestorPracs";
     private static $username = "alex";
     private static $password = "admin123";
     
