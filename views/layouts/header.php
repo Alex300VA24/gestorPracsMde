@@ -1,24 +1,24 @@
-<header class="header">
-    <div class="logo_nombre_sistema">
-        <img src="<?=base_url?>/assets/mde-logo.svg" alt="" srcset="">
-        <h1>Sistema de gestión de Practicantes</h1>
-    </div>
-    <div class="container_userDetails_logout">
-        <div class="userDetails">
-            <a class="iconUser" href="#" id="btnEditarPerfil">
-                <img src="<?=base_url?>/assets/icons/userIcon.svg" alt="">
-                <img class="iconEditProfile" src="<?=base_url?>/assets/icons/iconEditProfile.svg" alt="">
-            </a>
-            <div>
-                <span id="nombresUsuarioLog" class="nombresUsuarioLog"> <?php echo $_SESSION['user']['nombresApellidos'] ?> <span class="username">(<?php echo $_SESSION['user']['nombreUsuario']?>)</span> </span>
-                <div class="username_rol">
-                    <span id="areaUsuarioLog">  <?php echo $_SESSION['user']['rol'] ?> <span id="rolUsuarioLog"> </span></span>
-                </div>
-            </div>
-        </div>
+<?php
+if (session_status() === PHP_SESSION_NONE) session_start();
 
-        <a>
-            <img id="btnLogout" class="iconLogout" src="<?=base_url?>/assets/icons/iconLogout.svg" alt="iconLogout">
-        </a>
-    </div>
-</header>
+if (!isset($_SESSION['authenticated']) || !$_SESSION['authenticated']) {
+    header('Location: ' . BASE_URL . 'login');
+    exit;
+}
+
+$nombreUsuario = $_SESSION['nombreUsuario'] ?? 'Usuario';
+$nombreCargo   = $_SESSION['nombreCargo'] ?? 'Sin cargo';
+$nombreArea    = $_SESSION['nombreArea'] ?? 'Sin área';
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title><?= $titulo ?? 'Dashboard - Gestión de Practicantes' ?></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/practicantes.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/documentos.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/asistencias.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/dashboard.css">
+</head>
+<body>

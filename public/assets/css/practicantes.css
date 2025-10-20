@@ -1,0 +1,194 @@
+.tabla-practicantes {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+.tabla-practicantes th, .tabla-practicantes td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+.tabla-practicantes th {
+    background-color: #f5f5f5;
+}
+/* === MODAL DE NUEVO PRACTICANTE === */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease;
+}
+
+.modal-content {
+    background: #ffffff;
+    width: 600px;
+    border-radius: 12px;
+    padding: 25px 35px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    animation: fadeInUp 0.4s ease;
+}
+
+.modal-content h3 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+#formPracticante {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 20px;
+}
+
+#formPracticante input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.2s ease;
+}
+
+#formPracticante input:focus {
+    border-color: #0078D7;
+    outline: none;
+}
+
+#formPracticante button[type="submit"] {
+    grid-column: 1 / 2;
+    background: #0078D7;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-weight: 500;
+}
+
+#formPracticante button[type="submit"]:hover {
+    background: #005fa3;
+}
+
+#formPracticante button[type="button"] {
+    background: #ccc;
+    border: none;
+    color: #333;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-weight: 500;
+}
+
+#formPracticante button[type="button"]:hover {
+    background: #b5b5b5;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* === BOTONES DE ACCIÓN === */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #28a745, #20c997);
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #ffc107, #fd7e14);
+    color: #212529;
+}
+
+.btn-info {
+    background: linear-gradient(135deg, #17a2b8, #138496);
+}
+
+.btn-primary:hover, .btn-success:hover, .btn-warning:hover, .btn-info:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* === TARJETAS DE CONTENIDO === */
+.content-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.card-title {
+    font-size: 18px;
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+/* === TABLAS === */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table th, .table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.table th {
+    background: #f8f9fa;
+    font-weight: 600;
+    color: #555;
+}
+
+.table tr:hover {
+    background: #f8f9fa;
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.status-pendiente { background: #ffc107; }
+.status-vigente { background: #17a2b8; }
+.status-finalizado { background: #28a745; }
+.status-rechazado { background: #dc3545; }
+.status-activo { background: #6f42c1; }
